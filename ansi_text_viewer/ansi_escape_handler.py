@@ -1,0 +1,224 @@
+from PySide6.QtGui import QColor, QFont, QTextCharFormat
+
+
+class AnsiEscapeHandler:
+    def __init__(self):
+        self.reset()
+
+    def reset(self):
+        self.fg = QColor(255, 255, 255)
+        self.bg = QColor(0, 0, 0)
+        self.bold = False
+        self.dim = False
+        self.italic = False
+        self.underline = False
+        self.blink = False
+        self.reverse = False
+        self.strikethrough = False
+
+    def parse(self, text: str):
+        actions = []
+        i = 0
+        n = len(text)
+
+        while i < n:
+            if text[i] != "\x1b":
+                start = i
+                while i < n and text[i] != "\x1b":
+                    i += 1
+                actions.append(("text", text[start:i], self.__get_format()))
+                continue
+
+            # \x1b[ ...
+            if i + 1 < n and text[i + 1] == "[":
+                i += 2
+                
+                question_mark = False
+                if i < n and text[i] == "?":
+                    question_mark = True
+                    i += 1
+
+                params = []
+                num = ""
+                while i < n:
+                    c = text[i]
+                    if c.isdigit():
+                        num += c
+                    elif c == ";":
+                        params.append(int(num) if num else 0)
+                        num = ""
+                    else:
+                        if num:
+                            params.append(int(num))
+                        
+                        if c == "m":
+                            if not params and not num:  # e.g., \x1b[m
+                                self.__apply_sgr([])
+                            else:
+                                self.__apply_sgr(params)
+                        elif c == "A":
+                            actions.append(("cursor_up", params[0] if params else 1))
+                        elif c == "B":
+                            actions.append(("cursor_down", params[0] if params else 1))
+                        elif c == "C":
+                            actions.append(("cursor_forward", params[0] if params else 1))
+                        elif c == "D":
+                            actions.append(("cursor_back", params[0] if params else 1))
+                        elif c == "G":
+                            actions.append(("cursor_col", params[0] if params else 1))
+                        elif c == "H" or c == "f":
+                            row = params[0] if len(params) > 0 else 1
+                            col = params[1] if len(params) > 1 else 1
+                            actions.append(("cursor_pos", row, col))
+                        elif c == "J":
+                            actions.append(("erase_screen", params[0] if params else 0))
+                        elif c == "K":
+                            actions.append(("erase_line", params[0] if params else 0))
+                        elif c == "h" and question_mark:
+                            if params and params[0] == 25:
+                                actions.append(("show_cursor",))
+                        elif c == "l" and question_mark:
+                            if params and params[0] == 25:
+                                actions.append(("hide_cursor",))
+
+                        i += 1
+                        break
+                    i += 1
+                continue
+                
+            i += 1
+            
+        return actions
+
+    def __get_format(self):
+        fmt = QTextCharFormat()
+
+        fg = self.fg
+        bg = self.bg
+        
+        if self.dim:
+            # Dim the foreground color
+            fg = QColor(max(0, fg.red() // 2), max(0, fg.green() // 2), max(0, fg.blue() // 2))
+
+        if self.reverse:
+            fmt.setForeground(bg)
+            fmt.setBackground(fg)
+        else:
+            fmt.setForeground(fg)
+            fmt.setBackground(bg)
+            
+        if self.bold:
+            fmt.setFontWeight(QFont.Weight.Bold)
+        if self.italic:
+            fmt.setFontItalic(True)
+        if self.underline:
+            fmt.setFontUnderline(True)
+        if self.strikethrough:
+            fmt.setFontStrikeOut(True)
+            
+        return fmt
+
+    def __apply_sgr(self, params: list):
+        if not params:
+            self.reset()
+            return
+
+        i = 0
+        while i < len(params):
+            code = params[i]
+            i += 1
+
+            if code == 0:
+                self.reset()
+            elif code == 1:
+                self.bold = True
+            elif code == 2:
+                self.dim = True
+            elif code == 3:
+                self.italic = True
+            elif code == 4:
+                self.underline = True
+            elif code == 5:
+                self.blink = True
+            elif code == 7:
+                self.reverse = True
+            elif code == 9:
+                self.strikethrough = True
+            elif code == 22:
+                self.bold = False
+                self.dim = False
+            elif code == 23:
+                self.italic = False
+            elif code == 24:
+                self.underline = False
+            elif code == 25:
+                self.blink = False
+            elif code == 27:
+                self.reverse = False
+            elif code == 29:
+                self.strikethrough = False
+
+            # Standard colors
+            elif 30 <= code <= 37:
+                self.fg = self.__ansi8_color(code - 30)
+            elif 40 <= code <= 47:
+                self.bg = self.__ansi8_color(code - 40)
+            elif 90 <= code <= 97:
+                self.fg = self.__ansi8_color(code - 90, bright=True)
+            elif 100 <= code <= 107:
+                self.bg = self.__ansi8_color(code - 100, bright=True)
+
+            # 256 colors
+            elif code == 38 and i < len(params) and params[i] == 5:
+                i += 2
+                if i - 1 < len(params):
+                    self.fg = self.__color_256(params[i - 1])
+            elif code == 48 and i < len(params) and params[i] == 5:
+                i += 2
+                if i - 1 < len(params):
+                    self.bg = self.__color_256(params[i - 1])
+
+            # Truecolor RGB
+            elif code == 38 and i + 3 < len(params) and params[i] == 2:
+                i += 4
+                r, g, b = params[i - 3 : i]
+                self.fg = QColor(r, g, b)
+            elif code == 48 and i + 3 < len(params) and params[i] == 2:
+                i += 4
+                r, g, b = params[i - 3 : i]
+                self.bg = QColor(r, g, b)
+
+    def __ansi8_color(self, idx: int, bright: bool = False):
+        palette = [
+            QColor(0, 0, 0),
+            QColor(170, 0, 0),
+            QColor(0, 170, 0),
+            QColor(170, 170, 0),
+            QColor(0, 0, 170),
+            QColor(170, 0, 170),
+            QColor(0, 170, 170),
+            QColor(170, 170, 170),
+        ]
+        c = palette[idx % 8]
+        if bright:
+            c = QColor(
+                min(c.red() + 85, 255),
+                min(c.green() + 85, 255),
+                min(c.blue() + 85, 255),
+            )
+        return c
+
+    def __color_256(self, idx: int):
+        if idx < 16:
+            return self.__ansi8_color(idx % 8, bright=idx >= 8)
+
+        if idx < 232:  # 6x6x6 cube
+            idx -= 16
+            r = (idx // 36) * 51
+            g = ((idx // 6) % 6) * 51
+            b = (idx % 6) * 51
+            return QColor(r, g, b)
+
+        # Grayscale
+        gray = 8 + (idx - 232) * 10
+        return QColor(gray, gray, gray)
