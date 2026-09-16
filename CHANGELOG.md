@@ -21,8 +21,15 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   skips filtered-out lines.
 - Sessions (JSON save/load with validation), export (txt/html/md),
   selection stats, current-line highlight, max-blocks/line-length caps.
+- Color knobs (`setLogLevelColors`, `setBookmarkColor`,
+  `setSearchHighlightColor` active color, `currentLineColor`).
+- Debug diagnostics: every silent fallback logs on the `ansi_text_viewer`
+  logger; contract violations raise with the offender named.
 - Tooling: pytest suite, ruff (Google docstrings), mypy + ty, MkDocs API
-  docs, SHA-pinned CI on Python 3.11–3.14.
+  docs with gallery, SHA-pinned CI on Python 3.11–3.14, commitizen with
+  conventional commits and Pages deploy workflow.
+- Packaging: PyPI metadata (license, classifiers, authors, URLs),
+  `py.typed` marker verified in the wheel via `twine check`.
 
 ### Changed
 
