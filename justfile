@@ -38,5 +38,8 @@ cz *args="--help":
 changelog:
     uv run cz changelog --dry-run
 
+changelog-cliff:
+    git-cliff --unreleased
+
 bump *args="--dry-run":
     uv run cz bump {{args}}
