@@ -34,8 +34,7 @@ Documentation = "https://tanishq-kumar.github.io/QAnsiTextViewer/"
 Repository = "https://github.com/tanishq-kumar/QAnsiTextViewer"
 Issues = "https://github.com/tanishq-kumar/QAnsiTextViewer/issues"
 Changelog = "https://github.com/tanishq-kumar/QAnsiTextViewer/blob/main/CHANGELOG.md"
-# Socials: uncomment and fill in a handle to publish it, e.g.
-# X = "https://x.com/<handle>"
+X = "https://x.com/tanishqlife"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
