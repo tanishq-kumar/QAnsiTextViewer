@@ -1137,7 +1137,7 @@ wheels = [
 
 [[package]]
 name = "qansitextviewer"
-version = "0.1.0"
+version = "0.1.1"
 source = { editable = "." }
 dependencies = [
     { name = "pyside6" },
