@@ -1,6 +1,6 @@
 [project]
 name = "qansitextviewer"
-version = "0.1.0"
+version = "0.1.1"
 description = "A Qt-based viewer for ANSI-encoded text files."
 readme = "README.md"
 license = "GPL-2.0-only"
@@ -38,7 +38,7 @@ X = "https://x.com/tanishqlife"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.1.0"
+version = "0.1.1"
 version_files = [
   "pyproject.toml:version",
   "pyproject.toml:tool.commitizen.version",
