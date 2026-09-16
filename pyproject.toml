@@ -3,16 +3,93 @@ name = "qansitextviewer"
 version = "0.1.0"
 description = "A Qt-based viewer for ANSI-encoded text files."
 readme = "README.md"
-requires-python = ">=3.14"
+license = "GPL-2.0-only"
+authors = [
+  {name = "Tanishq Kumar"},
+]
+requires-python = ">=3.11"
 dependencies = [
   "PySide6>=6.5.0",
 ]
+keywords = ["qt", "pyside6", "ansi", "terminal", "log-viewer", "widget"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3 :: Only",
+  "Topic :: Software Development :: Widget Sets",
+  "Topic :: System :: Logging",
+  "Typing :: Typed",
+]
+
+[project.urls]
+Homepage = "https://github.com/tanishq-kumar/QAnsiTextViewer"
+Repository = "https://github.com/tanishq-kumar/QAnsiTextViewer"
+Issues = "https://github.com/tanishq-kumar/QAnsiTextViewer/issues"
+Changelog = "https://github.com/tanishq-kumar/QAnsiTextViewer/blob/main/CHANGELOG.md"
+# Socials: uncomment and fill in a handle to publish it, e.g.
+# X = "https://x.com/<handle>"
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.1.0"
+version_files = [
+  "pyproject.toml:version",
+  "pyproject.toml:tool.commitizen.version",
+]
+tag_format = "v$version"
+update_changelog_on_bump = false
+changelog_file = "CHANGELOG.md"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
-[tool.hatch]
-build.include = [
-  "ansi_text_viewer",
+[tool.hatch.build.targets.wheel]
+packages = ["ansi_text_viewer"]
+
+[dependency-groups]
+dev = [
+    "commitizen>=4.18.1",
+    "mkdocs>=1.6.1,<2",
+    "mkdocs-material>=9.7.7",
+    "mkdocstrings[python]>=1.0.6",
+    "mypy>=2.3.1",
+    "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
+    "pytest-qt>=4.5.0",
+    "ruff>=0.16.7",
+    "ty>=0.0.81",
 ]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=ansi_text_viewer --cov-report=term-missing -v"
+
+[tool.ruff]
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "D", "I"]
+ignore = ["D100", "D104"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*" = ["D"]
+"demo.py" = ["D"]
+"main.py" = ["D"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_unused_ignores = true
+
+[tool.ty]
+environment = { python-version = "3.11" }

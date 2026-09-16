@@ -1,13 +1,32 @@
+"""Decode ANSI escape sequences into text and cursor actions."""
+
 from PySide6.QtGui import QColor, QFont, QTextCharFormat
 
 
 class AnsiEscapeHandler:
+    r"""Stateful ANSI SGR and cursor-sequence decoder.
+
+    Keeps the current style (colors, bold, ...) across `parse` calls,
+    like a terminal. Repeat counts are clamped to blunt DoS input.
+
+    Examples:
+        >>> handler = AnsiEscapeHandler()
+        >>> actions = handler.parse("\x1b[1mbold")
+        >>> actions[0][0]
+        'text'
+    """
+
     def __init__(self):
+        """Create a handler with default terminal styling."""
+        self._custom_8: dict[tuple[int, bool], QColor] = {}
+        self.default_fg = QColor(255, 255, 255)
+        self.default_bg = QColor(0, 0, 0)
         self.reset()
 
     def reset(self):
-        self.fg = QColor(255, 255, 255)
-        self.bg = QColor(0, 0, 0)
+        """Restore default colors and clear all text attributes."""
+        self.fg = QColor(self.default_fg)
+        self.bg = QColor(self.default_bg)
         self.bold = False
         self.dim = False
         self.italic = False
@@ -16,8 +35,22 @@ class AnsiEscapeHandler:
         self.reverse = False
         self.strikethrough = False
 
-    def parse(self, text: str):
-        actions = []
+    def parse(self, text: str) -> list[tuple]:
+        r"""Parse text with escape sequences into display actions.
+
+        Args:
+            text: Raw text that may contain ``ESC[`` sequences.
+
+        Returns:
+            List of ``("text", str, QTextCharFormat)`` tuples plus cursor
+            actions such as ``("cursor_up", n)`` or ``("erase_line", mode)``.
+
+        Examples:
+            >>> handler = AnsiEscapeHandler()
+            >>> handler.parse("plain")
+            [('text', 'plain', <...>)]
+        """
+        actions: list[tuple] = []
         i = 0
         n = len(text)
 
@@ -32,7 +65,7 @@ class AnsiEscapeHandler:
             # \x1b[ ...
             if i + 1 < n and text[i + 1] == "[":
                 i += 2
-                
+
                 question_mark = False
                 if i < n and text[i] == "?":
                     question_mark = True
@@ -40,17 +73,30 @@ class AnsiEscapeHandler:
 
                 params = []
                 num = ""
+
+                def _num(n: str) -> int:
+                    # Clamp huge repeat counts (e.g. \x1b[999999999C) to avoid
+                    # cursor-movement DoS loops downstream.
+                    try:
+                        return min(int(n), 10000) if n else 0
+                    except ValueError:
+                        return 0
+
                 while i < n:
                     c = text[i]
                     if c.isdigit():
-                        num += c
+                        # Cap digit run early so 1MB of digits can't build a giant int.
+                        if len(num) < 5:
+                            num += c
+                        elif len(num) == 5:
+                            num = "10000"
                     elif c == ";":
-                        params.append(int(num) if num else 0)
+                        params.append(_num(num))
                         num = ""
                     else:
                         if num:
-                            params.append(int(num))
-                        
+                            params.append(_num(num))
+
                         if c == "m":
                             if not params and not num:  # e.g., \x1b[m
                                 self.__apply_sgr([])
@@ -61,7 +107,9 @@ class AnsiEscapeHandler:
                         elif c == "B":
                             actions.append(("cursor_down", params[0] if params else 1))
                         elif c == "C":
-                            actions.append(("cursor_forward", params[0] if params else 1))
+                            actions.append(
+                                ("cursor_forward", params[0] if params else 1)
+                            )
                         elif c == "D":
                             actions.append(("cursor_back", params[0] if params else 1))
                         elif c == "G":
@@ -85,9 +133,9 @@ class AnsiEscapeHandler:
                         break
                     i += 1
                 continue
-                
+
             i += 1
-            
+
         return actions
 
     def __get_format(self):
@@ -95,10 +143,13 @@ class AnsiEscapeHandler:
 
         fg = self.fg
         bg = self.bg
-        
+
         if self.dim:
-            # Dim the foreground color
-            fg = QColor(max(0, fg.red() // 2), max(0, fg.green() // 2), max(0, fg.blue() // 2))
+            fg = QColor(
+                max(0, fg.red() // 2),
+                max(0, fg.green() // 2),
+                max(0, fg.blue() // 2),
+            )
 
         if self.reverse:
             fmt.setForeground(bg)
@@ -106,7 +157,7 @@ class AnsiEscapeHandler:
         else:
             fmt.setForeground(fg)
             fmt.setBackground(bg)
-            
+
         if self.bold:
             fmt.setFontWeight(QFont.Weight.Bold)
         if self.italic:
@@ -115,7 +166,7 @@ class AnsiEscapeHandler:
             fmt.setFontUnderline(True)
         if self.strikethrough:
             fmt.setFontStrikeOut(True)
-            
+
         return fmt
 
     def __apply_sgr(self, params: list):
@@ -188,7 +239,48 @@ class AnsiEscapeHandler:
                 r, g, b = params[i - 3 : i]
                 self.bg = QColor(r, g, b)
 
+    def setDefaultColors(self, fg: QColor | None = None, bg: QColor | None = None):
+        """Override the colors used by SGR reset.
+
+        Args:
+            fg: Default foreground, or None to keep the current one.
+            bg: Default background, or None to keep the current one.
+
+        Examples:
+            >>> handler.setDefaultColors(QColor(0, 0, 0), QColor(255, 255, 255))
+        """
+        if fg is not None:
+            self.default_fg = QColor(fg)
+        if bg is not None:
+            self.default_bg = QColor(bg)
+        self.reset()
+
+    def defaultColors(self) -> tuple[QColor, QColor]:
+        """Return the current ``(foreground, background)`` defaults."""
+        return (QColor(self.default_fg), QColor(self.default_bg))
+
+    def setAnsi8Color(self, idx: int, color: QColor, bright: bool = False):
+        """Override one ANSI base color.
+
+        Args:
+            idx: Base color 0..7.
+            color: Replacement color.
+            bright: Whether it applies to the bright variant.
+        """
+        self._custom_8[(idx % 8, bool(bright))] = QColor(color)
+
+    def resetPalette(self):
+        """Drop all custom palette overrides."""
+        self._custom_8.clear()
+
+    def palette(self) -> dict:
+        """Return custom ``(index, bright) -> QColor`` overrides."""
+        return dict(self._custom_8)
+
     def __ansi8_color(self, idx: int, bright: bool = False):
+        key = (idx % 8, bool(bright))
+        if key in self._custom_8:
+            return QColor(self._custom_8[key])
         palette = [
             QColor(0, 0, 0),
             QColor(170, 0, 0),

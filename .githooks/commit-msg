@@ -1,0 +1,4 @@
+#!/bin/sh
+# Installed via `just hooks` (sets git core.hooksPath to .githooks/).
+# Rejects non-conventional commit messages before they are created.
+uv run cz check --commit-msg-file "$1"

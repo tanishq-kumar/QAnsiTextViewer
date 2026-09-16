@@ -1,37 +1,53 @@
 # QAnsiTextViewer
+
+![CI](https://github.com/tanishq-kumar/QAnsiTextViewer/actions/workflows/ci.yml/badge.svg)
+
 ANSI Text Viewer - QT Widget
 
-## Roadmap
+## Install
 
-### Core / High-Value Features (Urgent)
-- [x] **Search & Highlight**
-  - [x] Find text (Ctrl+F)
-  - [x] Highlight all matches
-  - [x] Search with regex
-  - [x] Find Next / Find Previous shortcuts
-- [x] **Line Numbers**: Show line numbers on the left (very useful for logs)
-- [x] **Auto-scroll Control**: Auto-scroll to bottom on new output (with option to freeze)
-- [ ] **Fonts & Zoom**
-  - Monospace font by default + size adjustment
-  - Zoom In/Out (Ctrl + Mouse Wheel)
-- [ ] **Word Wrap Toggle**: Option to enable/disable word wrap
-- [ ] **Custom Context Menu**: Right-click menu: Copy, Select All, Clear, Save to File, etc.
-- [x] **Clear Log**: Clear Button + Clear on Start
-- [ ] **Timestamp Prefixing**: Automatically add `[HH:MM:SS]` to each new line
-- [ ] **Log Level Highlighting**: Auto color `[ERROR]`, `[WARN]`, `[INFO]`, `[DEBUG]` differently
+```bash
+uv add qansitextviewer          # library
+# or clone + develop:
+uv sync --group dev
+```
 
-### Advanced / Nice-to-Have Features
-- [ ] **Syntax Highlighting for Specific Logs**: JSON, Python traceback, CMake output, etc.
-- [x] **Filter by Text**: Show only lines containing specific words
-- [ ] **Bookmarks**: Bookmarked Lines
-- [ ] **Export Log**: Save as `.txt`, `.html` (with colors), or `.md`
-- [ ] **Copy Modes**: Copy with/without ANSI codes
-- [ ] **Dark/Light Theme**: Auto Switch
-- [ ] **Custom Color Palette**: User can change ANSI colors
-- [ ] **Performance Optimizations**: Limit maximum lines (e.g. keep last 10,000 lines)
-- [x] **Pause/Resume**: Output pause/resume button
-- [ ] **Click-able Links**: URLs, file paths
-- [ ] **Selection Statistics**: Line count, word count when text is selected
-- [ ] **Highlight Current Line**
-- [ ] **Support for `\r` Progress Bars**: Better handling of same-line updates
-- [ ] **Save/Load Session**: Save current log content
+Requires Python `>=3.11`, PySide6 `>=6.5.0`.
+
+## Quick start
+
+```python
+from PySide6.QtWidgets import QApplication
+from ansi_text_viewer import AnsiTextViewer
+
+app = QApplication([])
+viewer = AnsiTextViewer()
+viewer.appendAnsiText("\x1b[31mred\x1b[0m plain\n")
+viewer.highlight_search("red")  # F3 / Shift+F3 navigates, Esc clears
+viewer.setTheme("dark")
+viewer.show()
+app.exec()
+```
+
+Full demo app: `just demo` (or `uv run python demo.py`).
+
+## API cheatsheet
+
+| Task               | Call                                                                                                                                                                                  |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Append / replace   | `appendAnsiText(s)`, `setAnsiText(s)` (`\r` = progress overwrite)                                                                                                                     |
+| Non-blocking burst | `appendAnsiTextAsync(s)` + `asyncAppendProgress` / `asyncAppendFinished`, `cancelAsyncAppends()`                                                                                      |
+| Search / filter    | `highlight_search(q, use_regex, match_case)`, `next_match()`, `prev_match()`, `filter_search(q, ...)`                                                                                 |
+| Limits             | `setMaximumBlocks(10000)`, `setMaxLineLength(10000)` (`0` = off)                                                                                                                      |
+| Look               | `setTheme("light"\|"dark"\|"auto")`, `setMonospaceFont()`, `setFontSize()`, `setFontFamily()`, `useSystemFont()`, `setWordWrapEnabled()`, `setCurrentLineHighlightEnabled()`          |
+| Appearance         | Theme-following defaults; `setDefaultColors(fg, bg)`, `setColorsFollowTheme(bool)`, `setAnsiPaletteColor()`, `setLogLevelColors()`, `setBookmarkColor()`, `setSearchHighlightColor()` |
+| Log helpers        | `setTimestampEnabled()`, `setLogLevelHighlighting()`, `setSyntaxHighlighting()`                                                                                                       |
+| Custom highlight   | `add_highlight_rule(rule)` with `spans(text)` (`ansi_text_viewer.highlight`)                                                                                                          |
+| Bookmarks          | `toggleBookmark()` (or gutter click), `gotoNextBookmark()`, `bookmarkedLines()`, `bookmarksChanged` signal                                                                            |
+| Copy / export      | `copySelectedPlainText()`, `copySelectedWithAnsi()`, `exportToFile(path)` (.txt/.html/.md)                                                                                            |
+| Sessions           | `saveSession("s.json")`, `loadSession("s.json")`                                                                                                                                      |
+| Shortcuts          | `Ctrl+F` → `findRequested`, `F3`/`Shift+F3`, `Esc` (app-wide)                                                                                                                         |
+
+## Dev Commands
+
+`just test` · `just demo` · `just run` · `just lint` · `just typecheck` · `just docs-build` — see `justfile`.

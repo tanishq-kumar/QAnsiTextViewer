@@ -1,10 +1,19 @@
-from PySide6.QtGui import QColor, QTextCharFormat, QTextCursor, QTextDocument
+"""Search highlighting and line filtering for the viewer."""
+
+import logging
+
 from PySide6.QtCore import QRegularExpression
+from PySide6.QtGui import QColor, QTextCharFormat, QTextCursor, QTextDocument
 from PySide6.QtWidgets import QTextEdit
+
+logger = logging.getLogger(__name__)
 
 
 class SearchHandler:
+    """Finds matches and hides non-matching blocks in the viewer."""
+
     def __init__(self, viewer):
+        """Create a handler bound to *viewer*."""
         self.viewer = viewer
         self.search_highlight_color = QColor(255, 255, 0, 100)  # Translucent yellow
         self.active_search_color = QColor(255, 165, 0, 150)  # Translucent orange
@@ -16,7 +25,17 @@ class SearchHandler:
 
     def highlight_search(
         self, query: str, use_regex: bool = False, match_case: bool = False
-    ):
+    ) -> int:
+        """Highlight every match and jump to the first one.
+
+        Args:
+            query: Text or pattern (empty clears the highlight).
+            use_regex: Treat *query* as a regular expression.
+            match_case: Case-sensitive matching.
+
+        Returns:
+            The number of matches found.
+        """
         if not query:
             self.clear_search_highlight()
             return 0
@@ -32,6 +51,13 @@ class SearchHandler:
         while True:
             if use_regex:
                 regex = QRegularExpression(query)
+                if not regex.isValid():
+                    logger.debug(
+                        "highlight_search: invalid regex %r: %s",
+                        query,
+                        regex.errorString(),
+                    )
+                    break
                 if match_case:
                     regex.setPatternOptions(
                         QRegularExpression.PatternOption.NoPatternOption
@@ -82,7 +108,12 @@ class SearchHandler:
             self.viewer.setTextCursor(active_cursor)
             self.viewer.ensureCursorVisible()
 
-    def next_match(self):
+    def next_match(self) -> int:
+        """Jump to the next match, wrapping around.
+
+        Returns:
+            The 1-based index of the now-active match.
+        """
         if not self.search_selections:
             return 0
         self.current_match_index = (self.current_match_index + 1) % len(
@@ -91,7 +122,12 @@ class SearchHandler:
         self.__update_search_highlights()
         return self.current_match_index + 1
 
-    def prev_match(self):
+    def prev_match(self) -> int:
+        """Jump to the previous match, wrapping around.
+
+        Returns:
+            The 1-based index of the now-active match.
+        """
         if not self.search_selections:
             return 0
         if self.current_match_index <= 0:
@@ -102,27 +138,46 @@ class SearchHandler:
         return self.current_match_index + 1
 
     def clear_search_highlight(self):
+        """Clear all search highlights and selection state."""
         self.search_selections = []
         self.current_match_index = -1
         self.viewer.setExtraSelections([])
 
-    def setSearchHighlightColor(self, color: QColor, active_color: QColor = None):
+    def setSearchHighlightColor(
+        self, color: QColor, active_color: QColor | None = None
+    ):
+        """Set match backgrounds.
+
+        Args:
+            color: Background for inactive matches.
+            active_color: Background for the active match, or None to keep it.
+        """
         self.search_highlight_color = color
         if active_color:
             self.active_search_color = active_color
 
-    def apply_filter(self, query: str, use_regex: bool = False, match_case: bool = False):
+    def apply_filter(
+        self, query: str, use_regex: bool = False, match_case: bool = False
+    ):
+        """Hide blocks that do not match *query*.
+
+        Args:
+            query: Text or pattern (empty restores every block).
+            use_regex: Treat *query* as a regular expression.
+            match_case: Case-sensitive matching.
+        """
         self.filter_query = query
         self.filter_use_regex = use_regex
         self.filter_match_case = match_case
-        
+
         doc = self.viewer.document()
         self.filter_blocks(doc.firstBlock())
-        
+
         doc.documentLayout().requestUpdate()
         self.viewer.viewport().update()
 
     def filter_blocks(self, start_block):
+        """Apply the current filter from *start_block* to the document end."""
         if not self.filter_query:
             while start_block.isValid():
                 start_block.setVisible(True)
@@ -130,13 +185,21 @@ class SearchHandler:
             return
 
         import re
+
         pattern = None
         query = self.filter_query
         if self.filter_use_regex:
+            if len(query) > 500:
+                logger.debug("filter: truncated %d-char regex", len(query))
+                query = query[:500]
+                self.filter_query = query
             flags = 0 if self.filter_match_case else re.IGNORECASE
             try:
                 pattern = re.compile(query, flags)
-            except re.error:
+            except re.error as exc:
+                logger.debug(
+                    "filter: invalid regex %r (%s), literal fallback", query, exc
+                )
                 pattern = re.compile(re.escape(query), flags)
         else:
             if not self.filter_match_case:
@@ -145,14 +208,19 @@ class SearchHandler:
         while start_block.isValid():
             text = start_block.text()
             if self.filter_use_regex:
-                match = bool(pattern.search(text))
+                match = pattern is not None and bool(pattern.search(text))
             else:
                 match = query in (text if self.filter_match_case else text.lower())
-            
+
             start_block.setVisible(match)
             start_block = start_block.next()
 
     def update_new_blocks(self, start_block_number: int):
+        """Filter blocks appended after *start_block_number*.
+
+        Args:
+            start_block_number: First block that has not been filtered yet.
+        """
         if not self.filter_query:
             return
         doc = self.viewer.document()

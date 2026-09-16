@@ -1,1 +1,1 @@
-from ansi_text_viewer.ansi_text_viewer import AnsiTextViewer
+from ansi_text_viewer.ansi_text_viewer import AnsiTextViewer as AnsiTextViewer
