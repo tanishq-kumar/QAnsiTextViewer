@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  QT_QPA_PLATFORM: offscreen
+  UV_PYTHON: "3.14"
+
+jobs:
+  test:
+    name: test (py${{ matrix.python-version }})
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.14"]
+    env:
+      UV_PYTHON: ${{ matrix.python-version }}
+    steps:
+      # Pinned to actions/checkout v7.0.1.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      # Pinned to astral-sh/setup-uv v10.1.0.
+      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4
+      - name: Install Qt runtime libs
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libgl1 libegl1 libxkbcommon0 libdbus-1-3 libfontconfig1
+      - name: Sync dependencies
+        run: uv sync --group dev
+      - name: Run tests
+        run: uv run --no-sync pytest -p no:cacheprovider -q
+
+  lint:
+    name: lint
+    runs-on: ubuntu-24.04
+    steps:
+      # Pinned to actions/checkout v7.0.1.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      # Pinned to astral-sh/setup-uv v10.1.0.
+      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4
+      - name: Check lockfile is in sync
+        run: uv lock --check
+      - name: Ruff check
+        run: uvx ruff@0.16.7 check ansi_text_viewer demo.py main.py tests
+      - name: Ruff format check
+        run: uvx ruff@0.16.7 format --check ansi_text_viewer demo.py main.py tests
+
+  typecheck:
+    name: typecheck
+    runs-on: ubuntu-24.04
+    steps:
+      # Pinned to actions/checkout v7.0.1.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      # Pinned to astral-sh/setup-uv v10.1.0.
+      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4
+      - name: Sync dependencies
+        run: uv sync --group dev
+      - name: mypy
+        run: uv run --no-sync mypy ansi_text_viewer
+      - name: ty
+        run: uv run --no-sync ty check ansi_text_viewer
+
+  docs:
+    name: docs
+    runs-on: ubuntu-24.04
+    steps:
+      # Pinned to actions/checkout v7.0.1.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      # Pinned to astral-sh/setup-uv v10.1.0.
+      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4
+      - name: Sync dependencies
+        run: uv sync --group dev
+      - name: Build docs
+        run: uv run --no-sync mkdocs build

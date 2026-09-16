@@ -1,0 +1,82 @@
+site_name: QAnsiTextViewer
+site_description: Qt widget for ANSI-encoded log text.
+site_author: Tanishq Kumar
+repo_url: https://github.com/tanishq-kumar/QAnsiTextViewer
+repo_name: GitHub
+
+theme:
+  name: material
+  favicon: material/library
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+  - pymdownx.keys
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: google
+            docstring_section_style: table
+            show_source: true
+            show_symbol_type_heading: true
+            separate_signature: true
+            merge_init_into_class: true
+            members_order: source
+            inherited_members: false
+
+nav:
+  - Home: index.md
+  - Gallery: gallery.md
+  - Troubleshooting: troubleshooting.md
+  - Changelog: changelog.md
+  - API:
+      - Viewer: api/viewer.md
+      - Highlighting: api/highlighting.md
+      - Internals: api/internals.md
+
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
