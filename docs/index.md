@@ -30,28 +30,25 @@ bookmark lines, and save sessions, all behind a typed one-widget API.
 
 ## Install
 
-!!! note "Not on PyPI yet"
-    Install straight from GitHub, or clone and build the wheel locally —
-    `uv add qansitextviewer` starts working after the first release.
+[![PyPI](https://img.shields.io/pypi/v/qansitextviewer)](https://pypi.org/project/qansitextviewer/)
 
 === "uv"
 
     ```bash
-    uv add git+https://github.com/tanishq-kumar/QAnsiTextViewer
+    uv add qansitextviewer
     ```
 
 === "pip"
 
     ```bash
-    pip install "git+https://github.com/tanishq-kumar/QAnsiTextViewer"
+    pip install qansitextviewer
     ```
 
-=== "local build"
+=== "github / local"
 
     ```bash
-    git clone https://github.com/tanishq-kumar/QAnsiTextViewer
-    cd QAnsiTextViewer
-    uv build && uv pip install dist/qansitextviewer-*.whl
+    uv add git+https://github.com/tanishq-kumar/QAnsiTextViewer
+    # or: uv build && uv pip install dist/qansitextviewer-*.whl
     ```
 
 Requires Python `>=3.11` and PySide6 `>=6.5.0`.

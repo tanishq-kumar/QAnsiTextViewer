@@ -1,16 +1,15 @@
 # QAnsiTextViewer
 
-![CI](https://github.com/tanishq-kumar/QAnsiTextViewer/actions/workflows/ci.yml/badge.svg) [![Docs](https://img.shields.io/badge/docs-live-blue)](https://tanishq-kumar.github.io/QAnsiTextViewer/)
+![CI](https://github.com/tanishq-kumar/QAnsiTextViewer/actions/workflows/ci.yml/badge.svg) [![Docs](https://img.shields.io/badge/docs-live-blue)](https://tanishq-kumar.github.io/QAnsiTextViewer/) [![PyPI](https://img.shields.io/pypi/v/qansitextviewer)](https://pypi.org/project/qansitextviewer/)
 
 ANSI Text Viewer - QT Widget
 
 ## Install
 
-> Not on PyPI yet — install from GitHub or build locally:
-
 ```bash
-uv add git+https://github.com/tanishq-kumar/QAnsiTextViewer  # from GitHub
-# or build locally:
+uv add qansitextviewer
+# or from GitHub / local build:
+uv add git+https://github.com/tanishq-kumar/QAnsiTextViewer
 uv build && uv pip install dist/qansitextviewer-*.whl
 # or clone + develop:
 uv sync --group dev
