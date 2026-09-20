@@ -20,6 +20,8 @@ jobs:
   static:
     name: static
     runs-on: ubuntu-24.04
+    env:
+      MKDOCS_SOCIAL_CARDS: "true"
     steps:
       # Pinned to actions/checkout v7.0.1.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -27,6 +29,10 @@ jobs:
       - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4
         with:
           enable-cache: true
+      - name: Install Cairo for social cards
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y -o Dir::Cache::Archives="$HOME/apt-cache" libcairo2
       - name: Sync dependencies
         run: uv sync --frozen --group dev
       - name: Check lockfile is in sync

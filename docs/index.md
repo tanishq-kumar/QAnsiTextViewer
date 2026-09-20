@@ -106,16 +106,16 @@ That snippet renders this — red ANSI text with the search match lit up:
 
 ## FAQ
 
-**Does it work with PyQt?**
-PySide6 is the tested dependency, but the widget only uses the shared Qt
-`QWidget` API, so PyQt6/PyQt5 work with no code changes. Report gaps as bugs.
+??? question "Does it work with PyQt?"
+    PySide6 is the tested dependency, but the widget only uses the shared Qt
+    `QWidget` API, so PyQt6/PyQt5 work with no code changes. Report gaps as bugs.
 
-**Can I use it outside Python?**
-No — it is a Python class (via Qt for Python) and cannot be imported from
-C++, Rust, or other languages. The ANSI parser module is deliberately kept
-free of widget imports so a future port only re-implements that core.
+??? question "Can I use it outside Python?"
+    No — it is a Python class (via Qt for Python) and cannot be imported from
+    C++, Rust, or other languages. The ANSI parser module is deliberately kept
+    free of widget imports so a future port only re-implements that core.
 
-**How large can logs get?**
-`setMaximumBlocks()` caps memory (oldest blocks are discarded) and
-`setMaxLineLength()` truncates hostile lines. The performance notes in
-[Internals](api/internals.md) cover the 100k-line burst path.
+??? question "How large can logs get?"
+    `setMaximumBlocks()` caps memory (oldest blocks are discarded) and
+    `setMaxLineLength()` truncates hostile lines. The performance notes in
+    [Internals](api/internals.md) cover the 100k-line burst path.

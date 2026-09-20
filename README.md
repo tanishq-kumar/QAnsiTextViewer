@@ -61,15 +61,24 @@ Full demo app: `just demo` (or `uv run python demo.py`).
 
 ## FAQ
 
-**PySide6 or PyQt?**
+<details>
+<summary><strong>PySide6 or PyQt?</strong></summary>
+
 PySide6 is the tested dependency. PyQt exposes the same `QWidget` API,
 so the viewer works there too — report any gap as a bug.
+</details>
 
-**Why not `QPlainTextEdit` + manual parsing?**
+<details>
+<summary><strong>Why not <code>QPlainTextEdit</code> + manual parsing?</strong></summary>
+
 That's exactly the boilerplate this widget removes: SGR/256-color/truecolor
 parsing, `\r` progress lines, search, bookmarks, themes, and session save/load
 in one typed widget.
+</details>
 
-**How is this different from a terminal emulator?**
+<details>
+<summary><strong>How is this different from a terminal emulator?</strong></summary>
+
 Terminal emulators run interactive shells. This is a read-oriented log viewer:
 append-only text, regex search/filter, bookmarks, and export to `.txt`/`.html`/`.md`.
+</details>
