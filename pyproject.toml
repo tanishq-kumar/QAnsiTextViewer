@@ -1,7 +1,7 @@
 [project]
 name = "qansitextviewer"
 version = "0.1.1"
-description = "A Qt-based viewer for ANSI-encoded text files."
+description = "A Qt log-viewer widget for Python (PySide6/PyQt) that renders ANSI escape codes with search, bookmarks, themes, and sessions."
 readme = "README.md"
 license = "GPL-2.0-only"
 authors = [
