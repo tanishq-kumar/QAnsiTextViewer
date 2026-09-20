@@ -1,5 +1,5 @@
 site_name: QAnsiTextViewer
-site_description: QAnsiTextViewer is a PySide6/PyQt log-viewer widget for Python that renders ANSI escape codes and colored terminal output, with search, bookmarks, themes, and sessions.
+site_description: QAnsiTextViewer is a PySide6/PyQt log-viewer widget for Python that renders ANSI escape codes and colored terminal output.
 site_author: Tanishq Kumar
 site_url: https://tanishq-kumar.github.io/QAnsiTextViewer/
 repo_url: https://github.com/tanishq-kumar/QAnsiTextViewer

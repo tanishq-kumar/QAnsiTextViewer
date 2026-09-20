@@ -1,6 +1,9 @@
 ---
 hide:
   - navigation
+social:
+  cards_layout_options:
+    title: ANSI log viewer for Qt for Python
 ---
 
 # QAnsiTextViewer
