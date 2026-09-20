@@ -31,6 +31,7 @@ jobs:
           enable-cache: true
       - name: Install Cairo for social cards
         run: |
+          mkdir -p "$HOME/apt-cache/partial"
           sudo apt-get update
           sudo apt-get install -y -o Dir::Cache::Archives="$HOME/apt-cache" libcairo2
       - name: Sync dependencies
@@ -77,6 +78,7 @@ jobs:
       - name: Install Qt runtime libs
         if: runner.os == 'Linux'
         run: |
+          mkdir -p "$HOME/apt-cache/partial"
           sudo apt-get update
           sudo apt-get install -y -o Dir::Cache::Archives="$HOME/apt-cache" \
             libgl1 libegl1 libxkbcommon0 libdbus-1-3 libfontconfig1
