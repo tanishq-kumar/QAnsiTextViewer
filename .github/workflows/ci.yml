@@ -38,6 +38,8 @@ jobs:
         run: uv sync --frozen --group dev
       - name: Check lockfile is in sync
         run: uv lock --check
+      - name: Audit dependencies
+        run: uv run --no-sync pip-audit
       - name: Ruff check
         run: uvx ruff@0.16.7 check ansi_text_viewer demo.py main.py tests
       - name: Ruff format check
