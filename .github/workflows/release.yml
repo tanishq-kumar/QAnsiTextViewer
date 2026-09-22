@@ -19,6 +19,8 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: write
+      id-token: write
+      attestations: write
     env:
       TAG: ${{ inputs.tag || github.ref_name }}
     steps:
@@ -30,6 +32,10 @@ jobs:
         run: uv build
       - name: Check distributions
         run: uv run --with twine twine check dist/*
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be # v2.4.0
+        with:
+          subject-path: "dist/*"
       - name: Extract release notes
         run: |
           python - <<'EOF'
