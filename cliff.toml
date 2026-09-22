@@ -1,0 +1,21 @@
+# git-cliff 2.x — release notes from conventional commits.
+#
+# Preview upcoming entries:  just changelog-cliff   (or: git cliff --unreleased)
+# CHANGELOG.md stays hand-curated; paste the generated entries into it.
+# Requires the git-cliff binary:  winget install -e --id orhun.git-cliff
+[git]
+# Parse commits per conventionalcommits.org; drop anything else.
+conventional_commits = true
+filter_unconventional = true
+# Groups use Keep-a-Changelog names; the <!-- N --> prefix only fixes order.
+commit_parsers = [
+    { message = "^feat", group = "<!-- 0 -->Added" },
+    { message = "^fix", group = "<!-- 1 -->Fixed" },
+    { message = "^perf", group = "<!-- 2 -->Changed" },
+    { message = "^refactor", group = "<!-- 2 -->Changed" },
+    { message = "^style", group = "<!-- 2 -->Changed" },
+    { message = "^docs", group = "<!-- 3 -->Documentation" },
+    { message = "^test", group = "<!-- 4 -->Testing" },
+    { message = "^revert", group = "<!-- 5 -->Revert" },
+    { message = "^chore|^ci", group = "<!-- 6 -->Miscellaneous Tasks" },
+]

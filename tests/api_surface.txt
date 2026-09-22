@@ -1,0 +1,98 @@
+addBookmark(self, blockNumber: int)
+add_highlight_rule(self, rule: ansi_text_viewer.highlight.HighlightRule) -> None
+ansiPalette(self) -> dict
+appendAnsiText(self, text: str)
+appendAnsiTextAsync(self, text: str, chunk_lines: int = 500) -> None
+asyncAppendFinished: Signal
+asyncAppendProgress: Signal
+beginNewStream(self)
+bookmarkColor(self) -> PySide6.QtGui.QColor
+bookmarkedLines(self) -> list[int]
+bookmarkedPreviews(self) -> list[tuple[int, str]]
+bookmarksChanged: Signal
+cancelAsyncAppends(self) -> int
+clear(self)
+clearBookmarks(self)
+clear_search_highlight(self)
+colorsFollowTheme(self) -> bool
+contextMenuEvent(self, event)
+copySelectedPlainText(self) -> str
+copySelectedWithAnsi(self) -> str
+currentLineColor(self) -> PySide6.QtGui.QColor
+defaultColors(self) -> tuple[PySide6.QtGui.QColor, PySide6.QtGui.QColor]
+exportToFile(self, path: str) -> str
+filter_search(self, query: str, use_regex: bool = False, match_case: bool = False)
+findRequested: Signal
+gotoNextBookmark(self) -> int
+gotoPrevBookmark(self) -> int
+hasPendingAppends(self) -> bool
+highlight_rules(self) -> list[ansi_text_viewer.highlight.HighlightRule]
+highlight_search(self, query: str, use_regex: bool = False, match_case: bool = False) -> int
+insertAnsiText(self, text: str)
+isAutoScroll(self) -> bool
+isBookmarked(self, blockNumber: int) -> bool
+isClearOnStart(self) -> bool
+isCurrentLineHighlightEnabled(self) -> bool
+isLineNumbersVisible(self) -> bool
+isLinksEnabled(self) -> bool
+isLogLevelHighlighting(self) -> bool
+isSyntaxHighlighting(self) -> bool
+isTimestampEnabled(self) -> bool
+isWordWrapEnabled(self) -> bool
+lineNumberAreaPaintEvent(self, event)
+lineNumberAreaWidth(self)
+loadSession(self, path: str) -> str
+logLevelColors(self) -> dict
+maxLineLength(self) -> int
+maximumBlocks(self) -> int
+mouseMoveEvent(self, event)
+mousePressEvent(self, event)
+nextRequested: Signal
+next_match(self) -> int
+pause_stream(self)
+prevRequested: Signal
+prev_match(self) -> int
+removeBookmark(self, blockNumber: int)
+remove_highlight_rule(self, rule: ansi_text_viewer.highlight.HighlightRule) -> None
+resetAnsiPalette(self)
+resetZoom(self)
+resizeEvent(self, event)
+resume_stream(self)
+saveSession(self, path: str) -> str
+searchExtraSelections(self)
+searchHighlightColors(self) -> tuple[PySide6.QtGui.QColor, PySide6.QtGui.QColor]
+selectedPlainText(self) -> str
+selectedTextWithAnsi(self) -> str
+selectionStats(self) -> dict
+setAnsiPaletteColor(self, idx: int, color: PySide6.QtGui.QColor, bright: bool = False)
+setAnsiText(self, text: str)
+setAutoScroll(self, enabled: bool)
+setBookmarkColor(self, color: PySide6.QtGui.QColor) -> None
+setClearOnStart(self, enabled: bool)
+setColorsFollowTheme(self, enabled: bool) -> None
+setCurrentLineHighlightEnabled(self, enabled: bool, color: PySide6.QtGui.QColor | None = None)
+setDefaultColors(self, fg: PySide6.QtGui.QColor, bg: PySide6.QtGui.QColor) -> None
+setExtraSelections(self, selections)
+setFontFamily(self, family: str) -> None
+setFontSize(self, pointSize: int) -> None
+setLineNumbersVisible(self, visible: bool)
+setLinksEnabled(self, enabled: bool)
+setLogLevelColors(self, colors: dict) -> None
+setLogLevelHighlighting(self, enabled: bool)
+setMaxLineLength(self, n: int)
+setMaximumBlocks(self, n: int)
+setMonospaceFont(self, family: str | None = None, pointSize: int = 10)
+setSearchHighlightColor(self, color: PySide6.QtGui.QColor, active_color: PySide6.QtGui.QColor | None = None)
+setSyntaxHighlighting(self, enabled: bool)
+setTheme(self, mode: str = 'light')
+setTimestampEnabled(self, enabled: bool, fmt: str = '[%H:%M:%S]')
+setWordWrapEnabled(self, enabled: bool)
+staticMetaObject: QMetaObject
+theme(self) -> str
+themeRequested(self) -> str
+toggleBookmark(self, blockNumber: int | None = None) -> bool
+toggleBookmarkAtY(self, y: int) -> int
+updateLineNumberArea(self, rect: PySide6.QtCore.QRect, dy: int)
+updateLineNumberAreaWidth(self, _)
+useSystemFont(self) -> None
+wheelEvent(self, event)

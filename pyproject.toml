@@ -1,7 +1,7 @@
 [project]
 name = "qansitextviewer"
-version = "0.1.0"
-description = "A Qt-based viewer for ANSI-encoded text files."
+version = "0.1.1"
+description = "A Qt log-viewer widget for Python (PySide6/PyQt) that renders ANSI escape codes with search, bookmarks, themes, and sessions."
 readme = "README.md"
 license = "GPL-2.0-only"
 authors = [
@@ -34,12 +34,11 @@ Documentation = "https://tanishq-kumar.github.io/QAnsiTextViewer/"
 Repository = "https://github.com/tanishq-kumar/QAnsiTextViewer"
 Issues = "https://github.com/tanishq-kumar/QAnsiTextViewer/issues"
 Changelog = "https://github.com/tanishq-kumar/QAnsiTextViewer/blob/main/CHANGELOG.md"
-# Socials: uncomment and fill in a handle to publish it, e.g.
-# X = "https://x.com/<handle>"
+X = "https://x.com/tanishqlife"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.1.0"
+version = "0.1.1"
 version_files = [
   "pyproject.toml:version",
   "pyproject.toml:tool.commitizen.version",
@@ -57,11 +56,14 @@ packages = ["ansi_text_viewer"]
 
 [dependency-groups]
 dev = [
+    "cairosvg>=2.9.1",
     "commitizen>=4.18.1",
     "mkdocs>=1.6.1,<2",
     "mkdocs-material>=9.7.7",
     "mkdocstrings[python]>=1.0.6",
     "mypy>=2.3.1",
+    "pillow>=12.3.0",
+    "pip-audit>=2.10.1",
     "pytest>=9.1.1",
     "pytest-cov>=7.1.0",
     "pytest-qt>=4.5.0",
@@ -71,7 +73,7 @@ dev = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "--cov=ansi_text_viewer --cov-report=term-missing -v"
+addopts = "--cov=ansi_text_viewer --cov-report=term-missing --cov-fail-under=85 -v"
 
 [tool.ruff]
 target-version = "py311"
