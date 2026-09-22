@@ -23,10 +23,8 @@ jobs:
     env:
       MKDOCS_SOCIAL_CARDS: "true"
     steps:
-      # Pinned to actions/checkout v7.0.1.
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-      # Pinned to astral-sh/setup-uv v10.1.0.
-      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
         with:
           enable-cache: true
       - name: Install Cairo for social cards
@@ -63,16 +61,13 @@ jobs:
     env:
       UV_PYTHON: ${{ matrix.python-version }}
     steps:
-      # Pinned to actions/checkout v7.0.1.
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-      # Pinned to astral-sh/setup-uv v10.1.0.
-      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
         with:
           enable-cache: true
       - name: Cache Qt runtime libs
         if: runner.os == 'Linux'
-        # Pinned to actions/cache v5.1.0.
-        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
         with:
           path: ~/apt-cache
           key: apt-qt-${{ hashFiles('.github/workflows/ci.yml') }}

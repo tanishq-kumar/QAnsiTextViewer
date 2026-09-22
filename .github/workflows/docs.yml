@@ -15,10 +15,8 @@ jobs:
     env:
       MKDOCS_SOCIAL_CARDS: "true"
     steps:
-      # Pinned to actions/checkout v7.0.1.
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-      # Pinned to astral-sh/setup-uv v10.1.0.
-      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
       - name: Install Cairo for social cards
         run: |
           sudo apt-get update
@@ -27,8 +25,7 @@ jobs:
         run: uv sync --group dev
       - name: Build docs
         run: uv run --no-sync mkdocs build --site-dir site
-      # Pinned to actions/upload-pages-artifact v5.0.0.
-      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: site
 
@@ -46,6 +43,5 @@ jobs:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
-      # Pinned to actions/deploy-pages v5.0.1.
       - id: deploy
-        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
