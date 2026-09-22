@@ -3,6 +3,23 @@
 All notable changes to this project are documented here, newest first.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.1.2] - 2026-09-22
+
+### Added
+- Full CI matrix: Ubuntu/Windows/macOS × Python 3.11–3.14 behind a `static`
+  gate (ruff, mypy, ty, pip-audit, strict docs build); CI runs on `main`
+  pushes and pull requests only.
+- TestPyPI prerelease lane (`v*rc*` tags) with owner-approved PyPI publishing
+  via a `pypi` environment.
+- API surface snapshot test, 85% coverage floor, dependency auditing.
+- Social preview cards, SEO pass (canonical URLs, sitemap, FAQ accordions).
+- Supply-chain hardening: SLSA build attestations, CodeQL, OpenSSF Scorecard,
+  Dependabot over SHA-pinned actions, slim 66 KB sdist.
+- Community files: issue forms, CONTRIBUTING, SECURITY policy.
+
+### Changed
+- PyPI-first install instructions and badges now that the package is published.
+
 ## [0.1.1] - 2026-09-17
 
 ### Changed
