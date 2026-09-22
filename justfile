@@ -48,4 +48,4 @@ changelog-cliff:
     git-cliff --unreleased
 
 bump *args="--dry-run":
-    uv run cz bump {{args}}
+    uv run cz bump {{args}} && uv lock

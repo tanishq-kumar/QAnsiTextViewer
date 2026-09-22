@@ -1,6 +1,6 @@
 [project]
 name = "qansitextviewer"
-version = "0.1.1"
+version = "0.1.2"
 description = "A Qt log-viewer widget for Python (PySide6/PyQt) that renders ANSI escape codes with search, bookmarks, themes, and sessions."
 readme = "README.md"
 license = "GPL-2.0-only"
@@ -38,7 +38,7 @@ X = "https://x.com/tanishqlife"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.1.1"
+version = "0.1.2"
 version_files = [
   "pyproject.toml:version",
   "pyproject.toml:tool.commitizen.version",
