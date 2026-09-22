@@ -65,6 +65,7 @@ exclude = [
 dev = [
     "cairosvg>=2.9.1",
     "commitizen>=4.18.1",
+    "hypothesis>=6.168.0",
     "mkdocs>=1.6.1,<2",
     "mkdocs-material>=9.7.7",
     "mkdocstrings[python]>=1.0.6",

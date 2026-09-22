@@ -1,0 +1,19 @@
+name: ClusterFuzzLite batch fuzzing
+
+on:
+  schedule:
+    - cron: "0 8 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  batch:
+    name: batch
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: google/clusterfuzzlite/actions/run@884713a6c30a92e5e8544c39945cd7cb630abcd1 # v1
+        with:
+          mode: "code-change"

@@ -12,7 +12,8 @@ Only the latest PyPI release receives security fixes.
 ## Reporting a vulnerability
 
 Use GitHub's **private vulnerability reporting**
-(repo → Security → Report a vulnerability). Include:
+([Security → Report a vulnerability](https://github.com/tanishq-kumar/QAnsiTextViewer/security/advisories/new)).
+Include:
 
 - package version and environment (OS, Python, Qt binding),
 - a minimal reproduction (log sample or snippet),
@@ -25,6 +26,6 @@ unless anonymity is requested.
 ## Scope notes
 
 Log content is treated as untrusted input by design (see the
-"Untrusted logs" section in the docs). Resource-exhaustion via huge lines
+["Untrusted logs" section in the docs](https://tanishq-kumar.github.io/QAnsiTextViewer/)). Resource-exhaustion via huge lines
 or cursor jumps is rate-limited by `setMaximumBlocks()` /
 `setMaxLineLength()` — bypasses of those limits are in scope.
