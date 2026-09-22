@@ -1,0 +1,33 @@
+name: Bug report
+description: Something is broken or behaves unexpectedly
+labels: [bug]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Package version
+      description: e.g. qansitextviewer 0.1.1 (from `pip show qansitextviewer`)
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      description: OS, Python version, and Qt binding (PySide6/PyQt + version)
+      placeholder: Windows 11, Python 3.12, PySide6 6.9.0
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproduction
+      description: Smallest snippet that shows the bug (ideally <20 lines)
+      render: python
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected vs actual behavior
+    validations:
+      required: true

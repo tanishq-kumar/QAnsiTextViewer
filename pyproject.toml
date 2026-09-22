@@ -54,6 +54,13 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["ansi_text_viewer"]
 
+[tool.hatch.build.targets.sdist]
+exclude = [
+  "docs/assets",
+  "site",
+  "uv.lock",
+]
+
 [dependency-groups]
 dev = [
     "cairosvg>=2.9.1",
