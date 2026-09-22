@@ -16,6 +16,12 @@ run:
 lint:
     uv run ruff check ansi_text_viewer tests demo.py main.py
 
+audit:
+    uv run pip-audit
+
+api-snapshot:
+    uv run python tests/test_api_surface.py
+
 typecheck:
     uv run mypy ansi_text_viewer
     uv run ty check ansi_text_viewer

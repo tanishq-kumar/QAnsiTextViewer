@@ -63,6 +63,7 @@ dev = [
     "mkdocstrings[python]>=1.0.6",
     "mypy>=2.3.1",
     "pillow>=12.3.0",
+    "pip-audit>=2.10.1",
     "pytest>=9.1.1",
     "pytest-cov>=7.1.0",
     "pytest-qt>=4.5.0",
@@ -72,7 +73,7 @@ dev = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "--cov=ansi_text_viewer --cov-report=term-missing -v"
+addopts = "--cov=ansi_text_viewer --cov-report=term-missing --cov-fail-under=85 -v"
 
 [tool.ruff]
 target-version = "py311"
