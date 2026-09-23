@@ -21,7 +21,7 @@ from PySide6.QtGui import (
 )
 from PySide6.QtWidgets import QApplication, QPlainTextEdit, QTextEdit, QWidget
 
-from ansi_text_viewer.ansi_escape_handler import AnsiEscapeHandler
+from ansi_text_viewer.ansi_escape_handler import AnsiEscapeHandler, TextStyle
 from ansi_text_viewer.highlight import (
     CMakeRule,
     FileRule,
@@ -49,6 +49,21 @@ _FIXED_FONT = getattr(QFontDatabase, "FixedFont")
 
 _TRUE_STRINGS = frozenset({"1", "true", "yes", "y", "on"})
 _FALSE_STRINGS = frozenset({"0", "false", "no", "n", "off", ""})
+
+
+def _style_to_format(style: TextStyle) -> QTextCharFormat:
+    fmt = QTextCharFormat()
+    fmt.setForeground(QColor(*style.fg))
+    fmt.setBackground(QColor(*style.bg))
+    if style.bold:
+        fmt.setFontWeight(QFont.Weight.Bold)
+    if style.italic:
+        fmt.setFontItalic(True)
+    if style.underline:
+        fmt.setFontUnderline(True)
+    if style.strikethrough:
+        fmt.setFontStrikeOut(True)
+    return fmt
 
 
 def _to_bool(value: object) -> bool:
@@ -729,7 +744,9 @@ class AnsiTextViewer(QPlainTextEdit):
             params.append(4)
         if fmt.fontStrikeOut():
             params.append(9)
-        default_fg, default_bg = self.__ansi_escape_handler.defaultColors()
+        default_fg, default_bg = (
+            QColor(*rgb) for rgb in self.__ansi_escape_handler.defaultColors()
+        )
         fg = fmt.foreground().color()
         bg = fmt.background().color()
         if fg != default_fg:
@@ -1044,12 +1061,10 @@ class AnsiTextViewer(QPlainTextEdit):
         if self.__colors_follow_theme:
             if mode == "dark":
                 self.__ansi_escape_handler.setDefaultColors(
-                    QColor(212, 212, 212), QColor(30, 30, 30)
+                    (212, 212, 212), (30, 30, 30)
                 )
             else:
-                self.__ansi_escape_handler.setDefaultColors(
-                    QColor(0, 0, 0), QColor(255, 255, 255)
-                )
+                self.__ansi_escape_handler.setDefaultColors((0, 0, 0), (255, 255, 255))
         self.lineNumberArea.update()
 
     def setAnsiPaletteColor(self, idx: int, color: QColor, bright: bool = False):
@@ -1064,7 +1079,9 @@ class AnsiTextViewer(QPlainTextEdit):
         Examples:
             >>> viewer.setAnsiPaletteColor(1, QColor(255, 0, 0))
         """
-        self.__ansi_escape_handler.setAnsi8Color(idx, color, bright)
+        self.__ansi_escape_handler.setAnsi8Color(
+            idx, (color.red(), color.green(), color.blue()), bright
+        )
 
     def resetAnsiPalette(self):
         """Restore the built-in ANSI palette."""
@@ -1072,7 +1089,10 @@ class AnsiTextViewer(QPlainTextEdit):
 
     def ansiPalette(self) -> dict:
         """Return custom ``(index, bright) -> QColor`` overrides."""
-        return self.__ansi_escape_handler.palette()
+        return {
+            key: QColor(*rgb)
+            for key, rgb in self.__ansi_escape_handler.palette().items()
+        }
 
     def setDefaultColors(self, fg: QColor, bg: QColor) -> None:
         """Fix the SGR-reset text colors instead of following the theme.
@@ -1084,12 +1104,15 @@ class AnsiTextViewer(QPlainTextEdit):
         Examples:
             >>> viewer.setDefaultColors(QColor(0, 0, 0), QColor(255, 255, 255))
         """
-        self.__ansi_escape_handler.setDefaultColors(QColor(fg), QColor(bg))
+        self.__ansi_escape_handler.setDefaultColors(
+            (fg.red(), fg.green(), fg.blue()), (bg.red(), bg.green(), bg.blue())
+        )
         self.__colors_follow_theme = False
 
     def defaultColors(self) -> tuple[QColor, QColor]:
         """Return the current ``(foreground, background)`` defaults."""
-        return self.__ansi_escape_handler.defaultColors()
+        fg, bg = self.__ansi_escape_handler.defaultColors()
+        return (QColor(*fg), QColor(*bg))
 
     def setColorsFollowTheme(self, enabled: bool) -> None:
         """Follow the theme for default text colors.
@@ -1422,7 +1445,7 @@ class AnsiTextViewer(QPlainTextEdit):
         for action in actions:
             cmd = action[0]
             if cmd == "text":
-                cursor.insertText(action[1], action[2])
+                cursor.insertText(action[1], _style_to_format(action[2]))
             elif cmd == "cursor_up":
                 for _ in range(_clamp(action[1], 0, 10000)):
                     cursor.movePosition(cursor.MoveOperation.Up)

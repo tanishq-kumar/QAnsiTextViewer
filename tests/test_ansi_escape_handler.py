@@ -17,45 +17,39 @@ def test_bold_and_reset():
     actions = h.parse("\x1b[1mBold\x1b[0mPlain")
     assert actions[0][0] == "text"
     assert actions[0][1] == "Bold"
-    assert actions[0][2].fontWeight() == 76 or actions[0][2].fontWeight() > 50
+    assert actions[0][2].bold is True
     assert actions[1][1] == "Plain"
 
 
 def test_fg_standard_color():
     h = AnsiEscapeHandler()
     actions = h.parse("\x1b[31mred")
-    fg = actions[0][2].foreground().color()
-    assert (fg.red(), fg.green(), fg.blue()) == (170, 0, 0)
+    assert actions[0][2].fg == (170, 0, 0)
 
 
 def test_bg_standard_color():
     h = AnsiEscapeHandler()
     actions = h.parse("\x1b[42mgreen-bg")
-    bg = actions[0][2].background().color()
-    assert (bg.red(), bg.green(), bg.blue()) == (0, 170, 0)
+    assert actions[0][2].bg == (0, 170, 0)
 
 
 def test_bright_fg():
     h = AnsiEscapeHandler()
     actions = h.parse("\x1b[91mbright")
-    fg = actions[0][2].foreground().color()
     # bright red = 170+85, 0+85, 0+85
-    assert fg.red() == 255
-    assert fg.green() == 85
+    assert actions[0][2].fg == (255, 85, 85)
 
 
 def test_256_color():
     h = AnsiEscapeHandler()
     actions = h.parse("\x1b[38;5;196mred256")
-    fg = actions[0][2].foreground().color()
-    assert (fg.red(), fg.green(), fg.blue()) == (255, 0, 0)
+    assert actions[0][2].fg == (255, 0, 0)
 
 
 def test_truecolor():
     h = AnsiEscapeHandler()
     actions = h.parse("\x1b[38;2;255;165;0morange")
-    fg = actions[0][2].foreground().color()
-    assert (fg.red(), fg.green(), fg.blue()) == (255, 165, 0)
+    assert actions[0][2].fg == (255, 165, 0)
 
 
 def test_cursor_movements():
@@ -92,18 +86,18 @@ def test_bare_sgr_reset():
 def test_state_persists_until_reset():
     h = AnsiEscapeHandler()
     h.parse("\x1b[31m")
-    a1 = h.parse("a")[0][2].foreground().color()
-    a2 = h.parse("b")[0][2].foreground().color()
-    assert (a1.red(), a1.green(), a1.blue()) == (a2.red(), a2.green(), a2.blue())
+    a1 = h.parse("a")[0][2].fg
+    a2 = h.parse("b")[0][2].fg
+    assert a1 == a2 == (170, 0, 0)
     h.reset()
-    a3 = h.parse("c")[0][2].foreground().color()
-    assert (a3.red(), a3.green(), a3.blue()) == (255, 255, 255)
+    a3 = h.parse("c")[0][2].fg
+    assert a3 == (255, 255, 255)
 
 
 def test_italic_underline_strike():
     h = AnsiEscapeHandler()
     actions = h.parse("\x1b[3;4;9mstyled")
-    fmt = actions[0][2]
-    assert fmt.fontItalic() is True
-    assert fmt.fontUnderline() is True
-    assert fmt.fontStrikeOut() is True
+    style = actions[0][2]
+    assert style.italic is True
+    assert style.underline is True
+    assert style.strikethrough is True

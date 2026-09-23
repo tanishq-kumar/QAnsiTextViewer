@@ -20,7 +20,7 @@ is set by CI; export it locally if you have no display).
 
 ## PR gate
 
-Every PR runs `static` (ruff, mypy, ty, audit, strict docs build) first;
+Every PR runs `static` (ruff, ty, audit, strict docs build) first;
 the OS × Python matrix (12 legs) only runs after it passes, and merging
 requires all of them green.
 

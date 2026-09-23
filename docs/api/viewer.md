@@ -71,15 +71,15 @@ queued async chunks. `pause_stream()` buffers incoming text (capped at
 `setClearOnStart(True)` with `beginNewStream()` to wipe the view whenever
 a new stream starts.
 
-::: ansi_text_viewer.AnsiTextViewer.appendAnsiText
-::: ansi_text_viewer.AnsiTextViewer.setAnsiText
-::: ansi_text_viewer.AnsiTextViewer.insertAnsiText
-::: ansi_text_viewer.AnsiTextViewer.clear
-::: ansi_text_viewer.AnsiTextViewer.pause_stream
-::: ansi_text_viewer.AnsiTextViewer.resume_stream
-::: ansi_text_viewer.AnsiTextViewer.beginNewStream
-::: ansi_text_viewer.AnsiTextViewer.setClearOnStart
-::: ansi_text_viewer.AnsiTextViewer.isClearOnStart
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.appendAnsiText
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setAnsiText
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.insertAnsiText
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.clear
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.pause_stream
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.resume_stream
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.beginNewStream
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setClearOnStart
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.isClearOnStart
 
 ## Non-blocking bursts
 
@@ -102,9 +102,9 @@ viewer.asyncAppendFinished.connect(lambda: status.showMessage("done"))
 drops it (the in-flight chunk still finishes). `clear()` also drops the
 queue, so cleared output can never be resurrected by pending chunks.
 
-::: ansi_text_viewer.AnsiTextViewer.appendAnsiTextAsync
-::: ansi_text_viewer.AnsiTextViewer.hasPendingAppends
-::: ansi_text_viewer.AnsiTextViewer.cancelAsyncAppends
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.appendAnsiTextAsync
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.hasPendingAppends
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.cancelAsyncAppends
 
 ## Search & filter
 
@@ -123,13 +123,13 @@ track the survivors); an empty query restores everything. Newly appended
 lines are filtered on arrival, and match colors are tunable with
 `setSearchHighlightColor()`.
 
-::: ansi_text_viewer.AnsiTextViewer.highlight_search
-::: ansi_text_viewer.AnsiTextViewer.next_match
-::: ansi_text_viewer.AnsiTextViewer.prev_match
-::: ansi_text_viewer.AnsiTextViewer.clear_search_highlight
-::: ansi_text_viewer.AnsiTextViewer.filter_search
-::: ansi_text_viewer.AnsiTextViewer.setSearchHighlightColor
-::: ansi_text_viewer.AnsiTextViewer.searchHighlightColors
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.highlight_search
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.next_match
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.prev_match
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.clear_search_highlight
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.filter_search
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setSearchHighlightColor
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.searchHighlightColors
 
 ## Limits and performance
 
@@ -142,10 +142,10 @@ updates and refresh once, and bookmark scans are skipped entirely when no
 bookmarks exist — 2000 streaming lines land in ~0.5s. Dense URL anchors
 are the one known cost (~4KB/line); turn links off for firehose logs.
 
-::: ansi_text_viewer.AnsiTextViewer.setMaximumBlocks
-::: ansi_text_viewer.AnsiTextViewer.maximumBlocks
-::: ansi_text_viewer.AnsiTextViewer.setMaxLineLength
-::: ansi_text_viewer.AnsiTextViewer.maxLineLength
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setMaximumBlocks
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.maximumBlocks
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setMaxLineLength
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.maxLineLength
 
 ## Fonts & zoom
 
@@ -154,12 +154,12 @@ application-font changes (frozen for layout stability). `setFontSize()`
 doubles as the zoom-reset size, `setFontFamily()` keeps the size, and
 `useSystemFont()` takes a one-shot snapshot of `QApplication.font()`.
 
-::: ansi_text_viewer.AnsiTextViewer.setMonospaceFont
-::: ansi_text_viewer.AnsiTextViewer.setFontSize
-::: ansi_text_viewer.AnsiTextViewer.setFontFamily
-::: ansi_text_viewer.AnsiTextViewer.useSystemFont
-::: ansi_text_viewer.AnsiTextViewer.resetZoom
-::: ansi_text_viewer.AnsiTextViewer.wheelEvent
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setMonospaceFont
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setFontSize
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setFontFamily
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.useSystemFont
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.resetZoom
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.wheelEvent
 
 ## Layout, scroll and gutter
 
@@ -168,17 +168,17 @@ bottom on new output; the gutter shows line numbers with bookmark ticks.
 The `lineNumberArea*` methods and `resizeEvent` are Qt plumbing most apps
 never call directly — listed here for completeness.
 
-::: ansi_text_viewer.AnsiTextViewer.setWordWrapEnabled
-::: ansi_text_viewer.AnsiTextViewer.isWordWrapEnabled
-::: ansi_text_viewer.AnsiTextViewer.setAutoScroll
-::: ansi_text_viewer.AnsiTextViewer.isAutoScroll
-::: ansi_text_viewer.AnsiTextViewer.setLineNumbersVisible
-::: ansi_text_viewer.AnsiTextViewer.isLineNumbersVisible
-::: ansi_text_viewer.AnsiTextViewer.lineNumberAreaWidth
-::: ansi_text_viewer.AnsiTextViewer.updateLineNumberAreaWidth
-::: ansi_text_viewer.AnsiTextViewer.updateLineNumberArea
-::: ansi_text_viewer.AnsiTextViewer.resizeEvent
-::: ansi_text_viewer.AnsiTextViewer.lineNumberAreaPaintEvent
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setWordWrapEnabled
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.isWordWrapEnabled
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setAutoScroll
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.isAutoScroll
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setLineNumbersVisible
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.isLineNumbersVisible
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.lineNumberAreaWidth
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.updateLineNumberAreaWidth
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.updateLineNumberArea
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.resizeEvent
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.lineNumberAreaPaintEvent
 
 ## Timestamps and highlight toggles
 
@@ -188,20 +188,20 @@ markers; `setSyntaxHighlighting()` covers tracebacks, JSON keys, CMake and
 justfiles (see [Highlighting](highlighting.md)). Custom languages plug in
 through `add_highlight_rule()` without touching the viewer.
 
-::: ansi_text_viewer.AnsiTextViewer.setTimestampEnabled
-::: ansi_text_viewer.AnsiTextViewer.isTimestampEnabled
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setTimestampEnabled
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.isTimestampEnabled
 Colors are injectable: `setLogLevelColors()` replaces the level map used
 for future highlights (read back with `logLevelColors()`).
 
-::: ansi_text_viewer.AnsiTextViewer.setLogLevelHighlighting
-::: ansi_text_viewer.AnsiTextViewer.isLogLevelHighlighting
-::: ansi_text_viewer.AnsiTextViewer.setLogLevelColors
-::: ansi_text_viewer.AnsiTextViewer.logLevelColors
-::: ansi_text_viewer.AnsiTextViewer.setSyntaxHighlighting
-::: ansi_text_viewer.AnsiTextViewer.isSyntaxHighlighting
-::: ansi_text_viewer.AnsiTextViewer.add_highlight_rule
-::: ansi_text_viewer.AnsiTextViewer.remove_highlight_rule
-::: ansi_text_viewer.AnsiTextViewer.highlight_rules
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setLogLevelHighlighting
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.isLogLevelHighlighting
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setLogLevelColors
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.logLevelColors
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setSyntaxHighlighting
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.isSyntaxHighlighting
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.add_highlight_rule
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.remove_highlight_rule
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.highlight_rules
 
 ## Current line
 
@@ -210,11 +210,11 @@ bookmark highlights. `setExtraSelections()` is the interception point the
 search engine writes through; `searchExtraSelections()` reads back just
 the search part.
 
-::: ansi_text_viewer.AnsiTextViewer.setCurrentLineHighlightEnabled
-::: ansi_text_viewer.AnsiTextViewer.isCurrentLineHighlightEnabled
-::: ansi_text_viewer.AnsiTextViewer.currentLineColor
-::: ansi_text_viewer.AnsiTextViewer.setExtraSelections
-::: ansi_text_viewer.AnsiTextViewer.searchExtraSelections
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setCurrentLineHighlightEnabled
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.isCurrentLineHighlightEnabled
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.currentLineColor
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setExtraSelections
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.searchExtraSelections
 
 ## Links
 
@@ -225,11 +225,11 @@ enforces the modifier, `mouseMoveEvent` shows the pointing hand, and
 `contextMenuEvent` builds the right-click menu. Disable entirely with
 `setLinksEnabled(False)` for untrusted logs.
 
-::: ansi_text_viewer.AnsiTextViewer.setLinksEnabled
-::: ansi_text_viewer.AnsiTextViewer.isLinksEnabled
-::: ansi_text_viewer.AnsiTextViewer.mousePressEvent
-::: ansi_text_viewer.AnsiTextViewer.mouseMoveEvent
-::: ansi_text_viewer.AnsiTextViewer.contextMenuEvent
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setLinksEnabled
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.isLinksEnabled
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.mousePressEvent
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.mouseMoveEvent
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.contextMenuEvent
 
 ## Copy, export, sessions
 
@@ -245,14 +245,14 @@ viewer.saveSession("run.json")
 viewer.loadSession("run.json")
 ```
 
-::: ansi_text_viewer.AnsiTextViewer.selectedPlainText
-::: ansi_text_viewer.AnsiTextViewer.copySelectedPlainText
-::: ansi_text_viewer.AnsiTextViewer.selectedTextWithAnsi
-::: ansi_text_viewer.AnsiTextViewer.copySelectedWithAnsi
-::: ansi_text_viewer.AnsiTextViewer.exportToFile
-::: ansi_text_viewer.AnsiTextViewer.selectionStats
-::: ansi_text_viewer.AnsiTextViewer.saveSession
-::: ansi_text_viewer.AnsiTextViewer.loadSession
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.selectedPlainText
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.copySelectedPlainText
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.selectedTextWithAnsi
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.copySelectedWithAnsi
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.exportToFile
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.selectionStats
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.saveSession
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.loadSession
 
 ## Bookmarks
 
@@ -264,18 +264,18 @@ invisible blocks), or from the context menu;
 filtered-out lines. `bookmarkedLines()`, `bookmarkedPreviews()`, and the
 `bookmarksChanged` signal feed list UIs like the demo's panel.
 
-::: ansi_text_viewer.AnsiTextViewer.toggleBookmark
-::: ansi_text_viewer.AnsiTextViewer.toggleBookmarkAtY
-::: ansi_text_viewer.AnsiTextViewer.addBookmark
-::: ansi_text_viewer.AnsiTextViewer.removeBookmark
-::: ansi_text_viewer.AnsiTextViewer.isBookmarked
-::: ansi_text_viewer.AnsiTextViewer.bookmarkedLines
-::: ansi_text_viewer.AnsiTextViewer.bookmarkedPreviews
-::: ansi_text_viewer.AnsiTextViewer.clearBookmarks
-::: ansi_text_viewer.AnsiTextViewer.gotoNextBookmark
-::: ansi_text_viewer.AnsiTextViewer.gotoPrevBookmark
-::: ansi_text_viewer.AnsiTextViewer.setBookmarkColor
-::: ansi_text_viewer.AnsiTextViewer.bookmarkColor
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.toggleBookmark
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.toggleBookmarkAtY
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.addBookmark
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.removeBookmark
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.isBookmarked
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.bookmarkedLines
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.bookmarkedPreviews
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.clearBookmarks
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.gotoNextBookmark
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.gotoPrevBookmark
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setBookmarkColor
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.bookmarkColor
 
 ## Theme & colors
 
@@ -291,13 +291,13 @@ viewer.setDefaultColors(QColor(0, 0, 0), QColor(255, 255, 255))  # manual
 viewer.setColorsFollowTheme(True)  # back to automatic
 ```
 
-::: ansi_text_viewer.AnsiTextViewer.setTheme
-::: ansi_text_viewer.AnsiTextViewer.theme
-::: ansi_text_viewer.AnsiTextViewer.themeRequested
-::: ansi_text_viewer.AnsiTextViewer.setDefaultColors
-::: ansi_text_viewer.AnsiTextViewer.defaultColors
-::: ansi_text_viewer.AnsiTextViewer.setColorsFollowTheme
-::: ansi_text_viewer.AnsiTextViewer.colorsFollowTheme
-::: ansi_text_viewer.AnsiTextViewer.setAnsiPaletteColor
-::: ansi_text_viewer.AnsiTextViewer.resetAnsiPalette
-::: ansi_text_viewer.AnsiTextViewer.ansiPalette
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setTheme
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.theme
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.themeRequested
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setDefaultColors
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.defaultColors
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setColorsFollowTheme
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.colorsFollowTheme
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setAnsiPaletteColor
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.resetAnsiPalette
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.ansiPalette
