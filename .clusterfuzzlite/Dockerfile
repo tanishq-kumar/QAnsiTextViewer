@@ -1,4 +1,4 @@
-FROM gcr.io/oss-fuzz-base/base-builder-python:v1
+FROM gcr.io/oss-fuzz-base/base-builder-python
 RUN python3 -m pip install --upgrade pip
 COPY . $SRC/QAnsiTextViewer
 WORKDIR $SRC/QAnsiTextViewer
