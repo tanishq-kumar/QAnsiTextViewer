@@ -1,6 +1,31 @@
-"""Decode ANSI escape sequences into text and cursor actions."""
+"""Decode ANSI escape sequences into text and cursor actions.
 
-from PySide6.QtGui import QColor, QFont, QTextCharFormat
+Deliberately free of Qt: the parser emits plain data (see `TextStyle`) so it
+can run anywhere — tests, fuzzers, other runtimes. The widget converts styles
+to ``QTextCharFormat`` at the boundary (``_style_to_format``).
+"""
+
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
+class TextStyle:
+    """Effective style of a ``("text", ...)`` action payload.
+
+    Colors are ``(r, g, b)`` tuples with dimming and reverse-video already
+    applied, mirroring what the widget used to bake into ``QTextCharFormat``.
+    """
+
+    fg: tuple[int, int, int]
+    bg: tuple[int, int, int]
+    bold: bool = False
+    italic: bool = False
+    underline: bool = False
+    strikethrough: bool = False
+
+
+_DEFAULT_FG = (255, 255, 255)
+_DEFAULT_BG = (0, 0, 0)
 
 
 class AnsiEscapeHandler:
@@ -18,15 +43,15 @@ class AnsiEscapeHandler:
 
     def __init__(self):
         """Create a handler with default terminal styling."""
-        self._custom_8: dict[tuple[int, bool], QColor] = {}
-        self.default_fg = QColor(255, 255, 255)
-        self.default_bg = QColor(0, 0, 0)
+        self._custom_8: dict[tuple[int, bool], tuple[int, int, int]] = {}
+        self.default_fg = _DEFAULT_FG
+        self.default_bg = _DEFAULT_BG
         self.reset()
 
     def reset(self):
         """Restore default colors and clear all text attributes."""
-        self.fg = QColor(self.default_fg)
-        self.bg = QColor(self.default_bg)
+        self.fg = self.default_fg
+        self.bg = self.default_bg
         self.bold = False
         self.dim = False
         self.italic = False
@@ -42,13 +67,14 @@ class AnsiEscapeHandler:
             text: Raw text that may contain ``ESC[`` sequences.
 
         Returns:
-            List of ``("text", str, QTextCharFormat)`` tuples plus cursor
+            List of ``("text", str, TextStyle)`` tuples plus cursor
             actions such as ``("cursor_up", n)`` or ``("erase_line", mode)``.
 
         Examples:
             >>> handler = AnsiEscapeHandler()
-            >>> handler.parse("plain")
-            [('text', 'plain', <...>)]
+            >>> actions = handler.parse("plain")
+            >>> actions[0][:2]
+            ('text', 'plain')
         """
         actions: list[tuple] = []
         i = 0
@@ -138,36 +164,24 @@ class AnsiEscapeHandler:
 
         return actions
 
-    def __get_format(self):
-        fmt = QTextCharFormat()
-
+    def __get_format(self) -> TextStyle:
         fg = self.fg
         bg = self.bg
 
         if self.dim:
-            fg = QColor(
-                max(0, fg.red() // 2),
-                max(0, fg.green() // 2),
-                max(0, fg.blue() // 2),
-            )
+            fg = (max(0, fg[0] // 2), max(0, fg[1] // 2), max(0, fg[2] // 2))
 
         if self.reverse:
-            fmt.setForeground(bg)
-            fmt.setBackground(fg)
-        else:
-            fmt.setForeground(fg)
-            fmt.setBackground(bg)
+            fg, bg = bg, fg
 
-        if self.bold:
-            fmt.setFontWeight(QFont.Weight.Bold)
-        if self.italic:
-            fmt.setFontItalic(True)
-        if self.underline:
-            fmt.setFontUnderline(True)
-        if self.strikethrough:
-            fmt.setFontStrikeOut(True)
-
-        return fmt
+        return TextStyle(
+            fg=fg,
+            bg=bg,
+            bold=self.bold,
+            italic=self.italic,
+            underline=self.underline,
+            strikethrough=self.strikethrough,
+        )
 
     def __apply_sgr(self, params: list):
         if not params:
@@ -233,72 +247,74 @@ class AnsiEscapeHandler:
             elif code == 38 and i + 3 < len(params) and params[i] == 2:
                 i += 4
                 r, g, b = params[i - 3 : i]
-                self.fg = QColor(r, g, b)
+                self.fg = (r, g, b)
             elif code == 48 and i + 3 < len(params) and params[i] == 2:
                 i += 4
                 r, g, b = params[i - 3 : i]
-                self.bg = QColor(r, g, b)
+                self.bg = (r, g, b)
 
-    def setDefaultColors(self, fg: QColor | None = None, bg: QColor | None = None):
+    def setDefaultColors(
+        self,
+        fg: tuple[int, int, int] | None = None,
+        bg: tuple[int, int, int] | None = None,
+    ):
         """Override the colors used by SGR reset.
 
         Args:
-            fg: Default foreground, or None to keep the current one.
-            bg: Default background, or None to keep the current one.
+            fg: Default foreground ``(r, g, b)``, or None to keep it.
+            bg: Default background ``(r, g, b)``, or None to keep it.
 
         Examples:
-            >>> handler.setDefaultColors(QColor(0, 0, 0), QColor(255, 255, 255))
+            >>> handler.setDefaultColors((0, 0, 0), (255, 255, 255))
         """
         if fg is not None:
-            self.default_fg = QColor(fg)
+            self.default_fg = fg
         if bg is not None:
-            self.default_bg = QColor(bg)
+            self.default_bg = bg
         self.reset()
 
-    def defaultColors(self) -> tuple[QColor, QColor]:
+    def defaultColors(self) -> tuple[tuple[int, int, int], tuple[int, int, int]]:
         """Return the current ``(foreground, background)`` defaults."""
-        return (QColor(self.default_fg), QColor(self.default_bg))
+        return (self.default_fg, self.default_bg)
 
-    def setAnsi8Color(self, idx: int, color: QColor, bright: bool = False):
+    def setAnsi8Color(
+        self, idx: int, color: tuple[int, int, int], bright: bool = False
+    ):
         """Override one ANSI base color.
 
         Args:
             idx: Base color 0..7.
-            color: Replacement color.
+            color: Replacement ``(r, g, b)`` color.
             bright: Whether it applies to the bright variant.
         """
-        self._custom_8[(idx % 8, bool(bright))] = QColor(color)
+        self._custom_8[(idx % 8, bool(bright))] = color
 
     def resetPalette(self):
         """Drop all custom palette overrides."""
         self._custom_8.clear()
 
     def palette(self) -> dict:
-        """Return custom ``(index, bright) -> QColor`` overrides."""
+        """Return custom ``(index, bright) -> (r, g, b)`` overrides."""
         return dict(self._custom_8)
 
     def __ansi8_color(self, idx: int, bright: bool = False):
         key = (idx % 8, bool(bright))
         if key in self._custom_8:
-            return QColor(self._custom_8[key])
+            return self._custom_8[key]
         palette = [
-            QColor(0, 0, 0),
-            QColor(170, 0, 0),
-            QColor(0, 170, 0),
-            QColor(170, 170, 0),
-            QColor(0, 0, 170),
-            QColor(170, 0, 170),
-            QColor(0, 170, 170),
-            QColor(170, 170, 170),
+            (0, 0, 0),
+            (170, 0, 0),
+            (0, 170, 0),
+            (170, 170, 0),
+            (0, 0, 170),
+            (170, 0, 170),
+            (0, 170, 170),
+            (170, 170, 170),
         ]
-        c = palette[idx % 8]
+        r, g, b = palette[idx % 8]
         if bright:
-            c = QColor(
-                min(c.red() + 85, 255),
-                min(c.green() + 85, 255),
-                min(c.blue() + 85, 255),
-            )
-        return c
+            r, g, b = min(r + 85, 255), min(g + 85, 255), min(b + 85, 255)
+        return (r, g, b)
 
     def __color_256(self, idx: int):
         if idx < 16:
@@ -306,11 +322,8 @@ class AnsiEscapeHandler:
 
         if idx < 232:  # 6x6x6 cube
             idx -= 16
-            r = (idx // 36) * 51
-            g = ((idx // 6) % 6) * 51
-            b = (idx % 6) * 51
-            return QColor(r, g, b)
+            return ((idx // 36) * 51, ((idx // 6) % 6) * 51, (idx % 6) * 51)
 
         # Grayscale
         gray = 8 + (idx - 232) * 10
-        return QColor(gray, gray, gray)
+        return (gray, gray, gray)

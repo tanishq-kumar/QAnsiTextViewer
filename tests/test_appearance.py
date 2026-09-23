@@ -15,18 +15,13 @@ def test_handler_default_colors_api():
     from ansi_text_viewer.ansi_escape_handler import AnsiEscapeHandler
 
     h = AnsiEscapeHandler()
-    fg, bg = h.defaultColors()
-    assert (fg.red(), fg.green(), fg.blue()) == (255, 255, 255)
-    h.setDefaultColors(QColor(1, 2, 3), QColor(4, 5, 6))
-    fg, bg = h.defaultColors()
-    assert (fg.red(), fg.green(), fg.blue()) == (1, 2, 3)
-    assert (bg.red(), bg.green(), bg.blue()) == (4, 5, 6)
+    assert h.defaultColors() == ((255, 255, 255), (0, 0, 0))
+    h.setDefaultColors((1, 2, 3), (4, 5, 6))
+    assert h.defaultColors() == ((1, 2, 3), (4, 5, 6))
     h.reset()
-    fg, bg = h.defaultColors()
-    assert (fg.red(), fg.green(), fg.blue()) == (1, 2, 3)
-    assert (bg.red(), bg.green(), bg.blue()) == (4, 5, 6)
+    assert h.defaultColors() == ((1, 2, 3), (4, 5, 6))
     actions = h.parse("x")
-    assert actions[0][2].foreground().color().red() == 1
+    assert actions[0][2].fg == (1, 2, 3)
 
 
 def test_light_theme_uses_dark_text(viewer):
