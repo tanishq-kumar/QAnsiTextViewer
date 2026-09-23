@@ -1,9 +1,7 @@
 """Property tests for the ANSI escape parser.
 
-Same invariants as the ClusterFuzzLite target (``fuzz/fuzz_ansi.py``):
-hostile input must never crash parsing, and plain-text payloads must never
-leak escape characters. Hypothesis covers the everyday PR loop; libFuzzer
-covers the deep end on a schedule.
+Hostile input must never crash parsing, and plain-text payloads must never
+leak escape characters. Five hundred examples run on every CI leg.
 """
 
 from hypothesis import HealthCheck, given, settings
