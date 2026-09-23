@@ -1,6 +1,6 @@
 # QAnsiTextViewer
 
-![CI](https://github.com/tanishq-kumar/QAnsiTextViewer/actions/workflows/ci.yml/badge.svg) [![Docs](https://img.shields.io/badge/docs-live-blue)](https://tanishq-kumar.github.io/QAnsiTextViewer/) [![PyPI](https://img.shields.io/pypi/v/qansitextviewer)](https://pypi.org/project/qansitextviewer/) [![CodeQL](https://github.com/tanishq-kumar/QAnsiTextViewer/actions/workflows/codeql.yml/badge.svg)](https://github.com/tanishq-kumar/QAnsiTextViewer/security/code-scanning) [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/tanishq-kumar/QAnsiTextViewer/badge)](https://scorecard.dev/viewer/?uri=github.com/tanishq-kumar/QAnsiTextViewer)
+![CI](https://github.com/tanishq-kumar/QAnsiTextViewer/actions/workflows/ci.yml/badge.svg) [![Docs](https://img.shields.io/badge/docs-live-blue)](https://tanishq-kumar.github.io/QAnsiTextViewer/) [![PyPI](https://img.shields.io/pypi/v/qansitextviewer)](https://pypi.org/project/qansitextviewer/)
 
 ANSI Text Viewer - Qt log-viewer widget for Python
 

@@ -42,8 +42,6 @@ jobs:
         run: uvx ruff@0.16.7 check ansi_text_viewer demo.py main.py tests
       - name: Ruff format check
         run: uvx ruff@0.16.7 format --check ansi_text_viewer demo.py main.py tests
-      - name: mypy
-        run: uv run --no-sync mypy ansi_text_viewer
       - name: ty
         run: uv run --no-sync ty check ansi_text_viewer
       - name: Build docs

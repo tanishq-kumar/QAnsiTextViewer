@@ -23,7 +23,6 @@ api-snapshot:
     uv run python tests/test_api_surface.py
 
 typecheck:
-    uv run mypy ansi_text_viewer
     uv run ty check ansi_text_viewer
 
 format:
