@@ -37,6 +37,10 @@ app.exec()
 ```
 
 Full demo app: `just demo` (or `uv run python demo.py`).
+Focused, runnable examples live in [`examples/`](examples): a colored
+`logging` handler, a command runner, `tail -f` for files, custom highlight
+rules, and non-blocking loading of huge logs — see the
+[Examples page](https://tanishq-kumar.github.io/QAnsiTextViewer/examples/).
 
 ## API cheatsheet
 

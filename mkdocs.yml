@@ -97,6 +97,7 @@ nav:
       - Your first log pane: guides/first-log-pane.md
       - Streaming process output: guides/streaming.md
       - Themes and colors: guides/theming.md
+      - Examples: examples.md
       - Visual tour: gallery.md
   - Reference:
       - Viewer: api/viewer.md

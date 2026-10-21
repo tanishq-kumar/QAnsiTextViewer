@@ -39,9 +39,9 @@ jobs:
       - name: Audit dependencies
         run: uv run --no-sync pip-audit
       - name: Ruff check
-        run: uvx ruff@0.16.7 check ansi_text_viewer demo.py main.py tests
+        run: uvx ruff@0.16.7 check ansi_text_viewer demo.py main.py tests examples tools
       - name: Ruff format check
-        run: uvx ruff@0.16.7 format --check ansi_text_viewer demo.py main.py tests
+        run: uvx ruff@0.16.7 format --check ansi_text_viewer demo.py main.py tests examples tools
       - name: ty
         run: uv run --no-sync ty check ansi_text_viewer
       - name: Build docs
