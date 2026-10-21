@@ -66,6 +66,13 @@ def test_just_rule():
     assert list(JustRule().spans("plain words here")) == []
 
 
+def test_just_rule_ignores_timestamps():
+    # Recipe names cannot start with a digit, so log timestamps stay plain.
+    assert list(JustRule().spans("14:23:20 - TestLogger - [INFO] - ok")) == []
+    (s,) = JustRule().spans("_private: build")
+    assert (s.start, s.end) == (0, 8)
+
+
 def test_url_and_file_rules():
     (s,) = UrlRule().spans("see https://example.com now")
     assert s.anchor_href == "https://example.com"
