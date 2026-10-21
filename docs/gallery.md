@@ -1,8 +1,3 @@
----
-hide:
-  - navigation
----
-
 # Visual tour
 
 <figure class="gb-figure gb-hero" markdown>
