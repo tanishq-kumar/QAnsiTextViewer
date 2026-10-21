@@ -1,57 +1,57 @@
-/* Green-bar listing: the docs printed on fan-fold line-printer paper.
+/* Teal-bar listing: the docs printed on fan-fold line-printer paper.
    The frame (rails, running head, banded code and tables) carries the
    world; the reading column stays plain paper. */
 
 :root,
 [data-md-color-scheme="default"] {
-  --gb-paper: #fbfbf6;
-  --gb-ink: #222222;
-  --gb-mute: #555a52;
-  --gb-band: #dcebd6;
-  --gb-band-soft: #eaf3e6;
-  --gb-band-strong: #bcd9b3;
-  --gb-edge: #c3d3bd;
-  --gb-hole: #9aa59a;
-  --gb-hole-fill: #e4e6dd;
-  --gb-green: #2e6b3a;
+  --gb-paper: #fafbfb;
+  --gb-ink: #1f2426;
+  --gb-mute: #525c60;
+  --gb-band: #e1eeee;
+  --gb-band-soft: #eef5f5;
+  --gb-band-strong: #c2dcdc;
+  --gb-edge: #c5d3d4;
+  --gb-hole: #98a4a6;
+  --gb-hole-fill: #e3e7e8;
+  --gb-accent: #0e6b6b;
   --gb-amber: #8a4b00;
   --gb-amber-band: #f4e7cf;
-  --gb-shadow: rgba(34, 40, 30, 0.1);
+  --gb-shadow: rgba(25, 35, 38, 0.1);
 
-  --md-primary-fg-color: var(--gb-green);
-  --md-primary-fg-color--light: #4d8a58;
-  --md-primary-fg-color--dark: #1f4d29;
+  --md-primary-fg-color: var(--gb-accent);
+  --md-primary-fg-color--light: #3a8e8e;
+  --md-primary-fg-color--dark: #0a4d4d;
   --md-primary-bg-color: var(--gb-paper);
-  --md-primary-bg-color--light: rgba(251, 251, 246, 0.7);
-  --md-accent-fg-color: var(--gb-green);
-  --md-accent-fg-color--transparent: rgba(46, 107, 58, 0.1);
+  --md-primary-bg-color--light: rgba(250, 251, 251, 0.7);
+  --md-accent-fg-color: var(--gb-accent);
+  --md-accent-fg-color--transparent: rgba(14, 107, 107, 0.1);
 
   --md-default-bg-color: var(--gb-paper);
   --md-default-fg-color: var(--gb-ink);
   --md-default-fg-color--light: var(--gb-mute);
-  --md-default-fg-color--lighter: rgba(34, 34, 34, 0.32);
-  --md-default-fg-color--lightest: rgba(34, 34, 34, 0.08);
+  --md-default-fg-color--lighter: rgba(31, 36, 38, 0.32);
+  --md-default-fg-color--lightest: rgba(31, 36, 38, 0.08);
 
   --md-typeset-color: var(--gb-ink);
-  --md-typeset-a-color: var(--gb-green);
+  --md-typeset-a-color: var(--gb-accent);
   --md-typeset-mark-color: var(--gb-band-strong);
   --md-typeset-table-color: var(--gb-edge);
 
   --md-code-bg-color: var(--gb-paper);
   --md-code-fg-color: var(--gb-ink);
-  --md-code-hl-color: rgba(46, 107, 58, 0.18);
-  --md-code-hl-keyword-color: #1f5a2c;
+  --md-code-hl-color: rgba(14, 107, 107, 0.18);
+  --md-code-hl-keyword-color: #0b5a5a;
   --md-code-hl-string-color: #8a4b12;
-  --md-code-hl-comment-color: #5a6357;
+  --md-code-hl-comment-color: #56606a;
   --md-code-hl-number-color: #1d5d8f;
-  --md-code-hl-function-color: #222222;
-  --md-code-hl-name-color: #222222;
+  --md-code-hl-function-color: #1f2426;
+  --md-code-hl-name-color: #1f2426;
   --md-code-hl-constant-color: #6b3fa0;
   --md-code-hl-special-color: #a3322a;
-  --md-code-hl-operator-color: #3d423b;
-  --md-code-hl-punctuation-color: #555a52;
-  --md-code-hl-variable-color: #222222;
-  --md-code-hl-generic-color: #555a52;
+  --md-code-hl-operator-color: #3b4448;
+  --md-code-hl-punctuation-color: #525c60;
+  --md-code-hl-variable-color: #1f2426;
+  --md-code-hl-generic-color: #525c60;
 
   --md-footer-bg-color: var(--gb-band-soft);
   --md-footer-bg-color--dark: var(--gb-band);
@@ -70,54 +70,54 @@
 }
 
 [data-md-color-scheme="slate"] {
-  --gb-paper: #121612;
-  --gb-ink: #e4e8df;
-  --gb-mute: #a9b3a4;
-  --gb-band: #1c261c;
-  --gb-band-soft: #171e17;
-  --gb-band-strong: #2c412d;
-  --gb-edge: #2f3d2f;
-  --gb-hole: #4b574b;
-  --gb-hole-fill: #0a0d0a;
-  --gb-green: #8fd19e;
+  --gb-paper: #111618;
+  --gb-ink: #e3e9ea;
+  --gb-mute: #a6b2b5;
+  --gb-band: #1a2628;
+  --gb-band-soft: #151d1f;
+  --gb-band-strong: #27403f;
+  --gb-edge: #2c3c3e;
+  --gb-hole: #4a5759;
+  --gb-hole-fill: #0a0d0e;
+  --gb-accent: #7fd1cb;
   --gb-amber: #f0c27a;
   --gb-amber-band: #2c2416;
   --gb-shadow: rgba(0, 0, 0, 0.4);
 
-  --md-hue: 120;
-  --md-primary-fg-color: var(--gb-green);
-  --md-primary-fg-color--light: #b4e3be;
-  --md-primary-fg-color--dark: #6fb880;
+  --md-hue: 185;
+  --md-primary-fg-color: var(--gb-accent);
+  --md-primary-fg-color--light: #b0e6e2;
+  --md-primary-fg-color--dark: #5fb8b2;
   --md-primary-bg-color: var(--gb-paper);
-  --md-accent-fg-color: var(--gb-green);
-  --md-accent-fg-color--transparent: rgba(143, 209, 158, 0.12);
+  --md-accent-fg-color: var(--gb-accent);
+  --md-accent-fg-color--transparent: rgba(127, 209, 203, 0.12);
 
   --md-default-bg-color: var(--gb-paper);
   --md-default-fg-color: var(--gb-ink);
   --md-default-fg-color--light: var(--gb-mute);
-  --md-default-fg-color--lighter: rgba(228, 232, 223, 0.32);
-  --md-default-fg-color--lightest: rgba(228, 232, 223, 0.08);
+  --md-default-fg-color--lighter: rgba(227, 233, 234, 0.32);
+  --md-default-fg-color--lightest: rgba(227, 233, 234, 0.08);
 
   --md-typeset-color: var(--gb-ink);
-  --md-typeset-a-color: var(--gb-green);
+  --md-typeset-a-color: var(--gb-accent);
   --md-typeset-mark-color: var(--gb-band-strong);
   --md-typeset-table-color: var(--gb-edge);
 
   --md-code-bg-color: var(--gb-paper);
   --md-code-fg-color: var(--gb-ink);
-  --md-code-hl-color: rgba(143, 209, 158, 0.16);
-  --md-code-hl-keyword-color: #8fd19e;
+  --md-code-hl-color: rgba(127, 209, 203, 0.16);
+  --md-code-hl-keyword-color: #7fd1cb;
   --md-code-hl-string-color: #e0b27a;
-  --md-code-hl-comment-color: #8f9a8b;
+  --md-code-hl-comment-color: #8e9a9d;
   --md-code-hl-number-color: #8cc2ef;
-  --md-code-hl-function-color: #e4e8df;
-  --md-code-hl-name-color: #e4e8df;
+  --md-code-hl-function-color: #e3e9ea;
+  --md-code-hl-name-color: #e3e9ea;
   --md-code-hl-constant-color: #c9a6f0;
   --md-code-hl-special-color: #f28b82;
-  --md-code-hl-operator-color: #c8cfc3;
-  --md-code-hl-punctuation-color: #a9b3a4;
-  --md-code-hl-variable-color: #e4e8df;
-  --md-code-hl-generic-color: #a9b3a4;
+  --md-code-hl-operator-color: #c6cfd1;
+  --md-code-hl-punctuation-color: #a6b2b5;
+  --md-code-hl-variable-color: #e3e9ea;
+  --md-code-hl-generic-color: #a6b2b5;
 
   --md-footer-bg-color: var(--gb-band-soft);
   --md-footer-bg-color--dark: var(--gb-band);
@@ -135,7 +135,7 @@ html {
 
 body {
   background: var(--gb-paper);
-  caret-color: var(--gb-green);
+  caret-color: var(--gb-accent);
 }
 
 ::selection {
@@ -144,7 +144,7 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid var(--gb-green);
+  outline: 2px solid var(--gb-accent);
   outline-offset: 2px;
 }
 
@@ -218,7 +218,7 @@ body {
   background: var(--gb-paper);
   color: var(--gb-ink);
   box-shadow: none;
-  border-bottom: 2px solid var(--gb-green);
+  border-bottom: 2px solid var(--gb-accent);
 }
 
 .md-header.gb-head .md-header__inner {
@@ -356,7 +356,7 @@ body {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--gb-green) !important;
+  color: var(--gb-accent) !important;
 }
 
 .md-nav {
@@ -379,7 +379,7 @@ body {
 
 .md-nav__link--active,
 .md-nav__link:is(:focus, :hover) {
-  color: var(--gb-green);
+  color: var(--gb-accent);
 }
 
 .md-nav--secondary .md-nav__link--active {
@@ -403,7 +403,7 @@ body {
 .md-nav--primary .md-nav__title[for="__drawer"] {
   background: var(--gb-paper);
   color: var(--gb-ink);
-  border-bottom: 2px solid var(--gb-green);
+  border-bottom: 2px solid var(--gb-accent);
 }
 
 .md-skip {
@@ -440,7 +440,7 @@ body {
 
 .md-nav--secondary .md-nav__list .md-nav__list .md-nav__link:is(:hover, :focus),
 .md-nav--secondary .md-nav__list .md-nav__list .md-nav__link--active {
-  color: var(--gb-green);
+  color: var(--gb-accent);
 }
 
 .md-nav--secondary .md-ellipsis {
@@ -496,12 +496,12 @@ body {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.18em;
-  text-decoration-color: color-mix(in srgb, var(--gb-green) 45%, transparent);
+  text-decoration-color: color-mix(in srgb, var(--gb-accent) 45%, transparent);
 }
 
 .md-typeset a:is(:hover, :focus) {
-  color: var(--gb-green);
-  text-decoration-color: var(--gb-green);
+  color: var(--gb-accent);
+  text-decoration-color: var(--gb-accent);
   text-decoration-thickness: 2px;
 }
 
@@ -618,7 +618,7 @@ body {
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--gb-green);
+  color: var(--gb-accent);
   background: var(--gb-paper);
   border-bottom: 1px solid var(--gb-edge);
   border-radius: 0;
@@ -638,7 +638,7 @@ body {
 }
 
 .md-clipboard:is(:focus, :hover) {
-  color: var(--gb-green);
+  color: var(--gb-accent);
 }
 
 /* ---- Tables (banded in pairs, like the paper) ------------------------ */
@@ -656,7 +656,7 @@ body {
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--gb-green);
+  color: var(--gb-accent);
   background: var(--gb-paper);
   border-bottom: 2px solid var(--gb-edge);
 }
@@ -702,18 +702,18 @@ body {
 .md-typeset summary {
   font-size: 0.8rem;
   font-weight: 700;
-  color: var(--gb-green);
+  color: var(--gb-accent);
   background: var(--gb-band) !important;
   border: 0 !important;
 }
 
 .md-typeset .admonition-title::before,
 .md-typeset summary::before {
-  background-color: var(--gb-green) !important;
+  background-color: var(--gb-accent) !important;
 }
 
 .md-typeset summary::after {
-  background-color: var(--gb-green);
+  background-color: var(--gb-accent);
 }
 
 .md-typeset .admonition.warning,
@@ -742,12 +742,12 @@ body {
 }
 
 .md-typeset .tabbed-labels > label:hover {
-  color: var(--gb-green);
+  color: var(--gb-accent);
 }
 
 .md-typeset .tabbed-set > input:checked + label,
 .md-typeset .tabbed-labels > label.tabbed-labels__active {
-  color: var(--gb-green);
+  color: var(--gb-accent);
 }
 
 /* ---- Printout figures (screenshots) ---------------------------------- */
@@ -909,12 +909,12 @@ body {
 }
 
 :root {
-  --doc-symbol-method-fg-color: var(--gb-green);
-  --doc-symbol-function-fg-color: var(--gb-green);
+  --doc-symbol-method-fg-color: var(--gb-accent);
+  --doc-symbol-function-fg-color: var(--gb-accent);
   --doc-symbol-method-bg-color: var(--gb-band);
   --doc-symbol-function-bg-color: var(--gb-band);
   --doc-symbol-class-fg-color: var(--gb-paper);
-  --doc-symbol-class-bg-color: var(--gb-green);
+  --doc-symbol-class-bg-color: var(--gb-accent);
 }
 
 /* ---- Footer: the perforation between sheets -------------------------- */

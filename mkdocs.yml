@@ -75,7 +75,7 @@ plugins:
       # Cards + meta tags are deploy artifacts — they only exist in CI output.
       cards: !ENV [MKDOCS_SOCIAL_CARDS, false]
       cards_layout_options:
-        background_color: "#2e6b3a"
+        background_color: "#0e6b6b"
         color: "#ffffff"
   - mkdocstrings:
       handlers:
