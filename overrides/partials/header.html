@@ -1,11 +1,12 @@
 {#-
   Green-bar running head: Material's header with the title area set as a
-  listing head (site · LISTING page · version).
+  listing head (site + version, then section · page).
 -#}
 {% set class = "md-header md-header--shadow gb-head" %}
 <header class="{{ class }}" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="{{ lang.t('header') }}">
-    <a href="{{ config.extra.homepage | d(nav.homepage.url, true) | url }}" title="{{ config.site_name | e }}" class="md-header__button md-logo" aria-label="{{ config.site_name }}" data-md-component="logo">
+    {#- The name link carries "home"; the logo stays out of the tab order. -#}
+    <a href="{{ config.extra.homepage | d(nav.homepage.url, true) | url }}" title="{{ config.site_name | e }}" class="md-header__button md-logo" aria-hidden="true" tabindex="-1" data-md-component="logo">
       {% include "partials/logo.html" %}
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -13,14 +14,18 @@
       {% include ".icons/" ~ icon ~ ".svg" %}
     </label>
     <div class="md-header__title gb-head__title">
-      <a class="gb-head__name" href="{{ config.extra.homepage | d(nav.homepage.url, true) | url }}">{{ config.site_name }}</a>
-      <span class="gb-head__listing">
-        Listing &middot;
+      <span class="gb-head__id">
+        <a class="gb-head__name" href="{{ config.extra.homepage | d(nav.homepage.url, true) | url }}">{{ config.site_name }}</a>
+        {%- if config.extra.version_label %}
+          <span class="gb-head__version">{{ config.extra.version_label }}</span>
+        {%- endif %}
+      </span>
+      <span class="gb-head__where">
+        {%- if page.parent and page.parent.title %}
+          <span class="gb-head__section">{{ page.parent.title }}</span><span class="gb-head__sep" aria-hidden="true"> &middot; </span>
+        {%- endif %}
         <span class="gb-head__page">{% if page.meta and page.meta.title %}{{ page.meta.title }}{% elif page.is_homepage %}Home{% else %}{{ page.title }}{% endif %}</span>
       </span>
-      {% if config.extra.version_label %}
-        <span class="gb-head__version">{{ config.extra.version_label }}</span>
-      {% endif %}
     </div>
     {% if config.theme.palette %}
       {% if not config.theme.palette is mapping %}

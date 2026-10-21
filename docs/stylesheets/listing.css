@@ -67,7 +67,6 @@
   --gb-pitch: 36px;
   --gb-rail: 44px;
   --gb-hole-r: 6px;
-  --gb-feed: 0px;
 }
 
 [data-md-color-scheme="slate"] {
@@ -151,12 +150,12 @@ body {
 
 /* ---- Tractor-feed rails ---------------------------------------------- */
 
-/* Below 1220px the rails narrow to half-holes rather than vanish. */
+/* Below 1220px there is no room for real sprocket holes, so the rail
+   becomes just its perforation: a torn edge, not a clipped pattern. */
 @media screen and (max-width: 76.234375em) {
   :root,
   [data-md-color-scheme] {
-    --gb-rail: 14px;
-    --gb-hole-r: 3px;
+    --gb-rail: 12px;
   }
 }
 
@@ -164,13 +163,16 @@ body {
   padding-inline: var(--gb-rail);
 }
 
+/* The rail is one pitch taller than the viewport and slides up by
+   (scrollY mod pitch) via transform, so feeding never restyles the page.
+   It sits under Material's header (4), overlay (4) and drawer (5). */
 .gb-feed {
   display: block;
   position: fixed;
   top: 0;
-  bottom: 0;
+  height: calc(100vh + var(--gb-pitch));
   width: var(--gb-rail);
-  z-index: 5;
+  z-index: 3;
   pointer-events: none;
   background-color: var(--gb-paper);
   background-image: radial-gradient(
@@ -180,17 +182,13 @@ body {
     transparent calc(var(--gb-hole-r) + 1.5px)
   );
   background-size: 100% var(--gb-pitch);
-  background-position: 0 var(--gb-feed);
+  background-repeat: repeat-y;
+  will-change: transform;
 }
 
-/* Half-holes: on narrow rails the punch sits on the outer edge. */
 @media screen and (max-width: 76.234375em) {
-  .gb-feed--left {
-    background-position: -7px var(--gb-feed);
-  }
-
-  .gb-feed--right {
-    background-position: 7px var(--gb-feed);
+  .gb-feed {
+    background-image: none;
   }
 }
 
@@ -202,6 +200,16 @@ body {
 .gb-feed--right {
   right: 0;
   border-left: 1px dashed var(--gb-hole);
+}
+
+@media print {
+  .gb-feed {
+    display: none;
+  }
+
+  body {
+    padding-inline: 0;
+  }
 }
 
 /* ---- Running head ---------------------------------------------------- */
@@ -223,6 +231,7 @@ body {
   width: auto;
 }
 
+/* Identity (name + version) on the left, then where you are: section · page */
 .gb-head__title {
   display: flex;
   align-items: baseline;
@@ -232,39 +241,47 @@ body {
   line-height: 2.8rem;
 }
 
-.gb-head__name {
-  font-weight: 700;
-  color: var(--gb-ink) !important;
+.gb-head__id {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
   white-space: nowrap;
 }
 
-.gb-head__listing,
+.gb-head__name {
+  font-weight: 700;
+  color: var(--gb-ink) !important;
+}
+
 .gb-head__version {
+  font-family: var(--md-code-font-family);
+  font-size: 0.66rem;
+  color: var(--gb-mute);
+  font-variant-numeric: tabular-nums;
+}
+
+.gb-head__where {
+  min-width: 0;
   font-family: var(--md-code-font-family);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--gb-mute);
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-.gb-head__version {
-  margin-left: auto;
-  padding-right: 0.4rem;
-  font-variant-numeric: tabular-nums;
+.gb-head__section,
+.gb-head__sep {
+  color: var(--gb-mute);
 }
 
-@media screen and (max-width: 44.984375em) {
-  .gb-head__title {
-    gap: 0.6rem;
-  }
+.gb-head__page {
+  color: var(--gb-ink);
+}
 
-  .gb-head__version {
-    display: none;
-  }
+/* The repo widget repeats the version; the head already prints it. */
+.md-header.gb-head .md-source__fact--version {
+  display: none;
 }
 
 .md-header.gb-head .md-header__button,
@@ -280,7 +297,7 @@ body {
 @media screen and (min-width: 60em) {
   .md-search__form {
     background: var(--gb-band-soft);
-    border: 1px solid var(--gb-edge);
+    border: 1px solid var(--gb-hole);
     border-radius: 0;
   }
 
@@ -299,12 +316,18 @@ body {
   }
 }
 
-/* Running head never truncates a word: below 1220px the logo carries the
-   name and the head prints the listing; on phones, where Material hides the
-   logo, the name returns with the page name stacked under it. */
+/* Never truncate a word: drop pieces whole as the head narrows.
+   Below 1220px the version goes (the name stays: Material hides the logo
+   here); below 60em the section goes; on phones name and page stack. */
 @media screen and (max-width: 76.234375em) {
-  .gb-head__name,
   .gb-head__version {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 59.984375em) {
+  .gb-head__section,
+  .gb-head__sep {
     display: none;
   }
 }
@@ -318,18 +341,9 @@ body {
     line-height: 1.2;
   }
 
-  .gb-head__name {
-    display: block;
-    font-size: 0.8rem;
-  }
-
-  .gb-head__listing {
-    font-size: 0;
-    white-space: normal;
-  }
-
-  .gb-head__listing .gb-head__page {
+  .gb-head__where {
     font-size: 0.6rem;
+    white-space: normal;
   }
 }
 

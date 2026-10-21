@@ -1,13 +1,19 @@
 // Tractor feed: the sprocket rails move with the scroll at paper speed,
 // and every listing gets a header strip with its line count.
 (function () {
-  var root = document.documentElement;
+  var PITCH = 36; // must match --gb-pitch
   var still = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var rails = document.getElementsByClassName("gb-feed");
   var queued = false;
 
+  // Each rail is one pitch taller than the viewport; sliding it up by
+  // (scrollY mod pitch) looks like endless paper and only moves layers.
   function feed() {
     queued = false;
-    root.style.setProperty("--gb-feed", -window.scrollY + "px");
+    var offset = still.matches ? 0 : -(window.scrollY % PITCH);
+    for (var i = 0; i < rails.length; i++) {
+      rails[i].style.transform = "translateY(" + offset + "px)";
+    }
   }
 
   function onScroll() {
@@ -15,6 +21,8 @@
     queued = true;
     window.requestAnimationFrame(feed);
   }
+
+  still.addEventListener("change", feed);
 
   function countLines(code) {
     return code.textContent.replace(/\n$/, "").split("\n").length;
