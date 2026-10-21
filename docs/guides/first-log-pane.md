@@ -20,6 +20,7 @@ from ansi_text_viewer import AnsiTextViewer
 class LogWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.total = self.current = 0  # match counter state
         self.viewer = AnsiTextViewer()
         self.viewer.setLogLevelHighlighting(True)
 
@@ -50,29 +51,35 @@ window.show()
 app.exec()
 ```
 
+This already runs. The next two steps add code to it; each listing's header
+says where the lines go.
+
 ## Wire up search
 
 `highlight_search()` highlights every match, jumps to the first one, and
-returns the count. `next_match()` and `prev_match()` return the 1-based
-index of the now-active match, which is all a counter needs. Add these
-lines at the end of `__init__`:
+returns the count. The counter also has to follow ++f3++ and ++shift+f3++:
+the viewer emits `nextRequested` / `prevRequested` just *before* it moves,
+and wraps around at the ends, so the counter mirrors that.
 
-```python
+Connect the signals at the end of `__init__`:
+
+```python title="log_window.py · end of __init__"
         self.search.textChanged.connect(self.run_search)
         self.viewer.findRequested.connect(self.focus_search)
+        self.viewer.nextRequested.connect(lambda: self.step(+1))
+        self.viewer.prevRequested.connect(lambda: self.step(-1))
 ```
 
-Then add the slots to the class:
+Then add these methods to `LogWindow`:
 
-```python
+```python title="log_window.py · new methods in LogWindow"
     def run_search(self, text):
         self.total = self.viewer.highlight_search(text)
         self.current = 1 if self.total else 0
         self.update_count()
 
     def step(self, delta):
-        # The shortcut signals fire just before the viewer moves, and the
-        # viewer wraps around, so mirror that here.
+        # Runs just before the viewer moves; wrap the same way it does.
         if self.total:
             self.current = (self.current - 1 + delta) % self.total + 1
         self.update_count()
@@ -84,16 +91,6 @@ Then add the slots to the class:
         self.search.setFocus()
         self.search.selectAll()
 ```
-
-and connect the two shortcut signals to `step` instead:
-
-```python
-        self.viewer.nextRequested.connect(lambda: self.step(+1))
-        self.viewer.prevRequested.connect(lambda: self.step(-1))
-```
-
-Also set `self.total = self.current = 0` near the top of `__init__`, so
-++f3++ before the first search doesn't fail.
 
 The shortcuts are built in: ++ctrl+f++ emits `findRequested`, ++f3++ and
 ++shift+f3++ emit `nextRequested` / `prevRequested` and then move between
@@ -109,9 +106,9 @@ matches, and ++esc++ clears the highlight. They are application-wide, so
 
 `filter_search()` hides every line that doesn't match. An empty query shows
 everything again, and new lines are filtered as they arrive, so a live
-stream respects the filter:
+stream respects the filter. One more line at the end of `__init__`:
 
-```python
+```python title="log_window.py · end of __init__"
         self.filter.textChanged.connect(self.viewer.filter_search)
 ```
 
@@ -135,7 +132,7 @@ input straight through.
     class LogWindow(QMainWindow):
         def __init__(self):
             super().__init__()
-            self.total = self.current = 0
+            self.total = self.current = 0  # match counter state
             self.viewer = AnsiTextViewer()
             self.viewer.setLogLevelHighlighting(True)
 
@@ -166,8 +163,7 @@ input straight through.
             self.update_count()
 
         def step(self, delta):
-            # The shortcut signals fire just before the viewer moves, and the
-            # viewer wraps around, so mirror that here.
+            # Runs just before the viewer moves; wrap the same way it does.
             if self.total:
                 self.current = (self.current - 1 + delta) % self.total + 1
             self.update_count()
@@ -190,6 +186,11 @@ input straight through.
     window.show()
     app.exec()
     ```
+
+<figure class="gb-figure gb-hero" markdown>
+![The finished log window: three colored log lines, the search box holding "timeout" with the match highlighted, the counter reading 1/1, and an empty filter box](../assets/guide_log_window.png){ width="640" }
+<figcaption>The assembled file, run as is, after typing <code>timeout</code> into the search box.</figcaption>
+</figure>
 
 ## Next steps
 

@@ -6,7 +6,9 @@ Run with ``QT_QPA_FONTDIR=C:/Windows/Fonts uv run python tools/make_screenshots.
 """
 
 import os
+import re
 import sys
+import textwrap
 from pathlib import Path
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
@@ -15,7 +17,8 @@ from PySide6.QtWidgets import QApplication
 
 from ansi_text_viewer import AnsiTextViewer
 
-OUT = Path(__file__).resolve().parent.parent / "docs" / "assets"
+DOCS = Path(__file__).resolve().parent.parent / "docs"
+OUT = DOCS / "assets"
 
 
 def sgr(code: str) -> str:
@@ -102,9 +105,48 @@ def palette(name: str) -> None:
     shoot(viewer, name)
 
 
+def guide_window(name: str) -> None:
+    """Run the first guide's assembled ``log_window.py`` and grab its window.
+
+    The code is read from the guide itself, so the picture cannot drift from
+    the listing readers copy.
+    """
+    guide = (DOCS / "guides" / "first-log-pane.md").read_text(encoding="utf-8")
+    block = re.search(r"\?\?\? example.*?```python[^\n]*\n(.*?)\n\s*```", guide, re.S)
+    code = textwrap.dedent(block.group(1))
+    code = code.replace("app = QApplication([])", "").replace("app.exec()", "")
+    scope: dict = {}
+    exec(code, scope)  # noqa: S102 - trusted repository docs
+    window = scope["window"]
+    window.viewer.setMonospaceFont("Consolas", 11)
+    window.resize(640, 220)
+    window.search.setText("timeout")
+    shoot(window, name)
+
+
+def themes(name: str) -> None:
+    """Render the same short log in the light and dark themes."""
+    text = (
+        f"{GRAY}09:41:02{RESET} [INFO]  server up\n"
+        f"{GRAY}09:41:05{RESET} [WARN]  retrying connection\n"
+        f"{GRAY}09:41:06{RESET} [ERROR] timeout after 30s\n"
+        "plain text follows the theme\n"
+    )
+    for theme in ("light", "dark"):
+        viewer = AnsiTextViewer()
+        viewer.setTheme(theme)
+        viewer.setLogLevelHighlighting(True)
+        viewer.setMonospaceFont("Consolas", 11)
+        viewer.resize(340, 118)
+        viewer.appendAnsiText(text)
+        shoot(viewer, f"{name}_{theme}.png")
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     hero("dark", "hero_dark.png")
     hero("light", "hero_light.png")
     palette("ansi_palette.png")
-    print("wrote hero_dark.png, hero_light.png, ansi_palette.png")
+    guide_window("guide_log_window.png")
+    themes("theme")
+    print("wrote hero, palette, guide window, and theme screenshots")

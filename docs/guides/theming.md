@@ -7,9 +7,10 @@ covers the knobs for when it has to match your app.
 ## Pick a theme
 
 ```python
-viewer.setTheme("auto")   # follow the OS, live-updates on system changes
-viewer.setTheme("dark")
 viewer.setTheme("light")
+viewer.setTheme("dark")
+# "auto" follows the OS and live-updates on system changes
+viewer.setTheme("auto")
 ```
 
 `theme()` returns the resolved theme (`"light"` or `"dark"`), and
@@ -18,6 +19,20 @@ distinguishable.
 
 Unstyled text uses black on white in light mode and `#d4d4d4` on `#1e1e1e`
 in dark mode, so plain logs always match the background.
+
+<div class="gb-figures" markdown>
+
+<figure class="gb-figure" markdown>
+![The same four log lines in the light theme: colored level markers, gray timestamps, black plain text on white](../assets/theme_light.png){ width="340" }
+<figcaption><code>setTheme("light")</code></figcaption>
+</figure>
+
+<figure class="gb-figure" markdown>
+![The same four log lines in the dark theme: colored level markers, gray timestamps, light gray plain text on near-black](../assets/theme_dark.png){ width="340" }
+<figcaption><code>setTheme("dark")</code></figcaption>
+</figure>
+
+</div>
 
 ## Fix the default colors
 
@@ -30,6 +45,11 @@ from PySide6.QtGui import QColor
 viewer.setDefaultColors(QColor("#e4e8df"), QColor("#121612"))
 viewer.setColorsFollowTheme(True)  # back to automatic
 ```
+
+!!! note "Background is per text run"
+    The default background colors the text itself, not the widget behind it.
+    Pick a theme whose base is close to your background (here `"dark"`), or
+    the text shows as dark bands on a light widget.
 
 ## Change the ANSI palette
 

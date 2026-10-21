@@ -3,6 +3,12 @@
 All notable changes to this project are documented here, newest first.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased]
+
+### Removed
+- CodeQL, OpenSSF Scorecard, and mypy CI checks, and the ClusterFuzzLite
+  fuzzing workflows; hypothesis property tests remain.
+
 ## [0.1.2] - 2026-09-22
 
 ### Added

@@ -39,6 +39,12 @@ viewer.show()
 app.exec()
 ```
 
+<figure class="gb-figure gb-hero" markdown>
+![A colored test run in the viewer: log levels, pytest progress dots, a failed test, a finished progress line, and a summary line](../assets/hero_light.png#only-light){ width="820" }
+![A colored test run in the viewer: log levels, pytest progress dots, a failed test, a finished progress line, and a summary line](../assets/hero_dark.png#only-dark){ width="820" }
+<figcaption>What colored test output looks like in the viewer (sample output with log levels on and a search for <code>timeout</code>).</figcaption>
+</figure>
+
 ANSI style state carries across `appendAnsiText()` calls, exactly like a
 terminal: a `\x1b[31m` in one chunk still colors the next chunk until a
 `\x1b[0m` resets it. Carriage returns overwrite the current line, so

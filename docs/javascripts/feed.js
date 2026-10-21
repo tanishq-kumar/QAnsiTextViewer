@@ -16,9 +16,15 @@
     window.requestAnimationFrame(feed);
   }
 
-  function lineLabel(code) {
-    var n = code.textContent.replace(/\n$/, "").split("\n").length;
-    return n === 1 ? "1 line" : "Lines 1-" + n;
+  function countLines(code) {
+    return code.textContent.replace(/\n$/, "").split("\n").length;
+  }
+
+  // Numbered listings are whole files ("Lines 1-11"); fragments that go
+  // inside other code only report their size ("4 lines").
+  function lineLabel(n, numbered) {
+    if (n === 1) return "1 line";
+    return numbered ? "Lines 1-" + n : n + " lines";
   }
 
   function stripListings() {
@@ -27,14 +33,18 @@
       if (block.parentElement.closest(".highlight")) return;
       var code = block.querySelector("pre > code");
       if (!code) return;
+      var n = countLines(code);
       var head = block.querySelector("span.filename");
       if (!head) {
+        // A one-line command needs no header strip.
+        if (n === 1) return;
         head = document.createElement("span");
         head.className = "filename gb-auto";
+        head.setAttribute("aria-hidden", "true");
         head.textContent = "Listing";
         block.insertBefore(head, block.firstChild);
       }
-      head.setAttribute("data-gb-lines", lineLabel(code));
+      head.setAttribute("data-gb-lines", lineLabel(n, !!block.querySelector(".linenos")));
     });
   }
 

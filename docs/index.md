@@ -98,8 +98,9 @@ Requires Python `>=3.11` and PySide6 `>=6.5.0`.
 | **Non-blocking** | Chunked async appends keep the UI alive through 100k-line bursts. |
 
 !!! tip "Try the demo"
-    `just demo` launches the full showcase: streaming logs, progress bars,
-    bookmarks, sessions, themes, and palette pickers. Prefer pictures?
+    In a clone of the repository, `just demo` (or `uv run python demo.py`)
+    launches the full showcase: streaming logs, progress bars, bookmarks,
+    sessions, themes, and palette pickers. Prefer pictures?
     [Take the visual tour](gallery.md) — every feature annotated.
 
 !!! warning "Untrusted logs"
