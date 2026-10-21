@@ -26,10 +26,10 @@ from ansi_text_viewer import AnsiTextViewer
 
 app = QApplication([])
 viewer = AnsiTextViewer()
+viewer.setTheme("dark")
 viewer.appendAnsiText("\x1b[31mred\x1b[0m plain\n")
 # F3 / Shift+F3 navigates, Esc clears
 viewer.highlight_search("red")
-viewer.setTheme("dark")
 viewer.show()
 app.exec()
 ```
@@ -37,7 +37,7 @@ app.exec()
 <div class="gb-figures" markdown>
 
 <figure class="gb-figure" markdown>
-![Minimal quick-start window](assets/simple_demo_crop.png){ width="420" }
+![Minimal quick-start window](assets/quickstart_output.png){ width="420" }
 <figcaption>That snippet renders this: the red ANSI text, lit up as the search match.</figcaption>
 </figure>
 

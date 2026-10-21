@@ -105,6 +105,20 @@ def palette(name: str) -> None:
     shoot(viewer, name)
 
 
+def quickstart(name: str) -> None:
+    """Run the home page's ``quickstart.py`` listing and grab the viewer."""
+    page = (DOCS / "index.md").read_text(encoding="utf-8")
+    block = re.search(r'```python title="quickstart.py"[^\n]*\n(.*?)\n```', page, re.S)
+    code = block.group(1)
+    code = code.replace("app = QApplication([])", "").replace("app.exec()", "")
+    scope: dict = {}
+    exec(code, scope)  # noqa: S102 - trusted repository docs
+    viewer = scope["viewer"]
+    viewer.setMonospaceFont("Consolas", 11)
+    viewer.resize(420, 110)
+    shoot(viewer, name)
+
+
 def guide_window(name: str) -> None:
     """Run the first guide's assembled ``log_window.py`` and grab its window.
 
@@ -147,6 +161,7 @@ if __name__ == "__main__":
     hero("dark", "hero_dark.png")
     hero("light", "hero_light.png")
     palette("ansi_palette.png")
+    quickstart("quickstart_output.png")
     guide_window("guide_log_window.png")
     themes("theme")
     print("wrote hero, palette, guide window, and theme screenshots")
