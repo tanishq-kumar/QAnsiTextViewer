@@ -29,7 +29,7 @@ from ansi_text_viewer import AnsiTextViewer
 
 app = QApplication([])
 viewer = AnsiTextViewer()
-viewer.setTheme("dark")
+viewer.setTheme("auto")  # follow the OS light/dark setting
 viewer.appendAnsiText("\x1b[31mred\x1b[0m plain\n")
 viewer.highlight_search("red")  # F3 / Shift+F3 navigates, Esc clears
 viewer.show()

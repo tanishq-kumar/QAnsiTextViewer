@@ -74,10 +74,10 @@ def hero(theme: str, name: str) -> None:
     shoot(viewer, name)
 
 
-def palette(name: str) -> None:
+def palette(name: str, theme: str) -> None:
     """Render styles, the 16 base colors, 256-color and truecolor."""
     viewer = AnsiTextViewer()
-    viewer.setTheme("dark")
+    viewer.setTheme(theme)
     viewer.setMonospaceFont("Consolas", 11)
     viewer.resize(400, 222)
     styles = [("1", "bold"), ("3", "italic"), ("4", "underline")]
@@ -103,21 +103,27 @@ def palette(name: str) -> None:
         f"{sgr('30;42')} PASS {RESET}",
     ]
     viewer.appendAnsiText("\n".join(lines) + "\n")
-    shoot(viewer, name)
+    shoot(viewer, suffixed(name, theme))
 
 
-def quickstart(name: str) -> None:
-    """Run the home page's ``quickstart.py`` listing and grab the viewer."""
+def quickstart(name: str, theme: str) -> None:
+    """Run the home page's ``quickstart.py`` listing and grab the viewer.
+
+    The listing asks for ``setTheme("auto")``, which follows the OS; each
+    pass renders the case where the OS is in *theme*.
+    """
     page = (DOCS / "index.md").read_text(encoding="utf-8")
     block = re.search(r'```python title="quickstart.py"[^\n]*\n(.*?)\n```', page, re.S)
     code = block.group(1)
     code = code.replace("app = QApplication([])", "").replace("app.exec()", "")
+    assert 'setTheme("auto")' in code, "quickstart no longer uses the auto theme"
+    code = code.replace('setTheme("auto")', f'setTheme("{theme}")')
     scope: dict = {}
     exec(code, scope)  # noqa: S102 - trusted repository docs
     viewer = scope["viewer"]
     viewer.setMonospaceFont("Consolas", 11)
     viewer.resize(420, 110)
-    shoot(viewer, name)
+    shoot(viewer, suffixed(name, theme))
 
 
 def guide_window(name: str, theme: str = "light") -> None:
@@ -161,10 +167,10 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     hero("dark", "hero_dark.png")
     hero("light", "hero_light.png")
-    palette("ansi_palette.png")
-    quickstart("quickstart_output.png")
     for theme in ("light", "dark"):
         use_theme(app, theme)
+        palette("ansi_palette.png", theme)
+        quickstart("quickstart_output.png", theme)
         guide_window("guide_log_window.png", theme)
     use_theme(app, "light")
     themes("theme")

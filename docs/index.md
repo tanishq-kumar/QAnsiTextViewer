@@ -26,7 +26,7 @@ from ansi_text_viewer import AnsiTextViewer
 
 app = QApplication([])
 viewer = AnsiTextViewer()
-viewer.setTheme("dark")
+viewer.setTheme("auto")  # follow the OS light/dark setting
 viewer.appendAnsiText("\x1b[31mred\x1b[0m plain\n")
 # F3 / Shift+F3 navigates, Esc clears
 viewer.highlight_search("red")
@@ -37,12 +37,14 @@ app.exec()
 <div class="gb-figures" markdown>
 
 <figure class="gb-figure" markdown>
-![Minimal quick-start window](assets/quickstart_output.png){ width="420" }
+![Minimal quick-start window](assets/quickstart_output.png#only-light){ width="420" }
+![Minimal quick-start window](assets/quickstart_output_dark.png#only-dark){ width="420" }
 <figcaption>That snippet renders this: the red ANSI text, lit up as the search match.</figcaption>
 </figure>
 
 <figure class="gb-figure" markdown>
-![SGR styles, the 16 standard and bright foreground colors, a 256-color ramp and grayscale, truecolor text and a truecolor gradient, and colored status badges](assets/ansi_palette.png){ width="400" }
+![SGR styles, the 16 standard and bright foreground colors, a 256-color ramp and grayscale, truecolor text and a truecolor gradient, and colored status badges](assets/ansi_palette.png#only-light){ width="400" }
+![SGR styles, the 16 standard and bright foreground colors, a 256-color ramp and grayscale, truecolor text and a truecolor gradient, and colored status badges](assets/ansi_palette_dark.png#only-dark){ width="400" }
 <figcaption>Styles, the 16 base colors, 256-color and truecolor, each line terminated so nothing bleeds. <a href="gallery/#ansi-colors-isolated-per-line">Visual tour</a></figcaption>
 </figure>
 
