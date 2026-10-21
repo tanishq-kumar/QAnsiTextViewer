@@ -278,7 +278,7 @@ class AnsiTextViewer(QPlainTextEdit):
         """Adopt the global ``QApplication`` font as a one-shot snapshot.
 
         Later application-font changes are not tracked; call again or use
-        :meth:`setMonospaceFont` to switch back.
+        ``setMonospaceFont()`` to switch back.
 
         Examples:
             >>> viewer.useSystemFont()
@@ -475,7 +475,7 @@ class AnsiTextViewer(QPlainTextEdit):
         self.__custom_rules.append(rule)
 
     def remove_highlight_rule(self, rule: HighlightRule) -> None:
-        """Unregister a custom rule added with :meth:`add_highlight_rule`."""
+        """Unregister a custom rule added with ``add_highlight_rule()``."""
         if rule in self.__custom_rules:
             self.__custom_rules.remove(rule)
 
@@ -1036,7 +1036,7 @@ class AnsiTextViewer(QPlainTextEdit):
             self._apply_theme(self.__theme)
 
     def setClearOnStart(self, enabled: bool):
-        """Clear the view when :meth:`beginNewStream` starts a stream."""
+        """Clear the view when ``beginNewStream()`` starts a stream."""
         self.__clear_on_start = _to_bool(enabled)
 
     def isClearOnStart(self) -> bool:
@@ -1188,7 +1188,7 @@ class AnsiTextViewer(QPlainTextEdit):
         return path
 
     def loadSession(self, path: str) -> str:
-        """Restore a session written by :meth:`saveSession`.
+        """Restore a session written by ``saveSession()``.
 
         Files over 10MB or with invalid content are rejected.
 

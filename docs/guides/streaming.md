@@ -116,4 +116,4 @@ viewer.setMaxLineLength(4_000)
 
 Measured numbers are in [Limits and performance](../api/viewer.md#limits-and-performance).
 For output you don't control, also read the note on
-[untrusted logs](../index.md#api-reference).
+[untrusted logs](../index.md#what-it-does).

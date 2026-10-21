@@ -43,3 +43,19 @@ on that line (`toggleBookmarkAtY()` refuses invisible blocks).
     options:
       show_root_heading: true
       members: true
+
+## Viewer event handlers
+
+`AnsiTextViewer` overrides these Qt handlers to implement ++ctrl++ + wheel
+zoom, ++ctrl++ + click links, the right-click menu, and the gutter. Qt calls
+them for you; apps rarely call or override them.
+
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.wheelEvent
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.mousePressEvent
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.mouseMoveEvent
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.contextMenuEvent
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.resizeEvent
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.lineNumberAreaWidth
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.updateLineNumberAreaWidth
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.updateLineNumberArea
+::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.lineNumberAreaPaintEvent

@@ -6,11 +6,8 @@ social:
 
 # QAnsiTextViewer
 
-A Qt log-viewer widget for Python that renders ANSI escape codes and colored
-terminal output — tail logs, search them, bookmark lines, and save sessions,
-all behind a typed one-widget API. Built on PySide6 (and compatible with PyQt),
-it parses SGR, 256-color, and truecolor sequences, handles `\r` progress lines,
-and stays responsive through 100k-line bursts via chunked async appends.
+A drop-in Qt widget for Python that renders ANSI-colored terminal output, so
+you can tail logs, search them, bookmark lines, and save sessions.
 { .gb-lede }
 
 <figure class="gb-figure gb-hero" markdown>
@@ -84,7 +81,7 @@ Requires Python `>=3.11` and PySide6 `>=6.5.0`.
 - [Your first log pane](guides/first-log-pane.md) Put the viewer in a window with a search box, match counter, and filter.
 - [Streaming process output](guides/streaming.md) Tail a subprocess, dump huge logs without freezing, pause and resume.
 - [Themes and colors](guides/theming.md) Light, dark, OS-following auto, plus custom ANSI palettes.
-- [Viewer API](api/viewer.md) Every method, signal, and shortcut, with examples.
+- [API reference](api/viewer.md) Every viewer method, signal, and shortcut; highlight rules and internals sit beside it under Reference.
 
 </div>
 
@@ -92,6 +89,9 @@ Requires Python `>=3.11` and PySide6 `>=6.5.0`.
 
 | Feature | In short |
 | ------- | -------- |
+| **One widget** | A typed `QWidget`; every behavior has a setter/getter pair. |
+| **ANSI parsing** | SGR, 256-color, and truecolor sequences; `\r` progress lines overwrite in place. |
+| **PySide6 and PyQt** | Built on PySide6, and compatible with PyQt through the same Qt API. |
 | **Search & filter** | Highlight with regex, jump with ++f3++, hide non-matching lines. |
 | **Bookmarks** | Gutter click, list panel, next/previous navigation, saved in sessions. |
 | **Themes** | Light, dark, OS-following auto, plus custom ANSI palettes. |
@@ -101,14 +101,6 @@ Requires Python `>=3.11` and PySide6 `>=6.5.0`.
     `just demo` launches the full showcase: streaming logs, progress bars,
     bookmarks, sessions, themes, and palette pickers. Prefer pictures?
     [Take the visual tour](gallery.md) — every feature annotated.
-
-## API reference
-
-| Page | Contents |
-| ---- | -------- |
-| [Viewer](api/viewer.md) | `AnsiTextViewer` — every method, with examples |
-| [Highlighting](api/highlighting.md) | `Span`, `HighlightRule`, all built-in rules |
-| [Internals](api/internals.md) | ANSI decoding, search engine, gutter |
 
 !!! warning "Untrusted logs"
     Log content is untrusted by design. Links open only on ++ctrl++ + click,
