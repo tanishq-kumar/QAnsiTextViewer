@@ -299,6 +299,40 @@ body {
   }
 }
 
+/* Running head never truncates a word: below 1220px the logo carries the
+   name and the head prints the listing; on phones, where Material hides the
+   logo, the name returns with the page name stacked under it. */
+@media screen and (max-width: 76.234375em) {
+  .gb-head__name,
+  .gb-head__version {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 44.984375em) {
+  .gb-head__title {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0;
+    line-height: 1.2;
+  }
+
+  .gb-head__name {
+    display: block;
+    font-size: 0.8rem;
+  }
+
+  .gb-head__listing {
+    font-size: 0;
+    white-space: normal;
+  }
+
+  .gb-head__listing .gb-head__page {
+    font-size: 0.6rem;
+  }
+}
+
 /* ---- Navigation ------------------------------------------------------ */
 
 .md-nav__item--section > .md-nav__link,
@@ -359,6 +393,7 @@ body {
 }
 
 .md-skip {
+  border-radius: 0;
   font-size: 0.7rem;
   background: var(--gb-ink);
   color: var(--gb-paper);
@@ -369,6 +404,37 @@ body {
   color: var(--gb-mute);
   background: var(--gb-band-soft);
 }
+
+/* Page contents: sections lead, members read as code identifiers */
+.md-nav--secondary > .md-nav__list > .md-nav__item > .md-nav__link {
+  font-weight: 700;
+  margin-top: 0.7em;
+}
+
+.md-nav--secondary .md-nav__list .md-nav__list {
+  margin-left: 0.2rem;
+  padding-left: 0.6rem;
+  border-left: 1px dashed var(--gb-hole);
+}
+
+.md-nav--secondary .md-nav__list .md-nav__list .md-nav__link {
+  margin-top: 0.15em;
+  font-family: var(--md-code-font-family);
+  font-size: 0.68rem;
+  color: var(--gb-mute);
+}
+
+.md-nav--secondary .md-nav__list .md-nav__list .md-nav__link:is(:hover, :focus),
+.md-nav--secondary .md-nav__list .md-nav__list .md-nav__link--active {
+  color: var(--gb-green);
+}
+
+.md-nav--secondary .md-ellipsis {
+  white-space: normal;
+  overflow: visible;
+  overflow-wrap: anywhere;
+}
+
 
 /* ---- Reading column -------------------------------------------------- */
 
@@ -403,6 +469,13 @@ body {
 .md-typeset h3 {
   font-size: 1.05rem;
   margin: 1.8em 0 0.5em;
+}
+
+@media screen and (max-width: 44.984375em) {
+  .md-typeset h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.6rem;
+  }
 }
 
 .md-typeset a {
@@ -440,15 +513,23 @@ body {
   word-break: normal;
 }
 
+/* Keycaps: a printed rule, no block shadow, no glyph icons */
 .md-typeset kbd {
   font-family: var(--md-code-font-family);
   font-weight: 700;
   background: var(--gb-paper);
   color: var(--gb-ink);
+  border: 1px solid var(--gb-edge);
+  border-bottom-width: 2px;
   border-radius: 0;
-  box-shadow:
-    0 0 0 1px var(--gb-edge),
-    0 2px 0 1px var(--gb-edge);
+  box-shadow: none;
+}
+
+/* Beats Material's .keys .key-*::before glyphs */
+.md-typeset .keys kbd[class*="key-"]::before,
+.md-typeset .keys kbd[class*="key-"]::after {
+  content: none;
+  padding: 0;
 }
 
 /* ---- Listings (code blocks) ------------------------------------------ */
@@ -478,6 +559,8 @@ body {
   padding: 0 0 0 1rem;
 }
 
+/* Bands stop at the last line (content-box) and travel with code that
+   scrolls sideways (local). */
 .md-typeset pre > code,
 .md-typeset .highlighttable .linenodiv pre {
   padding-block: 0.6rem;
@@ -489,7 +572,15 @@ body {
   );
   background-position: 0 0.6rem;
   background-repeat: repeat-y;
+  background-clip: content-box;
+  background-attachment: local;
   border-radius: 0;
+}
+
+/* Header cell that holds a titled listing's file strip */
+.md-typeset .highlighttable th.filename {
+  padding: 0;
+  background: transparent;
 }
 
 .md-typeset .highlighttable .linenodiv {
@@ -571,6 +662,16 @@ body {
   box-shadow: none;
 }
 
+/* Every table shares the listings' right edge */
+.md-typeset .md-typeset__table {
+  display: block;
+}
+
+.md-typeset .md-typeset__table table:not([class]) {
+  display: table;
+  width: 100%;
+}
+
 /* ---- Notes, details, tabs -------------------------------------------- */
 
 .md-typeset .admonition,
@@ -582,12 +683,11 @@ body {
   background: var(--gb-paper);
 }
 
+/* Note titles are prose: reading face, sentence case */
 .md-typeset .admonition-title,
 .md-typeset summary {
-  font-family: var(--md-code-font-family);
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
   color: var(--gb-green);
   background: var(--gb-band) !important;
   border: 0 !important;
@@ -666,17 +766,65 @@ body {
   color: inherit;
 }
 
-.md-typeset .gb-figure figcaption,
-.md-typeset .gb-caption {
-  font-family: var(--md-code-font-family);
-  font-size: 0.66rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+.md-typeset .gb-figure figcaption {
+  font-style: normal;
+  font-size: 0.75rem;
   color: var(--gb-mute);
   margin-top: 0.6rem;
   max-width: none;
   text-align: left;
+}
+
+/* Printouts side by side share the row evenly */
+.md-typeset .gb-figures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem 1.6rem;
+  align-items: flex-start;
+}
+
+.md-typeset .gb-figures > figure.gb-figure {
+  flex: 1 1 15rem;
+  max-width: none;
+  margin: 0;
+}
+
+.md-typeset .gb-figures > figure.gb-figure img {
+  width: 100%;
+}
+
+/* The hero printout spans the full measure */
+.md-typeset figure.gb-hero {
+  margin: 1.6em 0 0;
+}
+
+.md-typeset figure.gb-hero img {
+  width: 100%;
+}
+
+/* Keep Material's per-scheme image switching inside figures */
+[data-md-color-scheme="default"] .md-typeset .gb-figure img[src$="#only-dark"],
+[data-md-color-scheme="slate"] .md-typeset .gb-figure img[src$="#only-light"] {
+  display: none;
+}
+
+/* Phones: the hero keeps its native size and scrolls sideways instead of
+   shrinking to unreadable text. */
+@media screen and (max-width: 44.984375em) {
+  .md-typeset figure.gb-figure.gb-hero {
+    overflow-x: auto;
+  }
+
+  .md-typeset figure.gb-figure.gb-hero img {
+    width: 820px;
+    max-width: none;
+  }
+
+  .md-typeset figure.gb-figure.gb-hero figcaption {
+    position: sticky;
+    left: 0;
+    max-width: calc(100vw - 2 * var(--gb-rail) - 1.6rem);
+  }
 }
 
 /* ---- Home: quick start beside its printout --------------------------- */
@@ -693,8 +841,17 @@ body {
   margin-block: 0;
 }
 
-.md-typeset .gb-split .gb-figure img {
-  max-width: min(100%, 420px);
+/* Tighter run-in so the hero and listing reach the first screen */
+.md-typeset .gb-lede {
+  margin-bottom: 0;
+}
+
+.md-typeset .gb-lede + h2 {
+  margin-top: 1.4em;
+}
+
+.md-typeset .gb-split + h2 {
+  margin-top: 1.8em;
 }
 
 /* "Next" rows: an index printed under the listing, not cards */
@@ -786,237 +943,5 @@ body {
   color: var(--gb-ink);
   border: 1px solid var(--gb-edge);
   box-shadow: 0 3px 10px var(--gb-shadow);
-}
-
-/* ---- Review fixes ---------------------------------------------------- */
-
-/* Header cell that holds a titled listing's file strip */
-.md-typeset .highlighttable th.filename {
-  padding: 0;
-  background: transparent;
-}
-
-/* Bands stop at the last line, not in the bottom padding */
-.md-typeset pre > code,
-.md-typeset .highlighttable .linenodiv pre {
-  background-clip: content-box, border-box;
-  background-image:
-    repeating-linear-gradient(
-      to bottom,
-      var(--gb-band) 0 2.4rem,
-      transparent 2.4rem 4.8rem
-    ),
-    none;
-}
-
-/* Every table shares the listings' right edge */
-.md-typeset .md-typeset__table {
-  display: block;
-}
-
-.md-typeset .md-typeset__table table:not([class]) {
-  display: table;
-  width: 100%;
-}
-
-/* Captions and note titles are prose: reading face, sentence case */
-.md-typeset .gb-figure figcaption,
-.md-typeset .gb-caption,
-.md-typeset .admonition-title,
-.md-typeset summary {
-  font-family: var(--md-text-font-family);
-  font-style: normal;
-  letter-spacing: 0;
-  text-transform: none;
-}
-
-.md-typeset .gb-figure figcaption {
-  font-size: 0.75rem;
-  font-weight: 400;
-  color: var(--gb-mute);
-}
-
-.md-typeset .admonition-title,
-.md-typeset summary {
-  font-size: 0.8rem;
-}
-
-/* Keycaps: a printed rule, no block shadow, no glyph icons */
-.md-typeset kbd {
-  box-shadow: none;
-  border: 1px solid var(--gb-edge);
-  border-bottom-width: 2px;
-}
-
-.md-typeset .keys kbd::before,
-.md-typeset .keys kbd::after {
-  content: none;
-}
-
-/* Tighter run-in so the listing reaches the first screen */
-.md-typeset .gb-lede {
-  margin-bottom: 0;
-}
-
-.md-content__inner > h1:first-child + .gb-lede + h2,
-.md-typeset .gb-lede + h2 {
-  margin-top: 1.4em;
-}
-
-@media screen and (max-width: 44.984375em) {
-  .md-typeset h1 {
-    font-size: 1.8rem;
-    margin-bottom: 0.6rem;
-  }
-}
-
-@media screen and (max-width: 76.234375em) {
-  .gb-head__version {
-    display: none;
-  }
-}
-
-.md-typeset .gb-split + h2 {
-  margin-top: 1.8em;
-}
-
-/* Two printouts side by side under the quick-start listing */
-.md-typeset .gb-figures {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.2rem 1.6rem;
-  align-items: flex-start;
-}
-
-.md-typeset .gb-figures > figure.gb-figure {
-  margin: 0;
-  flex: 0 1 auto;
-  max-width: min(100%, 380px);
-}
-
-.md-typeset .gb-figures > figure.gb-figure:last-child {
-  max-width: min(100%, 270px);
-}
-
-/* Beat Material's .keys .key-*::before glyphs */
-.md-typeset .keys kbd[class*="key-"]::before,
-.md-typeset .keys kbd[class*="key-"]::after {
-  content: none;
-  padding: 0;
-}
-
-/* Running head never truncates a word: below 1220px the logo carries the
-   name and the head prints the listing; on phones, where Material hides the
-   logo, the name returns with the page name stacked under it. */
-@media screen and (max-width: 76.234375em) {
-  .gb-head__name {
-    display: none;
-  }
-}
-
-@media screen and (max-width: 44.984375em) {
-  .gb-head__title {
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 0;
-    line-height: 1.2;
-  }
-
-  .gb-head__name {
-    display: block;
-    font-size: 0.8rem;
-  }
-
-  .gb-head__listing {
-    font-size: 0;
-    white-space: normal;
-  }
-
-  .gb-head__listing .gb-head__page {
-    font-size: 0.6rem;
-  }
-}
-
-/* Phones: the hero keeps its native size and scrolls sideways instead of
-   shrinking to unreadable text. */
-@media screen and (max-width: 44.984375em) {
-  .md-typeset figure.gb-figure.gb-hero {
-    overflow-x: auto;
-  }
-
-  .md-typeset figure.gb-figure.gb-hero img {
-    width: 820px;
-    max-width: none;
-  }
-
-  .md-typeset figure.gb-figure.gb-hero figcaption {
-    position: sticky;
-    left: 0;
-    max-width: calc(100vw - 2 * var(--gb-rail) - 1.6rem);
-  }
-}
-
-/* Bands travel with code that scrolls sideways */
-.md-typeset pre > code {
-  background-attachment: local;
-}
-
-/* Both printouts share the row evenly */
-.md-typeset .gb-figures > figure.gb-figure,
-.md-typeset .gb-figures > figure.gb-figure:last-child {
-  flex: 1 1 15rem;
-  max-width: none;
-}
-
-.md-typeset .gb-figures > figure.gb-figure img {
-  width: 100%;
-  max-width: 100%;
-}
-
-/* The hero printout spans the full measure */
-.md-typeset figure.gb-hero {
-  margin: 1.6em 0 0;
-}
-
-.md-typeset figure.gb-hero img {
-  width: 100%;
-  height: auto;
-}
-
-/* Keep Material's per-scheme image switching inside figures */
-[data-md-color-scheme="default"] .md-typeset .gb-figure img[src$="#only-dark"],
-[data-md-color-scheme="slate"] .md-typeset .gb-figure img[src$="#only-light"] {
-  display: none;
-}
-
-/* Page contents: sections lead, members read as code identifiers */
-.md-nav--secondary > .md-nav__list > .md-nav__item > .md-nav__link {
-  font-weight: 700;
-  margin-top: 0.7em;
-}
-
-.md-nav--secondary .md-nav__list .md-nav__list {
-  margin-left: 0.2rem;
-  padding-left: 0.6rem;
-  border-left: 1px dashed var(--gb-hole);
-}
-
-.md-nav--secondary .md-nav__list .md-nav__list .md-nav__link {
-  margin-top: 0.15em;
-  font-family: var(--md-code-font-family);
-  font-size: 0.68rem;
-  color: var(--gb-mute);
-}
-
-.md-nav--secondary .md-nav__list .md-nav__list .md-nav__link:is(:hover, :focus),
-.md-nav--secondary .md-nav__list .md-nav__list .md-nav__link--active {
-  color: var(--gb-green);
-}
-
-.md-nav--secondary .md-ellipsis {
-  white-space: normal;
-  overflow: visible;
-  overflow-wrap: anywhere;
 }
 
