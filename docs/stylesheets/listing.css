@@ -1,0 +1,936 @@
+/* Green-bar listing: the docs printed on fan-fold line-printer paper.
+   The frame (rails, running head, banded code and tables) carries the
+   world; the reading column stays plain paper. */
+
+:root,
+[data-md-color-scheme="default"] {
+  --gb-paper: #fbfbf6;
+  --gb-ink: #222222;
+  --gb-mute: #555a52;
+  --gb-band: #dcebd6;
+  --gb-band-soft: #eaf3e6;
+  --gb-band-strong: #bcd9b3;
+  --gb-edge: #c3d3bd;
+  --gb-hole: #9aa59a;
+  --gb-hole-fill: #e4e6dd;
+  --gb-green: #2e6b3a;
+  --gb-amber: #8a4b00;
+  --gb-amber-band: #f4e7cf;
+  --gb-shadow: rgba(34, 40, 30, 0.1);
+
+  --md-primary-fg-color: var(--gb-green);
+  --md-primary-fg-color--light: #4d8a58;
+  --md-primary-fg-color--dark: #1f4d29;
+  --md-primary-bg-color: var(--gb-paper);
+  --md-primary-bg-color--light: rgba(251, 251, 246, 0.7);
+  --md-accent-fg-color: var(--gb-green);
+  --md-accent-fg-color--transparent: rgba(46, 107, 58, 0.1);
+
+  --md-default-bg-color: var(--gb-paper);
+  --md-default-fg-color: var(--gb-ink);
+  --md-default-fg-color--light: var(--gb-mute);
+  --md-default-fg-color--lighter: rgba(34, 34, 34, 0.32);
+  --md-default-fg-color--lightest: rgba(34, 34, 34, 0.08);
+
+  --md-typeset-color: var(--gb-ink);
+  --md-typeset-a-color: var(--gb-green);
+  --md-typeset-mark-color: var(--gb-band-strong);
+  --md-typeset-table-color: var(--gb-edge);
+
+  --md-code-bg-color: var(--gb-paper);
+  --md-code-fg-color: var(--gb-ink);
+  --md-code-hl-color: rgba(46, 107, 58, 0.18);
+  --md-code-hl-keyword-color: #1f5a2c;
+  --md-code-hl-string-color: #8a4b12;
+  --md-code-hl-comment-color: #5a6357;
+  --md-code-hl-number-color: #1d5d8f;
+  --md-code-hl-function-color: #222222;
+  --md-code-hl-name-color: #222222;
+  --md-code-hl-constant-color: #6b3fa0;
+  --md-code-hl-special-color: #a3322a;
+  --md-code-hl-operator-color: #3d423b;
+  --md-code-hl-punctuation-color: #555a52;
+  --md-code-hl-variable-color: #222222;
+  --md-code-hl-generic-color: #555a52;
+
+  --md-footer-bg-color: var(--gb-band-soft);
+  --md-footer-bg-color--dark: var(--gb-band);
+  --md-footer-fg-color: var(--gb-ink);
+  --md-footer-fg-color--light: var(--gb-mute);
+  --md-footer-fg-color--lighter: var(--gb-mute);
+
+  --md-admonition-bg-color: var(--gb-paper);
+  --md-shadow-z1: 0 2px 6px var(--gb-shadow);
+  --md-shadow-z2: 0 4px 14px var(--gb-shadow);
+  --md-shadow-z3: 0 8px 24px var(--gb-shadow);
+
+  --gb-pitch: 36px;
+  --gb-rail: 44px;
+  --gb-hole-r: 6px;
+  --gb-feed: 0px;
+}
+
+[data-md-color-scheme="slate"] {
+  --gb-paper: #121612;
+  --gb-ink: #e4e8df;
+  --gb-mute: #a9b3a4;
+  --gb-band: #1c261c;
+  --gb-band-soft: #171e17;
+  --gb-band-strong: #2c412d;
+  --gb-edge: #2f3d2f;
+  --gb-hole: #4b574b;
+  --gb-hole-fill: #0a0d0a;
+  --gb-green: #8fd19e;
+  --gb-amber: #f0c27a;
+  --gb-amber-band: #2c2416;
+  --gb-shadow: rgba(0, 0, 0, 0.4);
+
+  --md-hue: 120;
+  --md-primary-fg-color: var(--gb-green);
+  --md-primary-fg-color--light: #b4e3be;
+  --md-primary-fg-color--dark: #6fb880;
+  --md-primary-bg-color: var(--gb-paper);
+  --md-accent-fg-color: var(--gb-green);
+  --md-accent-fg-color--transparent: rgba(143, 209, 158, 0.12);
+
+  --md-default-bg-color: var(--gb-paper);
+  --md-default-fg-color: var(--gb-ink);
+  --md-default-fg-color--light: var(--gb-mute);
+  --md-default-fg-color--lighter: rgba(228, 232, 223, 0.32);
+  --md-default-fg-color--lightest: rgba(228, 232, 223, 0.08);
+
+  --md-typeset-color: var(--gb-ink);
+  --md-typeset-a-color: var(--gb-green);
+  --md-typeset-mark-color: var(--gb-band-strong);
+  --md-typeset-table-color: var(--gb-edge);
+
+  --md-code-bg-color: var(--gb-paper);
+  --md-code-fg-color: var(--gb-ink);
+  --md-code-hl-color: rgba(143, 209, 158, 0.16);
+  --md-code-hl-keyword-color: #8fd19e;
+  --md-code-hl-string-color: #e0b27a;
+  --md-code-hl-comment-color: #8f9a8b;
+  --md-code-hl-number-color: #8cc2ef;
+  --md-code-hl-function-color: #e4e8df;
+  --md-code-hl-name-color: #e4e8df;
+  --md-code-hl-constant-color: #c9a6f0;
+  --md-code-hl-special-color: #f28b82;
+  --md-code-hl-operator-color: #c8cfc3;
+  --md-code-hl-punctuation-color: #a9b3a4;
+  --md-code-hl-variable-color: #e4e8df;
+  --md-code-hl-generic-color: #a9b3a4;
+
+  --md-footer-bg-color: var(--gb-band-soft);
+  --md-footer-bg-color--dark: var(--gb-band);
+  --md-footer-fg-color: var(--gb-ink);
+  --md-footer-fg-color--light: var(--gb-mute);
+  --md-footer-fg-color--lighter: var(--gb-mute);
+  --md-admonition-bg-color: var(--gb-paper);
+}
+
+/* ---- Browser surfaces ------------------------------------------------ */
+
+html {
+  scrollbar-color: var(--gb-hole) var(--gb-paper);
+}
+
+body {
+  background: var(--gb-paper);
+  caret-color: var(--gb-green);
+}
+
+::selection {
+  background: var(--gb-band-strong);
+  color: var(--gb-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--gb-green);
+  outline-offset: 2px;
+}
+
+/* ---- Tractor-feed rails ---------------------------------------------- */
+
+/* Below 1220px the rails narrow to half-holes rather than vanish. */
+@media screen and (max-width: 76.234375em) {
+  :root,
+  [data-md-color-scheme] {
+    --gb-rail: 14px;
+    --gb-hole-r: 3px;
+  }
+}
+
+body {
+  padding-inline: var(--gb-rail);
+}
+
+.gb-feed {
+  display: block;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: var(--gb-rail);
+  z-index: 5;
+  pointer-events: none;
+  background-color: var(--gb-paper);
+  background-image: radial-gradient(
+    circle at 50% calc(var(--gb-pitch) / 2),
+    var(--gb-hole-fill) 0 var(--gb-hole-r),
+    var(--gb-hole) var(--gb-hole-r) calc(var(--gb-hole-r) + 1px),
+    transparent calc(var(--gb-hole-r) + 1.5px)
+  );
+  background-size: 100% var(--gb-pitch);
+  background-position: 0 var(--gb-feed);
+}
+
+/* Half-holes: on narrow rails the punch sits on the outer edge. */
+@media screen and (max-width: 76.234375em) {
+  .gb-feed--left {
+    background-position: -7px var(--gb-feed);
+  }
+
+  .gb-feed--right {
+    background-position: 7px var(--gb-feed);
+  }
+}
+
+.gb-feed--left {
+  left: 0;
+  border-right: 1px dashed var(--gb-hole);
+}
+
+.gb-feed--right {
+  right: 0;
+  border-left: 1px dashed var(--gb-hole);
+}
+
+/* ---- Running head ---------------------------------------------------- */
+
+.md-header.gb-head {
+  background: var(--gb-paper);
+  color: var(--gb-ink);
+  box-shadow: none;
+  border-bottom: 2px solid var(--gb-green);
+}
+
+.md-header.gb-head .md-header__inner {
+  height: 2.8rem;
+}
+
+.md-header.gb-head .md-logo img,
+.md-header.gb-head .md-logo svg {
+  height: 1.3rem;
+  width: auto;
+}
+
+.gb-head__title {
+  display: flex;
+  align-items: baseline;
+  gap: 1.2rem;
+  min-width: 0;
+  font-size: 0.8rem;
+  line-height: 2.8rem;
+}
+
+.gb-head__name {
+  font-weight: 700;
+  color: var(--gb-ink) !important;
+  white-space: nowrap;
+}
+
+.gb-head__listing,
+.gb-head__version {
+  font-family: var(--md-code-font-family);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gb-mute);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gb-head__version {
+  margin-left: auto;
+  padding-right: 0.4rem;
+  font-variant-numeric: tabular-nums;
+}
+
+@media screen and (max-width: 44.984375em) {
+  .gb-head__title {
+    gap: 0.6rem;
+  }
+
+  .gb-head__version {
+    display: none;
+  }
+}
+
+.md-header.gb-head .md-header__button,
+.md-header.gb-head .md-source {
+  color: var(--gb-ink);
+}
+
+.md-header.gb-head .md-source__repository {
+  font-family: var(--md-code-font-family);
+  font-weight: 700;
+}
+
+@media screen and (min-width: 60em) {
+  .md-search__form {
+    background: var(--gb-band-soft);
+    border: 1px solid var(--gb-edge);
+    border-radius: 0;
+  }
+
+  .md-search__form:hover {
+    background: var(--gb-band);
+  }
+
+  .md-search__input,
+  .md-search__input::placeholder,
+  .md-search__icon {
+    color: var(--gb-ink);
+  }
+
+  .md-search__input::placeholder {
+    color: var(--gb-mute);
+  }
+}
+
+/* ---- Navigation ------------------------------------------------------ */
+
+.md-nav__item--section > .md-nav__link,
+.md-nav__item--section > label.md-nav__link {
+  font-family: var(--md-code-font-family);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gb-green) !important;
+}
+
+.md-nav {
+  font-size: 0.74rem;
+}
+
+.md-nav__link {
+  margin-top: 0.3em;
+}
+
+@media screen and (min-width: 76.25em) {
+  .md-nav--primary .md-nav__link--active {
+    font-weight: 700;
+    color: var(--gb-ink);
+    background: var(--gb-band);
+    margin-inline: -0.5rem;
+    padding-inline: 0.5rem;
+  }
+}
+
+.md-nav__link--active,
+.md-nav__link:is(:focus, :hover) {
+  color: var(--gb-green);
+}
+
+.md-nav--secondary .md-nav__link--active {
+  font-weight: 700;
+}
+
+@media screen and (min-width: 76.25em) {
+  .md-nav--primary > .md-nav__title {
+    display: none;
+  }
+}
+
+.md-nav__title {
+  font-family: var(--md-code-font-family);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gb-mute);
+}
+
+/* Phone drawer head: paper, not a green slab */
+.md-nav--primary .md-nav__title[for="__drawer"] {
+  background: var(--gb-paper);
+  color: var(--gb-ink);
+  border-bottom: 2px solid var(--gb-green);
+}
+
+.md-skip {
+  font-size: 0.7rem;
+  background: var(--gb-ink);
+  color: var(--gb-paper);
+}
+
+.md-search-result__meta {
+  font-size: 0.7rem;
+  color: var(--gb-mute);
+  background: var(--gb-band-soft);
+}
+
+/* ---- Reading column -------------------------------------------------- */
+
+.md-typeset {
+  font-size: 0.85rem;
+  line-height: 1.65;
+  font-variant-numeric: tabular-nums;
+}
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4 {
+  color: var(--gb-ink);
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+.md-typeset h1 {
+  font-size: 2.2rem;
+  line-height: 1.18;
+  letter-spacing: -0.015em;
+  margin: 0 0 0.8rem;
+}
+
+.md-typeset h2 {
+  font-size: 1.35rem;
+  line-height: 1.3;
+  margin: 2.4em 0 0.6em;
+}
+
+.md-typeset h3 {
+  font-size: 1.05rem;
+  margin: 1.8em 0 0.5em;
+}
+
+.md-typeset a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: color-mix(in srgb, var(--gb-green) 45%, transparent);
+}
+
+.md-typeset a:is(:hover, :focus) {
+  color: var(--gb-green);
+  text-decoration-color: var(--gb-green);
+  text-decoration-thickness: 2px;
+}
+
+.md-typeset .headerlink,
+.md-typeset .md-button {
+  text-decoration: none;
+}
+
+.md-typeset .gb-lede {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  max-width: 36em;
+  color: var(--gb-ink);
+}
+
+.md-typeset :not(pre) > code {
+  font-size: 0.86em;
+  font-weight: 700;
+  color: var(--gb-ink);
+  background: var(--gb-band-soft);
+  border-radius: 0;
+  padding: 0.05em 0.3em;
+  word-break: normal;
+}
+
+.md-typeset kbd {
+  font-family: var(--md-code-font-family);
+  font-weight: 700;
+  background: var(--gb-paper);
+  color: var(--gb-ink);
+  border-radius: 0;
+  box-shadow:
+    0 0 0 1px var(--gb-edge),
+    0 2px 0 1px var(--gb-edge);
+}
+
+/* ---- Listings (code blocks) ------------------------------------------ */
+
+.md-typeset .highlight,
+.md-typeset .highlighttable {
+  border: 1px solid var(--gb-edge);
+  margin: 1.2em 0;
+}
+
+.md-typeset .highlighttable .highlight,
+.md-typeset .highlight .highlighttable {
+  border: 0;
+  margin: 0;
+}
+
+/* One line pitch everywhere so the bands, line numbers and code agree. */
+.md-typeset .highlight pre,
+.md-typeset .highlight pre > code,
+.md-typeset .highlighttable .linenos,
+.md-typeset .highlighttable .linenodiv pre {
+  font-size: 0.74rem;
+  line-height: 1.2rem;
+}
+
+.md-typeset .highlighttable .linenos {
+  padding: 0 0 0 1rem;
+}
+
+.md-typeset pre > code,
+.md-typeset .highlighttable .linenodiv pre {
+  padding-block: 0.6rem;
+  background-color: var(--gb-paper);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--gb-band) 0 2.4rem,
+    transparent 2.4rem 4.8rem
+  );
+  background-position: 0 0.6rem;
+  background-repeat: repeat-y;
+  border-radius: 0;
+}
+
+.md-typeset .highlighttable .linenodiv {
+  background: transparent;
+  box-shadow: inset -1px 0 var(--gb-edge);
+}
+
+.md-typeset .highlighttable .linenodiv pre {
+  margin: 0;
+  color: var(--gb-mute);
+}
+
+.md-typeset .highlight span.filename {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0;
+  padding: 0.4rem 1.2rem;
+  font-family: var(--md-code-font-family);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gb-green);
+  background: var(--gb-paper);
+  border-bottom: 1px solid var(--gb-edge);
+  border-radius: 0;
+}
+
+.md-typeset .highlight span.filename::after {
+  content: attr(data-gb-lines);
+  color: var(--gb-mute);
+}
+
+.md-typeset .highlight span.filename + pre > code {
+  border-top: 0;
+}
+
+.md-clipboard {
+  color: var(--gb-mute);
+}
+
+.md-clipboard:is(:focus, :hover) {
+  color: var(--gb-green);
+}
+
+/* ---- Tables (banded in pairs, like the paper) ------------------------ */
+
+.md-typeset table:not([class]) {
+  font-size: 0.78rem;
+  border: 1px solid var(--gb-edge);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.md-typeset table:not([class]) th {
+  font-family: var(--md-code-font-family);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gb-green);
+  background: var(--gb-paper);
+  border-bottom: 2px solid var(--gb-edge);
+}
+
+.md-typeset table:not([class]) td {
+  border-top: 0;
+  vertical-align: top;
+}
+
+.md-typeset table:not([class]) tbody tr:nth-child(4n + 1),
+.md-typeset table:not([class]) tbody tr:nth-child(4n + 2) {
+  background: var(--gb-band);
+}
+
+.md-typeset table:not([class]) tbody tr:hover {
+  background: var(--gb-band-strong);
+  box-shadow: none;
+}
+
+/* ---- Notes, details, tabs -------------------------------------------- */
+
+.md-typeset .admonition,
+.md-typeset details {
+  font-size: 0.8rem;
+  border: 1px solid var(--gb-edge) !important;
+  border-radius: 0;
+  box-shadow: none;
+  background: var(--gb-paper);
+}
+
+.md-typeset .admonition-title,
+.md-typeset summary {
+  font-family: var(--md-code-font-family);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--gb-green);
+  background: var(--gb-band) !important;
+  border: 0 !important;
+}
+
+.md-typeset .admonition-title::before,
+.md-typeset summary::before {
+  background-color: var(--gb-green) !important;
+}
+
+.md-typeset summary::after {
+  background-color: var(--gb-green);
+}
+
+.md-typeset .admonition.warning,
+.md-typeset details.warning {
+  border-color: color-mix(in srgb, var(--gb-amber) 35%, var(--gb-edge)) !important;
+}
+
+.md-typeset .warning > .admonition-title,
+.md-typeset .warning > summary {
+  color: var(--gb-amber);
+  background: var(--gb-amber-band) !important;
+}
+
+.md-typeset .warning > .admonition-title::before,
+.md-typeset .warning > summary::before {
+  background-color: var(--gb-amber) !important;
+}
+
+.md-typeset .tabbed-labels > label {
+  font-family: var(--md-code-font-family);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gb-mute);
+}
+
+.md-typeset .tabbed-labels > label:hover {
+  color: var(--gb-green);
+}
+
+.md-typeset .tabbed-set > input:checked + label,
+.md-typeset .tabbed-labels > label.tabbed-labels__active {
+  color: var(--gb-green);
+}
+
+/* ---- Printout figures (screenshots) ---------------------------------- */
+
+.md-typeset p > img:not(.twemoji),
+.md-typeset .gb-figure img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  padding: 6px;
+  background: var(--gb-paper);
+  border: 1px solid var(--gb-edge);
+  box-shadow: 0 3px 10px var(--gb-shadow);
+}
+
+.md-typeset figure.gb-figure {
+  display: block;
+  width: auto;
+  max-width: none;
+  margin: 1.2em 0;
+  text-align: left;
+}
+
+.md-typeset figure.gb-figure img {
+  margin: 0;
+}
+
+.md-typeset .highlighttable .linenos a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.md-typeset .gb-figure figcaption,
+.md-typeset .gb-caption {
+  font-family: var(--md-code-font-family);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gb-mute);
+  margin-top: 0.6rem;
+  max-width: none;
+  text-align: left;
+}
+
+/* ---- Home: quick start beside its printout --------------------------- */
+
+/* The listing takes the full measure; its printout hangs beneath it. */
+.md-typeset .gb-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.2rem;
+}
+
+.md-typeset .gb-split > * {
+  min-width: 0;
+  margin-block: 0;
+}
+
+.md-typeset .gb-split .gb-figure img {
+  max-width: min(100%, 420px);
+}
+
+/* "Next" rows: an index printed under the listing, not cards */
+.md-typeset .gb-next > ul {
+  list-style: none;
+  margin: 1.2em 0;
+  padding: 0;
+  border-top: 1px dashed var(--gb-hole);
+}
+
+.md-typeset .gb-next > ul > li {
+  display: grid;
+  grid-template-columns: minmax(10rem, 14rem) 1fr;
+  gap: 1rem;
+  margin: 0;
+  padding: 0.6rem 0;
+  border-bottom: 1px dashed var(--gb-hole);
+}
+
+.md-typeset .gb-next > ul > li > a {
+  font-weight: 700;
+}
+
+@media screen and (max-width: 44.984375em) {
+  .md-typeset .gb-next > ul > li {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+}
+
+/* ---- API reference (mkdocstrings) ------------------------------------ */
+
+.md-typeset .doc-heading code {
+  font-weight: 700;
+  background: transparent;
+}
+
+.md-typeset .doc-symbol {
+  border-radius: 0;
+  font-family: var(--md-code-font-family);
+}
+
+:root {
+  --doc-symbol-method-fg-color: var(--gb-green);
+  --doc-symbol-function-fg-color: var(--gb-green);
+  --doc-symbol-method-bg-color: var(--gb-band);
+  --doc-symbol-function-bg-color: var(--gb-band);
+  --doc-symbol-class-fg-color: var(--gb-paper);
+  --doc-symbol-class-bg-color: var(--gb-green);
+}
+
+/* ---- Footer: the perforation between sheets -------------------------- */
+
+.md-footer {
+  border-top: 1px dashed var(--gb-hole);
+}
+
+.md-footer__link {
+  color: var(--gb-ink);
+}
+
+.md-footer__direction {
+  font-family: var(--md-code-font-family);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gb-mute);
+  opacity: 1;
+}
+
+.md-footer__title {
+  font-weight: 700;
+}
+
+.md-footer-meta {
+  border-top: 1px solid var(--gb-edge);
+}
+
+.md-footer-meta,
+.md-footer-meta a,
+.md-copyright {
+  color: var(--gb-mute) !important;
+}
+
+.md-top {
+  font-family: var(--md-code-font-family);
+  font-weight: 700;
+  background: var(--gb-paper);
+  color: var(--gb-ink);
+  border: 1px solid var(--gb-edge);
+  box-shadow: 0 3px 10px var(--gb-shadow);
+}
+
+/* ---- Review fixes ---------------------------------------------------- */
+
+/* Header cell that holds a titled listing's file strip */
+.md-typeset .highlighttable th.filename {
+  padding: 0;
+  background: transparent;
+}
+
+/* Bands stop at the last line, not in the bottom padding */
+.md-typeset pre > code,
+.md-typeset .highlighttable .linenodiv pre {
+  background-clip: content-box, border-box;
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      var(--gb-band) 0 2.4rem,
+      transparent 2.4rem 4.8rem
+    ),
+    none;
+}
+
+/* Every table shares the listings' right edge */
+.md-typeset .md-typeset__table {
+  display: block;
+}
+
+.md-typeset .md-typeset__table table:not([class]) {
+  display: table;
+  width: 100%;
+}
+
+/* Captions and note titles are prose: reading face, sentence case */
+.md-typeset .gb-figure figcaption,
+.md-typeset .gb-caption,
+.md-typeset .admonition-title,
+.md-typeset summary {
+  font-family: var(--md-text-font-family);
+  font-style: normal;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.md-typeset .gb-figure figcaption {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--gb-mute);
+}
+
+.md-typeset .admonition-title,
+.md-typeset summary {
+  font-size: 0.8rem;
+}
+
+/* Keycaps: a printed rule, no block shadow, no glyph icons */
+.md-typeset kbd {
+  box-shadow: none;
+  border: 1px solid var(--gb-edge);
+  border-bottom-width: 2px;
+}
+
+.md-typeset .keys kbd::before,
+.md-typeset .keys kbd::after {
+  content: none;
+}
+
+/* Tighter run-in so the listing reaches the first screen */
+.md-typeset .gb-lede {
+  margin-bottom: 0;
+}
+
+.md-content__inner > h1:first-child + .gb-lede + h2,
+.md-typeset .gb-lede + h2 {
+  margin-top: 1.4em;
+}
+
+@media screen and (max-width: 44.984375em) {
+  .md-typeset h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.6rem;
+  }
+}
+
+@media screen and (max-width: 76.234375em) {
+  .gb-head__version {
+    display: none;
+  }
+}
+
+.md-typeset .gb-split + h2 {
+  margin-top: 1.8em;
+}
+
+/* Two printouts side by side under the quick-start listing */
+.md-typeset .gb-figures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem 1.6rem;
+  align-items: flex-start;
+}
+
+.md-typeset .gb-figures > figure.gb-figure {
+  margin: 0;
+  flex: 0 1 auto;
+  max-width: min(100%, 380px);
+}
+
+.md-typeset .gb-figures > figure.gb-figure:last-child {
+  max-width: min(100%, 270px);
+}
+
+/* Beat Material's .keys .key-*::before glyphs */
+.md-typeset .keys kbd[class*="key-"]::before,
+.md-typeset .keys kbd[class*="key-"]::after {
+  content: none;
+  padding: 0;
+}
+
+/* Running head never truncates a word: below 1220px the logo carries the
+   name and the head prints only the page; under 45em only the page name. */
+@media screen and (max-width: 76.234375em) {
+  .gb-head__name {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 44.984375em) {
+  .gb-head__listing {
+    font-size: 0;
+  }
+
+  .gb-head__listing .gb-head__page {
+    font-size: 0.7rem;
+  }
+}
+
+/* Both printouts share the row evenly */
+.md-typeset .gb-figures > figure.gb-figure,
+.md-typeset .gb-figures > figure.gb-figure:last-child {
+  flex: 1 1 15rem;
+  max-width: none;
+}
+
+.md-typeset .gb-figures > figure.gb-figure img {
+  width: 100%;
+  max-width: 100%;
+}

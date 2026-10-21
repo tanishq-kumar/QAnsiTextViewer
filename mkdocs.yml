@@ -7,30 +7,45 @@ repo_name: GitHub
 
 theme:
   name: material
-  favicon: material/library
+  custom_dir: overrides
+  favicon: assets/favicon.svg
+  logo: assets/favicon.svg
+  font:
+    text: Atkinson Hyperlegible
+    code: Courier Prime
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
-      accent: indigo
+      primary: custom
+      accent: custom
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
-      accent: indigo
+      primary: custom
+      accent: custom
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
   features:
-    - navigation.tabs
     - navigation.sections
+    - navigation.footer
     - navigation.top
+    - toc.follow
     - search.suggest
     - search.highlight
     - content.code.copy
     - content.code.annotate
+
+extra:
+  version_label: v0.1.2
+
+extra_css:
+  - stylesheets/listing.css
+
+extra_javascript:
+  - javascripts/feed.js
 
 markdown_extensions:
   - attr_list
@@ -60,7 +75,7 @@ plugins:
       # Cards + meta tags are deploy artifacts — they only exist in CI output.
       cards: !ENV [MKDOCS_SOCIAL_CARDS, false]
       cards_layout_options:
-        background_color: "#3f51b5"
+        background_color: "#2e6b3a"
         color: "#ffffff"
   - mkdocstrings:
       handlers:
@@ -76,14 +91,19 @@ plugins:
             inherited_members: false
 
 nav:
-  - Home: index.md
-  - Gallery: gallery.md
-  - Troubleshooting: troubleshooting.md
-  - Changelog: changelog.md
-  - API:
+  - Use:
+      - Home: index.md
+      - Your first log pane: guides/first-log-pane.md
+      - Streaming process output: guides/streaming.md
+      - Themes and colors: guides/theming.md
+      - Visual tour: gallery.md
+  - Reference:
       - Viewer: api/viewer.md
       - Highlighting: api/highlighting.md
       - Internals: api/internals.md
+  - Appendix:
+      - Troubleshooting: troubleshooting.md
+      - Changelog: changelog.md
 
 validation:
   omitted_files: warn

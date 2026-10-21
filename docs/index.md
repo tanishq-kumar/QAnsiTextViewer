@@ -1,6 +1,4 @@
 ---
-hide:
-  - navigation
 social:
   cards_layout_options:
     title: ANSI log viewer for Qt for Python
@@ -13,30 +11,43 @@ terminal output — tail logs, search them, bookmark lines, and save sessions,
 all behind a typed one-widget API. Built on PySide6 (and compatible with PyQt),
 it parses SGR, 256-color, and truecolor sequences, handles `\r` progress lines,
 and stays responsive through 100k-line bursts via chunked async appends.
+{ .gb-lede }
 
-<div class="grid cards" markdown>
+## Quick start
 
--   :material-magnify: **Search & filter**
+<div class="gb-split" markdown>
 
-    Highlight with regex, jump with ++f3++, hide non-matching lines.
+```python title="quickstart.py" linenums="1"
+from PySide6.QtWidgets import QApplication
+from ansi_text_viewer import AnsiTextViewer
 
--   :material-bookmark: **Bookmarks**
+app = QApplication([])
+viewer = AnsiTextViewer()
+viewer.appendAnsiText("\x1b[31mred\x1b[0m plain\n")
+# F3 / Shift+F3 navigates, Esc clears
+viewer.highlight_search("red")
+viewer.setTheme("dark")
+viewer.show()
+app.exec()
+```
 
-    Gutter click, list panel, next/previous navigation, saved in sessions.
+<div class="gb-figures" markdown>
 
--   :material-palette: **Themes**
+<figure class="gb-figure" markdown>
+![Minimal quick-start window](assets/simple_demo_crop.png){ width="420" }
+<figcaption>That snippet renders this: the red ANSI text, lit up as the search match.</figcaption>
+</figure>
 
-    Light, dark, OS-following auto, plus custom ANSI palettes.
+<figure class="gb-figure" markdown>
+![ANSI styles and colors in the viewer](assets/ansi_colors_crop.png){ width="380" }
+<figcaption>The demo's Test ANSI Colors output: styles and foreground colors, each line terminated so nothing bleeds. <a href="gallery/#ansi-colors-isolated-per-line">Visual tour</a></figcaption>
+</figure>
 
--   :material-lightning-bolt: **Non-blocking**
-
-    Chunked async appends keep the UI alive through 100k-line bursts.
+</div>
 
 </div>
 
 ## Install
-
-[![PyPI](https://img.shields.io/pypi/v/qansitextviewer)](https://pypi.org/project/qansitextviewer/)
 
 === "uv"
 
@@ -59,24 +70,26 @@ and stays responsive through 100k-line bursts via chunked async appends.
 
 Requires Python `>=3.11` and PySide6 `>=6.5.0`.
 
-## Quick start
 
-```python
-from PySide6.QtWidgets import QApplication
-from ansi_text_viewer import AnsiTextViewer
+## Next
 
-app = QApplication([])
-viewer = AnsiTextViewer()
-viewer.appendAnsiText("\x1b[31mred\x1b[0m plain\n")
-viewer.highlight_search("red")  # F3 / Shift+F3 navigates, Esc clears
-viewer.setTheme("dark")
-viewer.show()
-app.exec()
-```
+<div class="gb-next" markdown>
 
-That snippet renders this — red ANSI text with the search match lit up:
+- [Your first log pane](guides/first-log-pane.md) Put the viewer in a window with a search box, match counter, and filter.
+- [Streaming process output](guides/streaming.md) Tail a subprocess, dump huge logs without freezing, pause and resume.
+- [Themes and colors](guides/theming.md) Light, dark, OS-following auto, plus custom ANSI palettes.
+- [Viewer API](api/viewer.md) Every method, signal, and shortcut, with examples.
 
-![Minimal quick-start window](assets/simple_demo.png){ width="420" }
+</div>
+
+## What it does
+
+| Feature | In short |
+| ------- | -------- |
+| **Search & filter** | Highlight with regex, jump with ++f3++, hide non-matching lines. |
+| **Bookmarks** | Gutter click, list panel, next/previous navigation, saved in sessions. |
+| **Themes** | Light, dark, OS-following auto, plus custom ANSI palettes. |
+| **Non-blocking** | Chunked async appends keep the UI alive through 100k-line bursts. |
 
 !!! tip "Try the demo"
     `just demo` launches the full showcase: streaming logs, progress bars,
