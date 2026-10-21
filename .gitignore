@@ -212,3 +212,4 @@ __marimo__/
 .impeccable/questions/
 .impeccable/hook.cache.json
 .impeccable/config.local.json
+.impeccable/critique/

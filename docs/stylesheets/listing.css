@@ -934,3 +934,19 @@ body {
   width: 100%;
   max-width: 100%;
 }
+
+/* The hero printout spans the full measure */
+.md-typeset figure.gb-hero {
+  margin: 1.6em 0 0;
+}
+
+.md-typeset figure.gb-hero img {
+  width: 100%;
+  height: auto;
+}
+
+/* Keep Material's per-scheme image switching inside figures */
+[data-md-color-scheme="default"] .md-typeset .gb-figure img[src$="#only-dark"],
+[data-md-color-scheme="slate"] .md-typeset .gb-figure img[src$="#only-light"] {
+  display: none;
+}

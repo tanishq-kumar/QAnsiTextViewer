@@ -13,6 +13,12 @@ it parses SGR, 256-color, and truecolor sequences, handles `\r` progress lines,
 and stays responsive through 100k-line bursts via chunked async appends.
 { .gb-lede }
 
+<figure class="gb-figure gb-hero" markdown>
+![The viewer tailing a test run: colored log levels, pytest progress, a failed test with its search match and bookmark, a finished upload progress line, and clickable links](assets/hero_light.png#only-light){ width="820" }
+![The viewer tailing a test run: colored log levels, pytest progress, a failed test with its search match and bookmark, a finished upload progress line, and clickable links](assets/hero_dark.png#only-dark){ width="820" }
+<figcaption>A test run in the real widget: log levels, a search match on line 8 with its bookmark, a <code>\r</code> progress line that finished in place, and clickable paths and URLs.</figcaption>
+</figure>
+
 ## Quick start
 
 <div class="gb-split" markdown>
@@ -39,8 +45,8 @@ app.exec()
 </figure>
 
 <figure class="gb-figure" markdown>
-![ANSI styles and colors in the viewer](assets/ansi_colors_crop.png){ width="380" }
-<figcaption>The demo's Test ANSI Colors output: styles and foreground colors, each line terminated so nothing bleeds. <a href="gallery/#ansi-colors-isolated-per-line">Visual tour</a></figcaption>
+![SGR styles, the 16 standard and bright foreground colors, a 256-color ramp and grayscale, truecolor text and a truecolor gradient, and colored status badges](assets/ansi_palette.png){ width="400" }
+<figcaption>Styles, the 16 base colors, 256-color and truecolor, each line terminated so nothing bleeds. <a href="gallery/#ansi-colors-isolated-per-line">Visual tour</a></figcaption>
 </figure>
 
 </div>

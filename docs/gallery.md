@@ -5,6 +5,12 @@ hide:
 
 # Visual tour
 
+<figure class="gb-figure gb-hero" markdown>
+![The viewer tailing a test run: colored log levels, pytest progress, a failed test with its search match and bookmark, a finished upload progress line, and clickable links](assets/hero_light.png#only-light){ width="820" }
+![The viewer tailing a test run: colored log levels, pytest progress, a failed test with its search match and bookmark, a finished upload progress line, and clickable links](assets/hero_dark.png#only-dark){ width="820" }
+<figcaption>At work: a test run in the widget itself, rendered by <code>tools/make_screenshots.py</code>.</figcaption>
+</figure>
+
 Every screenshot below is the real demo (`just demo`) with the feature
 toggled on. The red boxes are the author's own callouts — each section
 explains what the marked control does and links the API behind it.
@@ -37,6 +43,10 @@ reverse-video, strikethrough, the 8 standard and 8 bright foregrounds, and
 `https://example.com` links open on ++ctrl++ + click; the olive bar is the
 current-line highlight. See [Appending](api/viewer.md#appending-content)
 and [Links](api/viewer.md#links).
+
+The timestamped line joined onto `Downloading... 60%` is the demo's log
+stream writing while the progress test runs (the progress line has no
+newline yet), not a `\r` rendering fault.
 
 ## Search: matches, query, counter
 
