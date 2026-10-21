@@ -19,6 +19,7 @@ os.environ.setdefault("QT_SCALE_FACTOR", "2")
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+from darkmode import suffixed, use_theme  # noqa: E402
 from PySide6.QtCore import QPoint, QRect, QTimer  # noqa: E402
 from PySide6.QtGui import (  # noqa: E402
     QColor,
@@ -36,6 +37,7 @@ OUT = ROOT / "docs" / "assets"
 SIZE = (1172, 730)
 CALLOUT = QColor(220, 30, 30)
 FACTS: dict = {}
+THEME = "light"  # set per pass in __main__
 
 
 class FixedClock(logging.Filter):
@@ -62,6 +64,8 @@ def window() -> demo.TestWindow:
         handler.addFilter(FixedClock())
     win.viewer.setMonospaceFont("Consolas", 10)
     win.font_combo.setCurrentFont(QFont("Consolas"))
+    if THEME == "dark":
+        win.theme_combo.setCurrentText("Dark")
     win.resize(*SIZE)
     win.show()
     settle()
@@ -111,7 +115,7 @@ def save(win: QWidget, name: str, boxes=(), overlay=None) -> None:
     for box in boxes:
         painter.drawRect(box.adjusted(-3, -3, 3, 3))
     painter.end()
-    pix.save(str(OUT / name))
+    pix.save(str(OUT / suffixed(name, THEME)))
     win.close()
 
 
@@ -270,16 +274,17 @@ def shot_wrap(enabled: bool, name: str) -> None:
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    app.setStyle("Fusion")
-    app.setFont(QFont("Segoe UI", 9))
-    shot_board()
-    shot_ansi()
-    shot_stream()
-    shot_search()
-    shot_bookmarks()
-    shot_context_menu()
-    shot_selection()
-    shot_system_font()
-    shot_wrap(False, "demo_screen_before_wrap_text.png")
-    shot_wrap(True, "demo_screen_after_wrap_text.png")
-    print(FACTS)
+    for THEME in ("light", "dark"):
+        use_theme(app, THEME)
+        app.setFont(QFont("Segoe UI", 9))
+        shot_board()
+        shot_ansi()
+        shot_stream()
+        shot_search()
+        shot_bookmarks()
+        shot_context_menu()
+        shot_selection()
+        shot_system_font()
+        shot_wrap(False, "demo_screen_before_wrap_text.png")
+        shot_wrap(True, "demo_screen_after_wrap_text.png")
+        print(THEME, FACTS)

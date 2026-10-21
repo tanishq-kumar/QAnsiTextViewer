@@ -188,7 +188,8 @@ input straight through.
     ```
 
 <figure class="gb-figure gb-hero" markdown>
-![The finished log window: three colored log lines, the search box holding "timeout" with the match highlighted, the counter reading 1/1, and an empty filter box](../assets/guide_log_window.png){ width="640" }
+![The finished log window: three colored log lines, the search box holding "timeout" with the match highlighted, the counter reading 1/1, and an empty filter box](../assets/guide_log_window.png#only-light){ width="640" }
+![The finished log window: three colored log lines, the search box holding "timeout" with the match highlighted, the counter reading 1/1, and an empty filter box](../assets/guide_log_window_dark.png#only-dark){ width="640" }
 <figcaption>The assembled file, run as is, after typing <code>timeout</code> into the search box.</figcaption>
 </figure>
 

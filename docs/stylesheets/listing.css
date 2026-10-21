@@ -802,9 +802,9 @@ body {
   width: 100%;
 }
 
-/* Keep Material's per-scheme image switching inside figures */
-[data-md-color-scheme="default"] .md-typeset .gb-figure img[src$="#only-dark"],
-[data-md-color-scheme="slate"] .md-typeset .gb-figure img[src$="#only-light"] {
+/* Keep Material's per-scheme image switching for framed screenshots */
+[data-md-color-scheme="default"] .md-typeset img[src$="#only-dark"],
+[data-md-color-scheme="slate"] .md-typeset img[src$="#only-light"] {
   display: none;
 }
 

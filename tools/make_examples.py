@@ -20,10 +20,12 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "examples"))
 
+from darkmode import suffixed, use_theme  # noqa: E402
 from PySide6.QtCore import QCoreApplication  # noqa: E402
 from PySide6.QtWidgets import QApplication, QWidget  # noqa: E402
 
 OUT = ROOT / "docs" / "assets"
+THEME = "light"  # set per pass in __main__
 
 
 def wait(condition, timeout: float = 10.0) -> None:
@@ -42,9 +44,9 @@ def shoot(widget: QWidget, name: str, size: tuple[int, int]) -> None:
     widget.show()
     for _ in range(3):
         QCoreApplication.processEvents()
-    widget.grab().save(str(OUT / name))
+    widget.grab().save(str(OUT / suffixed(name, THEME)))
     widget.close()
-    print("wrote", name)
+    print("wrote", suffixed(name, THEME))
 
 
 def mono(viewer) -> None:
@@ -129,9 +131,12 @@ def big_file() -> None:
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    app.setStyle("Fusion")
-    logging_handler()
-    run_command()
-    tail_file()
-    custom_highlight()
-    big_file()
+    for THEME in ("light", "dark"):
+        use_theme(app, THEME)
+        FixedClock.t = 1760000000.0
+        logging.getLogger("app").handlers.clear()
+        logging_handler()
+        run_command()
+        tail_file()
+        custom_highlight()
+        big_file()

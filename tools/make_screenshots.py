@@ -13,6 +13,7 @@ from pathlib import Path
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
+from darkmode import suffixed, use_theme
 from PySide6.QtWidgets import QApplication
 
 from ansi_text_viewer import AnsiTextViewer
@@ -119,7 +120,7 @@ def quickstart(name: str) -> None:
     shoot(viewer, name)
 
 
-def guide_window(name: str) -> None:
+def guide_window(name: str, theme: str = "light") -> None:
     """Run the first guide's assembled ``log_window.py`` and grab its window.
 
     The code is read from the guide itself, so the picture cannot drift from
@@ -135,7 +136,7 @@ def guide_window(name: str) -> None:
     window.viewer.setMonospaceFont("Consolas", 11)
     window.resize(640, 220)
     window.search.setText("timeout")
-    shoot(window, name)
+    shoot(window, suffixed(name, theme))
 
 
 def themes(name: str) -> None:
@@ -162,6 +163,9 @@ if __name__ == "__main__":
     hero("light", "hero_light.png")
     palette("ansi_palette.png")
     quickstart("quickstart_output.png")
-    guide_window("guide_log_window.png")
+    for theme in ("light", "dark"):
+        use_theme(app, theme)
+        guide_window("guide_log_window.png", theme)
+    use_theme(app, "light")
     themes("theme")
     print("wrote hero, palette, guide window, and theme screenshots")
