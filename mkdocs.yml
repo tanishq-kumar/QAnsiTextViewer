@@ -44,9 +44,6 @@ extra:
 extra_css:
   - stylesheets/listing.css
 
-extra_javascript:
-  - javascripts/feed.js
-
 markdown_extensions:
   - attr_list
   - md_in_html

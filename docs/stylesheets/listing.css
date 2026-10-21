@@ -1,5 +1,5 @@
 /* Teal-bar listing: the docs printed on fan-fold line-printer paper.
-   The frame (rails, running head, banded code and tables) carries the
+   The frame (running head, banded code and tables) carries the
    world; the reading column stays plain paper. */
 
 :root,
@@ -12,7 +12,6 @@
   --gb-band-strong: #c2dcdc;
   --gb-edge: #c5d3d4;
   --gb-hole: #98a4a6;
-  --gb-hole-fill: #e3e7e8;
   --gb-accent: #0e6b6b;
   --gb-amber: #8a4b00;
   --gb-amber-band: #f4e7cf;
@@ -64,9 +63,6 @@
   --md-shadow-z2: 0 4px 14px var(--gb-shadow);
   --md-shadow-z3: 0 8px 24px var(--gb-shadow);
 
-  --gb-pitch: 36px;
-  --gb-rail: 44px;
-  --gb-hole-r: 6px;
 }
 
 [data-md-color-scheme="slate"] {
@@ -78,7 +74,6 @@
   --gb-band-strong: #27403f;
   --gb-edge: #2c3c3e;
   --gb-hole: #4a5759;
-  --gb-hole-fill: #0a0d0e;
   --gb-accent: #7fd1cb;
   --gb-amber: #f0c27a;
   --gb-amber-band: #2c2416;
@@ -146,70 +141,6 @@ body {
 :focus-visible {
   outline: 2px solid var(--gb-accent);
   outline-offset: 2px;
-}
-
-/* ---- Tractor-feed rails ---------------------------------------------- */
-
-/* Below 1220px there is no room for real sprocket holes, so the rail
-   becomes just its perforation: a torn edge, not a clipped pattern. */
-@media screen and (max-width: 76.234375em) {
-  :root,
-  [data-md-color-scheme] {
-    --gb-rail: 12px;
-  }
-}
-
-body {
-  padding-inline: var(--gb-rail);
-}
-
-/* The rail is one pitch taller than the viewport and slides up by
-   (scrollY mod pitch) via transform, so feeding never restyles the page.
-   It sits under Material's header (4), overlay (4) and drawer (5). */
-.gb-feed {
-  display: block;
-  position: fixed;
-  top: 0;
-  height: calc(100vh + var(--gb-pitch));
-  width: var(--gb-rail);
-  z-index: 3;
-  pointer-events: none;
-  background-color: var(--gb-paper);
-  background-image: radial-gradient(
-    circle at 50% calc(var(--gb-pitch) / 2),
-    var(--gb-hole-fill) 0 var(--gb-hole-r),
-    var(--gb-hole) var(--gb-hole-r) calc(var(--gb-hole-r) + 1px),
-    transparent calc(var(--gb-hole-r) + 1.5px)
-  );
-  background-size: 100% var(--gb-pitch);
-  background-repeat: repeat-y;
-  will-change: transform;
-}
-
-@media screen and (max-width: 76.234375em) {
-  .gb-feed {
-    background-image: none;
-  }
-}
-
-.gb-feed--left {
-  left: 0;
-  border-right: 1px dashed var(--gb-hole);
-}
-
-.gb-feed--right {
-  right: 0;
-  border-left: 1px dashed var(--gb-hole);
-}
-
-@media print {
-  .gb-feed {
-    display: none;
-  }
-
-  body {
-    padding-inline: 0;
-  }
 }
 
 /* ---- Running head ---------------------------------------------------- */
@@ -624,10 +555,6 @@ body {
   border-radius: 0;
 }
 
-.md-typeset .highlight span.filename::after {
-  content: attr(data-gb-lines);
-  color: var(--gb-mute);
-}
 
 .md-typeset .highlight span.filename + pre > code {
   border-top: 0;
@@ -837,7 +764,7 @@ body {
   .md-typeset figure.gb-figure.gb-hero figcaption {
     position: sticky;
     left: 0;
-    max-width: calc(100vw - 2 * var(--gb-rail) - 1.6rem);
+    max-width: calc(100vw - 1.6rem);
   }
 }
 
