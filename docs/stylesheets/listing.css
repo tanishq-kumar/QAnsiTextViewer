@@ -950,3 +950,33 @@ body {
 [data-md-color-scheme="slate"] .md-typeset .gb-figure img[src$="#only-light"] {
   display: none;
 }
+
+/* Page contents: sections lead, members read as code identifiers */
+.md-nav--secondary > .md-nav__list > .md-nav__item > .md-nav__link {
+  font-weight: 700;
+  margin-top: 0.7em;
+}
+
+.md-nav--secondary .md-nav__list .md-nav__list {
+  margin-left: 0.2rem;
+  padding-left: 0.6rem;
+  border-left: 1px dashed var(--gb-hole);
+}
+
+.md-nav--secondary .md-nav__list .md-nav__list .md-nav__link {
+  margin-top: 0.15em;
+  font-family: var(--md-code-font-family);
+  font-size: 0.68rem;
+  color: var(--gb-mute);
+}
+
+.md-nav--secondary .md-nav__list .md-nav__list .md-nav__link:is(:hover, :focus),
+.md-nav--secondary .md-nav__list .md-nav__list .md-nav__link--active {
+  color: var(--gb-green);
+}
+
+.md-nav--secondary .md-ellipsis {
+  white-space: normal;
+  overflow: visible;
+  overflow-wrap: anywhere;
+}
