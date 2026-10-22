@@ -12,7 +12,7 @@ theme:
   logo: assets/favicon.svg
   font:
     text: Atkinson Hyperlegible
-    code: Courier Prime
+    code: JetBrains Mono
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -42,7 +42,7 @@ extra:
   version_label: v0.1.2
 
 extra_css:
-  - stylesheets/listing.css
+  - stylesheets/theme.css
 
 markdown_extensions:
   - attr_list

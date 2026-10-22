@@ -1,0 +1,929 @@
+/* QAnsiTextViewer docs theme: a calm, modern reading surface.
+   Atkinson Hyperlegible for prose, JetBrains Mono for code, one teal
+   accent. Surfaces are soft and rounded; dividers are hairlines. The
+   colour on the page belongs to the widget's own screenshots and code. */
+
+:root,
+[data-md-color-scheme="default"] {
+  --c-bg: #ffffff;
+  --c-surface: #f4f7f7;
+  --c-surface-2: #eaf0f0;
+  --c-ink: #1d2427;
+  --c-mute: #56606a;
+  --c-line: rgba(29, 36, 39, 0.1);
+  --c-line-strong: rgba(29, 36, 39, 0.18);
+  --c-accent: #0b6e72;
+  --c-accent-tint: #ecf5f5;
+  --c-accent-soft: rgba(11, 110, 114, 0.1);
+  --c-amber: #8a4b00;
+  --c-amber-tint: #fbf3e6;
+  --c-shadow: rgba(16, 24, 28, 0.06);
+  --c-header: rgba(255, 255, 255, 0.86);
+
+  --md-primary-fg-color: var(--c-accent);
+  --md-primary-fg-color--light: #3c9497;
+  --md-primary-fg-color--dark: #08575a;
+  --md-primary-bg-color: var(--c-bg);
+  --md-primary-bg-color--light: rgba(255, 255, 255, 0.7);
+  --md-accent-fg-color: var(--c-accent);
+  --md-accent-fg-color--transparent: var(--c-accent-soft);
+
+  --md-default-bg-color: var(--c-bg);
+  --md-default-fg-color: var(--c-ink);
+  --md-default-fg-color--light: var(--c-mute);
+  --md-default-fg-color--lighter: rgba(29, 36, 39, 0.32);
+  --md-default-fg-color--lightest: var(--c-line);
+
+  --md-typeset-color: var(--c-ink);
+  --md-typeset-a-color: var(--c-accent);
+  --md-typeset-mark-color: rgba(11, 110, 114, 0.18);
+  --md-typeset-table-color: var(--c-line);
+
+  --md-code-bg-color: var(--c-surface);
+  --md-code-fg-color: var(--c-ink);
+  --md-code-hl-color: rgba(11, 110, 114, 0.12);
+  --md-code-hl-keyword-color: #0b5f63;
+  --md-code-hl-string-color: #8a4b12;
+  --md-code-hl-comment-color: #5f6b74;
+  --md-code-hl-number-color: #1d5d8f;
+  --md-code-hl-function-color: #1d2427;
+  --md-code-hl-name-color: #1d2427;
+  --md-code-hl-constant-color: #6b3fa0;
+  --md-code-hl-special-color: #a3322a;
+  --md-code-hl-operator-color: #3b4448;
+  --md-code-hl-punctuation-color: #56606a;
+  --md-code-hl-variable-color: #1d2427;
+  --md-code-hl-generic-color: #56606a;
+
+  --md-footer-bg-color: var(--c-surface);
+  --md-footer-bg-color--dark: var(--c-surface-2);
+  --md-footer-fg-color: var(--c-ink);
+  --md-footer-fg-color--light: var(--c-mute);
+  --md-footer-fg-color--lighter: var(--c-mute);
+
+  --md-admonition-bg-color: var(--c-accent-tint);
+  --md-shadow-z1: 0 1px 2px var(--c-shadow), 0 4px 12px var(--c-shadow);
+  --md-shadow-z2: 0 1px 2px var(--c-shadow), 0 8px 24px var(--c-shadow);
+  --md-shadow-z3: 0 2px 4px var(--c-shadow), 0 16px 40px var(--c-shadow);
+
+  --radius: 8px;
+  --radius-sm: 4px;
+}
+
+[data-md-color-scheme="slate"] {
+  --c-bg: #0f1416;
+  --c-surface: #161e21;
+  --c-surface-2: #1c2629;
+  --c-ink: #e4eaeb;
+  --c-mute: #9aa7ab;
+  --c-line: rgba(228, 234, 235, 0.09);
+  --c-line-strong: rgba(228, 234, 235, 0.16);
+  --c-accent: #5ecfc8;
+  --c-accent-tint: #13232a;
+  --c-accent-soft: rgba(94, 207, 200, 0.12);
+  --c-amber: #f0c27a;
+  --c-amber-tint: #231d12;
+  --c-shadow: rgba(0, 0, 0, 0.35);
+  --c-header: rgba(15, 20, 22, 0.86);
+
+  --md-hue: 190;
+  --md-primary-fg-color: var(--c-accent);
+  --md-primary-fg-color--light: #9fe4df;
+  --md-primary-fg-color--dark: #3fb2ab;
+  --md-primary-bg-color: var(--c-bg);
+  --md-accent-fg-color: var(--c-accent);
+  --md-accent-fg-color--transparent: var(--c-accent-soft);
+
+  --md-default-bg-color: var(--c-bg);
+  --md-default-fg-color: var(--c-ink);
+  --md-default-fg-color--light: var(--c-mute);
+  --md-default-fg-color--lighter: rgba(228, 234, 235, 0.32);
+  --md-default-fg-color--lightest: var(--c-line);
+
+  --md-typeset-color: var(--c-ink);
+  --md-typeset-a-color: var(--c-accent);
+  --md-typeset-mark-color: rgba(94, 207, 200, 0.2);
+  --md-typeset-table-color: var(--c-line);
+
+  --md-code-bg-color: var(--c-surface);
+  --md-code-fg-color: var(--c-ink);
+  --md-code-hl-color: rgba(94, 207, 200, 0.12);
+  --md-code-hl-keyword-color: #5ecfc8;
+  --md-code-hl-string-color: #e0b27a;
+  --md-code-hl-comment-color: #8e9a9d;
+  --md-code-hl-number-color: #8cc2ef;
+  --md-code-hl-function-color: #e4eaeb;
+  --md-code-hl-name-color: #e4eaeb;
+  --md-code-hl-constant-color: #c9a6f0;
+  --md-code-hl-special-color: #f28b82;
+  --md-code-hl-operator-color: #c6cfd1;
+  --md-code-hl-punctuation-color: #9aa7ab;
+  --md-code-hl-variable-color: #e4eaeb;
+  --md-code-hl-generic-color: #9aa7ab;
+
+  --md-footer-bg-color: var(--c-surface);
+  --md-footer-bg-color--dark: var(--c-surface-2);
+  --md-footer-fg-color: var(--c-ink);
+  --md-footer-fg-color--light: var(--c-mute);
+  --md-footer-fg-color--lighter: var(--c-mute);
+  --md-admonition-bg-color: var(--c-accent-tint);
+}
+
+/* ---- Browser surfaces ------------------------------------------------ */
+
+html {
+  scrollbar-color: var(--c-line-strong) transparent;
+}
+
+body {
+  background: var(--c-bg);
+  caret-color: var(--c-accent);
+}
+
+::selection {
+  background: rgba(11, 110, 114, 0.2);
+}
+
+[data-md-color-scheme="slate"] ::selection {
+  background: rgba(94, 207, 200, 0.25);
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+}
+
+/* ---- Header ---------------------------------------------------------- */
+
+.md-header.gb-head {
+  color: var(--c-ink);
+  background: var(--c-header);
+  -webkit-backdrop-filter: saturate(1.4) blur(10px);
+  backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: 1px solid var(--c-line);
+  box-shadow: none;
+}
+
+.md-header.gb-head .md-header__inner {
+  height: 2.8rem;
+}
+
+.md-header.gb-head .md-logo img,
+.md-header.gb-head .md-logo svg {
+  height: 1.3rem;
+  width: auto;
+}
+
+/* Identity (name + version), then where you are: section / page */
+.gb-head__title {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  min-width: 0;
+  font-size: 0.8rem;
+  line-height: 2.8rem;
+}
+
+.gb-head__id {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+.gb-head__name {
+  font-weight: 700;
+  color: var(--c-ink) !important;
+}
+
+.gb-head__version {
+  font-family: var(--md-code-font-family);
+  font-size: 0.62rem;
+  color: var(--c-mute);
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background: var(--c-surface);
+  line-height: 1.6;
+}
+
+.gb-head__where {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.gb-head__section,
+.gb-head__sep {
+  color: var(--c-mute);
+}
+
+.gb-head__page {
+  color: var(--c-ink);
+  font-weight: 600;
+}
+
+/* The repo widget repeats the version; the head already prints it. */
+.md-header.gb-head .md-source__fact--version {
+  display: none;
+}
+
+.md-header.gb-head .md-header__button,
+.md-header.gb-head .md-source {
+  color: var(--c-ink);
+}
+
+.md-header.gb-head .md-source__repository {
+  font-weight: 600;
+}
+
+/* Search: a soft pill with a visible icon. Material colours the inline
+   icon with --md-primary-bg-color through a (0,2,0) selector, which made
+   it paper-on-paper; these selectors outrank it. */
+@media screen and (min-width: 60em) {
+  .md-header .md-search__form {
+    height: 1.8rem;
+    background: var(--c-surface);
+    border: 1px solid var(--c-line);
+    border-radius: 999px;
+    transition: background-color 150ms ease, border-color 150ms ease;
+  }
+
+  .md-header .md-search__form:hover {
+    background: var(--c-surface-2);
+    border-color: var(--c-line-strong);
+  }
+
+  .md-header .md-search__input {
+    font-size: 0.75rem;
+    color: var(--c-ink);
+  }
+
+  .md-header .md-search__input::placeholder {
+    color: var(--c-mute);
+  }
+
+  .md-header .md-search__input + .md-search__icon,
+  .md-header .md-search__input ~ .md-search__icon {
+    color: var(--c-mute);
+  }
+
+  .md-header .md-search__icon[for="__search"] {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .md-header .md-search__icon:hover {
+    opacity: 1;
+    color: var(--c-ink);
+  }
+
+  /* Opened: the field becomes a plain input above the results */
+  [data-md-toggle="search"]:checked ~ .md-header .md-search__form {
+    border-radius: var(--radius) var(--radius) 0 0;
+    background: var(--c-bg);
+  }
+}
+
+.md-search__output {
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+
+.md-search-result__meta {
+  font-size: 0.7rem;
+  color: var(--c-mute);
+  background: var(--c-surface);
+}
+
+/* Drop pieces whole as the head narrows: below 1220px the version goes
+   (the name stays: Material hides the logo here), below 60em the
+   section goes, and on phones name and page stack. */
+@media screen and (max-width: 76.234375em) {
+  .gb-head__version {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 59.984375em) {
+  .gb-head__section,
+  .gb-head__sep {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 44.984375em) {
+  .gb-head__title {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0;
+    line-height: 1.25;
+  }
+
+  .gb-head__where {
+    font-size: 0.66rem;
+    white-space: normal;
+  }
+}
+
+/* ---- Navigation ------------------------------------------------------ */
+
+.md-nav {
+  font-size: 0.74rem;
+}
+
+.md-nav__link {
+  margin-top: 0.25em;
+}
+
+.md-nav__item--section > .md-nav__link,
+.md-nav__item--section > label.md-nav__link {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--c-ink) !important;
+  margin-top: 1.1em;
+}
+
+.md-nav__link--active,
+.md-nav__link:is(:focus, :hover) {
+  color: var(--c-accent);
+}
+
+@media screen and (min-width: 76.25em) {
+  .md-nav--primary .md-nav__item:not(.md-nav__item--section) > .md-nav__link {
+    padding: 0.2rem 0.5rem;
+    margin-inline: -0.5rem;
+    border-radius: 6px;
+  }
+
+  .md-nav--primary .md-nav__link--active {
+    font-weight: 600;
+    color: var(--c-accent);
+    background: var(--c-accent-soft);
+  }
+
+  .md-nav--primary > .md-nav__title {
+    display: none;
+  }
+}
+
+.md-nav__title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--c-ink);
+}
+
+/* Phone drawer head: a plain surface, not a coloured slab */
+.md-nav--primary .md-nav__title[for="__drawer"] {
+  background: var(--c-bg);
+  color: var(--c-ink);
+  border-bottom: 1px solid var(--c-line);
+}
+
+.md-skip {
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+  background: var(--c-ink);
+  color: var(--c-bg);
+}
+
+/* Page contents: sections lead, members read as code identifiers */
+.md-nav--secondary .md-nav__link--active {
+  font-weight: 600;
+}
+
+.md-nav--secondary > .md-nav__list > .md-nav__item > .md-nav__link {
+  font-weight: 600;
+  margin-top: 0.6em;
+}
+
+.md-nav--secondary .md-nav__list .md-nav__list {
+  margin-left: 0.15rem;
+  padding-left: 0.6rem;
+  border-left: 1px solid var(--c-line);
+}
+
+.md-nav--secondary .md-nav__list .md-nav__list .md-nav__link {
+  margin-top: 0.15em;
+  font-family: var(--md-code-font-family);
+  font-size: 0.64rem;
+  color: var(--c-mute);
+}
+
+.md-nav--secondary .md-nav__list .md-nav__list .md-nav__link:is(:hover, :focus),
+.md-nav--secondary .md-nav__list .md-nav__list .md-nav__link--active {
+  color: var(--c-accent);
+}
+
+.md-nav--secondary .md-ellipsis {
+  white-space: normal;
+  overflow: visible;
+  overflow-wrap: break-word;
+}
+
+/* ---- Reading column -------------------------------------------------- */
+
+.md-typeset {
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4 {
+  color: var(--c-ink);
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+.md-typeset h1 {
+  font-size: 2rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.6em;
+}
+
+.md-typeset h2 {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin: 2em 0 0.5em;
+  padding-top: 1em;
+  border-top: 1px solid var(--c-line);
+}
+
+.md-typeset h3 {
+  font-size: 1.15rem;
+  line-height: 1.3;
+  margin: 1.6em 0 0.4em;
+}
+
+@media screen and (max-width: 44.984375em) {
+  .md-typeset h1 {
+    font-size: 1.7rem;
+  }
+
+  .md-typeset h2 {
+    font-size: 1.3rem;
+  }
+}
+
+.md-typeset a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: color-mix(in srgb, var(--c-accent) 40%, transparent);
+  transition: text-decoration-color 150ms ease;
+}
+
+.md-typeset a:is(:hover, :focus) {
+  color: var(--c-accent);
+  text-decoration-color: var(--c-accent);
+}
+
+.md-typeset .headerlink,
+.md-typeset .md-button,
+.md-typeset .tabbed-labels a {
+  text-decoration: none;
+}
+
+.md-typeset .gb-lede {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  max-width: 36em;
+  color: var(--c-mute);
+  margin-bottom: 0;
+}
+
+.md-typeset :not(pre) > code {
+  font-size: 0.82em;
+  font-weight: 500;
+  color: var(--c-ink);
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-sm);
+  padding: 0.08em 0.35em;
+  word-break: normal;
+}
+
+.md-typeset kbd {
+  font-family: var(--md-code-font-family);
+  font-size: 0.75em;
+  font-weight: 500;
+  background: var(--c-bg);
+  color: var(--c-ink);
+  border: 1px solid var(--c-line-strong);
+  border-bottom-width: 2px;
+  border-radius: var(--radius-sm);
+  box-shadow: none;
+}
+
+/* Material's .keys .key-*::before glyphs, off */
+.md-typeset .keys kbd[class*="key-"]::before,
+.md-typeset .keys kbd[class*="key-"]::after {
+  content: none;
+  padding: 0;
+}
+
+/* ---- Code blocks ----------------------------------------------------- */
+
+.md-typeset .highlight {
+  margin: 1.2em 0;
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.md-typeset .highlighttable,
+.md-typeset .highlight .highlighttable,
+.md-typeset .highlighttable .highlight {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.md-typeset .highlight pre,
+.md-typeset .highlight pre > code,
+.md-typeset .highlighttable .linenos,
+.md-typeset .highlighttable .linenodiv pre {
+  font-size: 0.7rem;
+  line-height: 1.65;
+}
+
+.md-typeset pre > code {
+  padding: 0.85rem 1.1rem;
+  background: transparent;
+  border-radius: 0;
+}
+
+.md-typeset .highlighttable .linenos {
+  padding: 0 0 0 0.9rem;
+  background: transparent;
+}
+
+.md-typeset .highlighttable .linenodiv {
+  background: transparent;
+  box-shadow: none;
+}
+
+.md-typeset .highlighttable .linenodiv pre {
+  margin: 0;
+  padding-block: 0.85rem;
+  color: var(--c-mute);
+  opacity: 0.65;
+  background: transparent;
+}
+
+.md-typeset .highlighttable .linenos a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* File name: a quiet tab above the code */
+.md-typeset .highlighttable th.filename {
+  padding: 0;
+  background: transparent;
+}
+
+.md-typeset .highlight span.filename {
+  display: block;
+  margin: 0;
+  padding: 0.5rem 1.1rem;
+  font-family: var(--md-code-font-family);
+  font-size: 0.64rem;
+  font-weight: 500;
+  color: var(--c-mute);
+  background: var(--c-surface-2);
+  border-bottom: 1px solid var(--c-line);
+  border-radius: 0;
+}
+
+.md-clipboard {
+  color: var(--c-mute);
+  border-radius: var(--radius-sm);
+}
+
+.md-clipboard:is(:focus, :hover) {
+  color: var(--c-accent);
+}
+
+/* Phones: no line-number gutter, so code keeps its width */
+@media screen and (max-width: 44.984375em) {
+  .md-typeset .highlighttable .linenos {
+    display: none;
+  }
+
+  .md-typeset pre > code {
+    padding: 0.75rem 0.9rem;
+  }
+}
+
+/* ---- Tables ---------------------------------------------------------- */
+
+.md-typeset .md-typeset__table {
+  display: block;
+}
+
+.md-typeset .md-typeset__table table:not([class]) {
+  display: table;
+  width: 100%;
+}
+
+.md-typeset table:not([class]) {
+  font-size: 0.78rem;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+.md-typeset table:not([class]) th {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--c-mute);
+  background: transparent;
+  border-bottom: 1px solid var(--c-line-strong);
+  padding: 0.6em 0.9em;
+}
+
+.md-typeset table:not([class]) td {
+  border-top: 0;
+  border-bottom: 1px solid var(--c-line);
+  padding: 0.6em 0.9em;
+  vertical-align: top;
+}
+
+.md-typeset table:not([class]) tbody tr {
+  transition: background-color 120ms ease;
+}
+
+.md-typeset table:not([class]) tbody tr:hover {
+  background: var(--c-surface);
+  box-shadow: none;
+}
+
+/* ---- Notes, details, tabs -------------------------------------------- */
+
+.md-typeset .admonition,
+.md-typeset details {
+  font-size: 0.8rem;
+  background: var(--c-accent-tint);
+  border: 1px solid color-mix(in srgb, var(--c-accent) 18%, transparent) !important;
+  border-radius: var(--radius);
+  box-shadow: none;
+}
+
+.md-typeset .admonition-title,
+.md-typeset summary {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--c-ink);
+  background: transparent !important;
+  border: 0 !important;
+}
+
+.md-typeset .admonition-title::before,
+.md-typeset summary::before {
+  background-color: var(--c-accent) !important;
+}
+
+.md-typeset summary::after {
+  background-color: var(--c-mute);
+}
+
+.md-typeset .admonition.warning,
+.md-typeset details.warning {
+  background: var(--c-amber-tint);
+  border-color: color-mix(in srgb, var(--c-amber) 28%, transparent) !important;
+}
+
+.md-typeset .warning > .admonition-title::before,
+.md-typeset .warning > summary::before {
+  background-color: var(--c-amber) !important;
+}
+
+/* Collapsible FAQ rows sit on the page, not in tinted boxes */
+.md-typeset details.question {
+  background: transparent;
+  border-color: var(--c-line) !important;
+}
+
+.md-typeset .tabbed-labels > label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--c-mute);
+  text-decoration: none;
+}
+
+.md-typeset .tabbed-labels > label:hover,
+.md-typeset .tabbed-set > input:checked + label,
+.md-typeset .tabbed-labels > label.tabbed-labels__active {
+  color: var(--c-accent);
+}
+
+.md-typeset .tabbed-content .highlight {
+  margin-top: 0.8em;
+}
+
+/* ---- Screenshots ----------------------------------------------------- */
+
+.md-typeset p > img:not(.twemoji),
+.md-typeset .gb-figure img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 2px var(--c-shadow), 0 8px 24px var(--c-shadow);
+}
+
+.md-typeset figure.gb-figure {
+  display: block;
+  width: auto;
+  max-width: none;
+  margin: 1.4em 0;
+  text-align: left;
+}
+
+.md-typeset figure.gb-figure img {
+  margin: 0;
+}
+
+.md-typeset .gb-figure figcaption {
+  font-style: normal;
+  font-size: 0.75rem;
+  color: var(--c-mute);
+  margin-top: 0.7rem;
+  max-width: none;
+  text-align: left;
+}
+
+/* Two screenshots side by side share the row evenly */
+.md-typeset .gb-figures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem 1.6rem;
+  align-items: flex-start;
+}
+
+.md-typeset .gb-figures > figure.gb-figure {
+  flex: 1 1 15rem;
+  max-width: none;
+  margin: 0;
+}
+
+.md-typeset .gb-figures > figure.gb-figure img {
+  width: 100%;
+}
+
+/* The hero spans the full measure */
+.md-typeset figure.gb-hero {
+  margin: 1.6em 0 0;
+}
+
+.md-typeset figure.gb-hero img {
+  width: 100%;
+}
+
+/* Keep Material's per-scheme image switching for framed screenshots */
+[data-md-color-scheme="default"] .md-typeset img[src$="#only-dark"],
+[data-md-color-scheme="slate"] .md-typeset img[src$="#only-light"] {
+  display: none;
+}
+
+/* Phones: the hero keeps its native size and scrolls sideways instead of
+   shrinking to unreadable text. */
+@media screen and (max-width: 44.984375em) {
+  .md-typeset figure.gb-figure.gb-hero {
+    overflow-x: auto;
+  }
+
+  .md-typeset figure.gb-figure.gb-hero img {
+    width: 820px;
+    max-width: none;
+  }
+
+  .md-typeset figure.gb-figure.gb-hero figcaption {
+    position: sticky;
+    left: 0;
+    max-width: calc(100vw - 1.6rem);
+  }
+}
+
+/* ---- Home ------------------------------------------------------------ */
+
+.md-typeset .gb-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.2rem;
+}
+
+.md-typeset .gb-split > * {
+  min-width: 0;
+  margin-block: 0;
+}
+
+/* Tighter run-in so the hero and the quick start reach the first screen */
+.md-typeset .gb-lede + h2 {
+  margin-top: 1.4em;
+}
+
+.md-typeset .gb-split + h2 {
+  margin-top: 1.8em;
+}
+
+/* "Next" rows: a short index, not cards */
+.md-typeset .gb-next > ul {
+  list-style: none;
+  margin: 1em 0;
+  padding: 0;
+}
+
+.md-typeset .gb-next > ul > li {
+  display: grid;
+  grid-template-columns: minmax(10rem, 14rem) 1fr;
+  gap: 1rem;
+  margin: 0;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--c-line);
+}
+
+.md-typeset .gb-next > ul > li:first-child {
+  border-top: 1px solid var(--c-line);
+}
+
+.md-typeset .gb-next > ul > li > a {
+  font-weight: 600;
+}
+
+@media screen and (max-width: 44.984375em) {
+  .md-typeset .gb-next > ul > li {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+}
+
+/* ---- API reference (mkdocstrings) ------------------------------------ */
+
+.md-typeset .doc-heading code {
+  font-weight: 600;
+  background: transparent;
+  border: 0;
+}
+
+.md-typeset .doc-symbol {
+  border-radius: var(--radius-sm);
+  font-family: var(--md-code-font-family);
+}
+
+:root {
+  --doc-symbol-method-fg-color: var(--c-accent);
+  --doc-symbol-function-fg-color: var(--c-accent);
+  --doc-symbol-method-bg-color: var(--c-accent-soft);
+  --doc-symbol-function-bg-color: var(--c-accent-soft);
+  --doc-symbol-class-fg-color: var(--c-bg);
+  --doc-symbol-class-bg-color: var(--c-accent);
+}
+
+/* ---- Footer ---------------------------------------------------------- */
+
+.md-footer {
+  border-top: 1px solid var(--c-line);
+}
+
+.md-footer__link {
+  color: var(--c-ink);
+}
+
+.md-footer__direction {
+  font-size: 0.66rem;
+  color: var(--c-mute);
+  opacity: 1;
+}
+
+.md-footer__title {
+  font-weight: 600;
+}
+
+.md-footer-meta {
+  border-top: 1px solid var(--c-line);
+}
+
+.md-footer-meta,
+.md-footer-meta a,
+.md-copyright {
+  color: var(--c-mute) !important;
+}
+
+.md-top {
+  font-weight: 600;
+  background: var(--c-bg);
+  color: var(--c-ink);
+  border: 1px solid var(--c-line);
+  border-radius: 999px;
+  box-shadow: var(--md-shadow-z1);
+}
