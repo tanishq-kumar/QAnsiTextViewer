@@ -14,7 +14,7 @@ run:
     uv run python main.py
 
 lint:
-    uv run ruff check ansi_text_viewer tests demo.py main.py
+    uv run ruff check ansi_text_viewer tests demo.py main.py examples tools
 
 audit:
     uv run pip-audit
@@ -26,7 +26,7 @@ typecheck:
     uv run ty check ansi_text_viewer
 
 format:
-    uv run ruff format ansi_text_viewer tests demo.py main.py
+    uv run ruff format ansi_text_viewer tests demo.py main.py examples tools
 
 docs:
     uv run mkdocs serve

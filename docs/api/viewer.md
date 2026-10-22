@@ -159,14 +159,14 @@ doubles as the zoom-reset size, `setFontFamily()` keeps the size, and
 ::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setFontFamily
 ::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.useSystemFont
 ::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.resetZoom
-::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.wheelEvent
 
 ## Layout, scroll and gutter
 
 Word wrap is off by default (logs scroll sideways); auto-scroll pins the
 bottom on new output; the gutter shows line numbers with bookmark ticks.
 The `lineNumberArea*` methods and `resizeEvent` are Qt plumbing most apps
-never call directly — listed here for completeness.
+never call directly — they are listed under
+[Internals](internals.md#viewer-event-handlers).
 
 ::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setWordWrapEnabled
 ::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.isWordWrapEnabled
@@ -174,11 +174,6 @@ never call directly — listed here for completeness.
 ::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.isAutoScroll
 ::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setLineNumbersVisible
 ::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.isLineNumbersVisible
-::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.lineNumberAreaWidth
-::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.updateLineNumberAreaWidth
-::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.updateLineNumberArea
-::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.resizeEvent
-::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.lineNumberAreaPaintEvent
 
 ## Timestamps and highlight toggles
 
@@ -222,14 +217,12 @@ the search part.
 anchors, opened with ++ctrl++ + click (plain clicks just move the cursor —
 single-click-open would let a hostile log line phish you). `mousePressEvent`
 enforces the modifier, `mouseMoveEvent` shows the pointing hand, and
-`contextMenuEvent` builds the right-click menu. Disable entirely with
+`contextMenuEvent` builds the right-click menu (see
+[Internals](internals.md#viewer-event-handlers)). Disable entirely with
 `setLinksEnabled(False)` for untrusted logs.
 
 ::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.setLinksEnabled
 ::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.isLinksEnabled
-::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.mousePressEvent
-::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.mouseMoveEvent
-::: ansi_text_viewer.ansi_text_viewer.AnsiTextViewer.contextMenuEvent
 
 ## Copy, export, sessions
 

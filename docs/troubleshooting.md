@@ -1,8 +1,3 @@
----
-hide:
-  - navigation
----
-
 # Troubleshooting
 
 ## Why was my input ignored?

@@ -28,7 +28,7 @@ _CMAKE_BUILD_RE = re.compile(
 )
 _JUST_COMMENT_RE = re.compile(r"^\s{0,200}#.?.{0,500}")
 _JUST_RECIPE_RE = re.compile(
-    r"^([A-Za-z0-9_][A-Za-z0-9_-]{0,100})"
+    r"^([A-Za-z_][A-Za-z0-9_-]{0,100})"
     r"(\s{0,10}\[[^\]\n]{0,100}\])?\s{0,10}:"
 )
 _JUST_ASSIGN_RE = re.compile(r"^([A-Za-z_][A-Za-z0-9_]{0,100})\s{0,10}(:=|\?=|=)")

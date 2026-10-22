@@ -1,6 +1,4 @@
 ---
-hide:
-  - navigation
 social:
   cards_layout_options:
     title: ANSI log viewer for Qt for Python
@@ -8,35 +6,53 @@ social:
 
 # QAnsiTextViewer
 
-A Qt log-viewer widget for Python that renders ANSI escape codes and colored
-terminal output — tail logs, search them, bookmark lines, and save sessions,
-all behind a typed one-widget API. Built on PySide6 (and compatible with PyQt),
-it parses SGR, 256-color, and truecolor sequences, handles `\r` progress lines,
-and stays responsive through 100k-line bursts via chunked async appends.
+A drop-in Qt widget for Python that renders ANSI-colored terminal output, so
+you can tail logs, search them, bookmark lines, and save sessions.
+{ .gb-lede }
 
-<div class="grid cards" markdown>
+<figure class="gb-figure gb-hero" markdown>
+![The viewer tailing a test run: colored log levels, pytest progress, a failed test with its search match and bookmark, a finished upload progress line, and clickable links](assets/hero_light.png#only-light){ width="820" }
+![The viewer tailing a test run: colored log levels, pytest progress, a failed test with its search match and bookmark, a finished upload progress line, and clickable links](assets/hero_dark.png#only-dark){ width="820" }
+<figcaption>A test run in the real widget: log levels, a search match on line 8 with its bookmark, a <code>\r</code> progress line that finished in place, and clickable paths and URLs.</figcaption>
+</figure>
 
--   :material-magnify: **Search & filter**
+## Quick start
 
-    Highlight with regex, jump with ++f3++, hide non-matching lines.
+<div class="gb-split" markdown>
 
--   :material-bookmark: **Bookmarks**
+```python title="quickstart.py" linenums="1"
+from PySide6.QtWidgets import QApplication
+from ansi_text_viewer import AnsiTextViewer
 
-    Gutter click, list panel, next/previous navigation, saved in sessions.
+app = QApplication([])
+viewer = AnsiTextViewer()
+viewer.setTheme("auto")  # follow the OS light/dark setting
+viewer.appendAnsiText("\x1b[31mred\x1b[0m plain\n")
+# F3 / Shift+F3 navigates, Esc clears
+viewer.highlight_search("red")
+viewer.show()
+app.exec()
+```
 
--   :material-palette: **Themes**
+<div class="gb-figures" markdown>
 
-    Light, dark, OS-following auto, plus custom ANSI palettes.
+<figure class="gb-figure" markdown>
+![Minimal quick-start window](assets/quickstart_output.png#only-light){ width="420" }
+![Minimal quick-start window](assets/quickstart_output_dark.png#only-dark){ width="420" }
+<figcaption>That snippet renders this: the red ANSI text, lit up as the search match.</figcaption>
+</figure>
 
--   :material-lightning-bolt: **Non-blocking**
+<figure class="gb-figure" markdown>
+![SGR styles, the 16 standard and bright foreground colors, a 256-color ramp and grayscale, truecolor text and a truecolor gradient, and colored status badges](assets/ansi_palette.png#only-light){ width="400" }
+![SGR styles, the 16 standard and bright foreground colors, a 256-color ramp and grayscale, truecolor text and a truecolor gradient, and colored status badges](assets/ansi_palette_dark.png#only-dark){ width="400" }
+<figcaption>Styles, the 16 base colors, 256-color and truecolor, each line terminated so nothing bleeds. <a href="gallery/#ansi-colors-isolated-per-line">Visual tour</a></figcaption>
+</figure>
 
-    Chunked async appends keep the UI alive through 100k-line bursts.
+</div>
 
 </div>
 
 ## Install
-
-[![PyPI](https://img.shields.io/pypi/v/qansitextviewer)](https://pypi.org/project/qansitextviewer/)
 
 === "uv"
 
@@ -59,37 +75,35 @@ and stays responsive through 100k-line bursts via chunked async appends.
 
 Requires Python `>=3.11` and PySide6 `>=6.5.0`.
 
-## Quick start
 
-```python
-from PySide6.QtWidgets import QApplication
-from ansi_text_viewer import AnsiTextViewer
+## Next
 
-app = QApplication([])
-viewer = AnsiTextViewer()
-viewer.appendAnsiText("\x1b[31mred\x1b[0m plain\n")
-viewer.highlight_search("red")  # F3 / Shift+F3 navigates, Esc clears
-viewer.setTheme("dark")
-viewer.show()
-app.exec()
-```
+<div class="gb-next" markdown>
 
-That snippet renders this — red ANSI text with the search match lit up:
+- [Your first log pane](guides/first-log-pane.md) Put the viewer in a window with a search box, match counter, and filter.
+- [Streaming process output](guides/streaming.md) Tail a subprocess, dump huge logs without freezing, pause and resume.
+- [Themes and colors](guides/theming.md) Light, dark, OS-following auto, plus custom ANSI palettes.
+- [API reference](api/viewer.md) Every viewer method, signal, and shortcut; highlight rules and internals sit beside it under Reference.
 
-![Minimal quick-start window](assets/simple_demo.png){ width="420" }
+</div>
+
+## What it does
+
+| Feature | In short |
+| ------- | -------- |
+| **One widget** | A typed `QWidget`; every behavior has a setter/getter pair. |
+| **ANSI parsing** | SGR, 256-color, and truecolor sequences; `\r` progress lines overwrite in place. |
+| **PySide6 and PyQt** | Built on PySide6, and compatible with PyQt through the same Qt API. |
+| **Search & filter** | Highlight with regex, jump with ++f3++, hide non-matching lines. |
+| **Bookmarks** | Gutter click, list panel, next/previous navigation, saved in sessions. |
+| **Themes** | Light, dark, OS-following auto, plus custom ANSI palettes. |
+| **Non-blocking** | Chunked async appends keep the UI alive through 100k-line bursts. |
 
 !!! tip "Try the demo"
-    `just demo` launches the full showcase: streaming logs, progress bars,
-    bookmarks, sessions, themes, and palette pickers. Prefer pictures?
+    In a clone of the repository, `just demo` (or `uv run python demo.py`)
+    launches the full showcase: streaming logs, progress bars, bookmarks,
+    sessions, themes, and palette pickers. Prefer pictures?
     [Take the visual tour](gallery.md) — every feature annotated.
-
-## API reference
-
-| Page | Contents |
-| ---- | -------- |
-| [Viewer](api/viewer.md) | `AnsiTextViewer` — every method, with examples |
-| [Highlighting](api/highlighting.md) | `Span`, `HighlightRule`, all built-in rules |
-| [Internals](api/internals.md) | ANSI decoding, search engine, gutter |
 
 !!! warning "Untrusted logs"
     Log content is untrusted by design. Links open only on ++ctrl++ + click,
